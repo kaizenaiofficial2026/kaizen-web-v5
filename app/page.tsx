@@ -3,12 +3,12 @@ export default function Home() {
     <div className="relative flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-black text-white">
       <video
         className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        src="/video/hero.mp4"
+        src="/video/12662100_1280_720_30fps.mp4"
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
       />
       <div className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
       <Grain />
