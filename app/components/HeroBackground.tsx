@@ -1,10 +1,14 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+
+const ROBOT_URL = "/models/friendly_robot.glb";
+useGLTF.preload(ROBOT_URL);
 
 const lattice = {
   vertex: /* glsl */ `
@@ -106,41 +110,87 @@ function LatticeBackdrop() {
   );
 }
 
-function HeroShard() {
+function Robot() {
   const group = useRef<THREE.Group>(null);
+  const armsRef = useRef<THREE.Object3D | null>(null);
+  const headRef = useRef<THREE.Object3D | null>(null);
+  const armsRest = useRef<{ x: number; y: number; z: number } | null>(null);
+  const headRest = useRef<{ x: number; y: number; z: number } | null>(null);
+
+  const { scene } = useGLTF(ROBOT_URL);
+
+  // Clone so HMR / multiple mounts don't share the same object graph,
+  // and grab the named sub-nodes once.
+  const cloned = useMemo(() => scene.clone(true), [scene]);
+
+  useEffect(() => {
+    const arms = cloned.getObjectByName("brazos");
+    const head = cloned.getObjectByName("cabeza");
+    if (arms) {
+      armsRef.current = arms;
+      armsRest.current = {
+        x: arms.rotation.x,
+        y: arms.rotation.y,
+        z: arms.rotation.z,
+      };
+    }
+    if (head) {
+      headRef.current = head;
+      headRest.current = {
+        x: head.rotation.x,
+        y: head.rotation.y,
+        z: head.rotation.z,
+      };
+    }
+    cloned.traverse((obj) => {
+      const mesh = obj as THREE.Mesh;
+      if (mesh.isMesh) {
+        mesh.castShadow = false;
+        mesh.receiveShadow = false;
+      }
+    });
+  }, [cloned]);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
+
+    // Idle float + slow turn for the whole robot
     if (group.current) {
-      group.current.rotation.x = t * 0.15;
-      group.current.rotation.y = t * 0.22;
-      group.current.position.y = Math.sin(t * 0.5) * 0.05;
+      group.current.position.y = 0.1 + Math.sin(t * 1.2) * 0.04;
+      group.current.rotation.y = -0.35 + Math.sin(t * 0.4) * 0.08;
+    }
+
+    // Wave: 3-second cycle, wave for ~1.6s then rest
+    const cycle = 3.0;
+    const phase = t % cycle;
+    const waving = phase < 1.6;
+    const waveAmt = waving ? Math.sin((phase / 1.6) * Math.PI) : 0; // 0→1→0 envelope
+    const flap = waving ? Math.sin(phase * 14) : 0; // fast hand flap
+
+    if (armsRef.current && armsRest.current) {
+      // Lift arms up + side-to-side flap
+      armsRef.current.rotation.x = armsRest.current.x - waveAmt * 1.6;
+      armsRef.current.rotation.z = armsRest.current.z + flap * 0.5 * waveAmt;
+      armsRef.current.rotation.y = armsRest.current.y + flap * 0.2 * waveAmt;
+    }
+
+    if (headRef.current && headRest.current) {
+      // Tiny head tilt while waving
+      headRef.current.rotation.z =
+        headRest.current.z + Math.sin(t * 1.5) * 0.04 + waveAmt * 0.08;
+      headRef.current.rotation.x =
+        headRest.current.x + Math.sin(t * 1.1) * 0.03;
     }
   });
 
   return (
-    <group ref={group} position={[1.6, 0.4, 0]}>
-      {/* solid faceted core */}
-      <mesh>
-        <icosahedronGeometry args={[0.85, 0]} />
-        <meshStandardMaterial
-          color="#1a1d24"
-          metalness={0.9}
-          roughness={0.25}
-          emissive="#3a2510"
-          emissiveIntensity={0.4}
-        />
-      </mesh>
-      {/* glowing wireframe shell */}
-      <mesh scale={1.02}>
-        <icosahedronGeometry args={[0.85, 1]} />
-        <meshBasicMaterial color="#ffb070" wireframe transparent opacity={0.55} />
-      </mesh>
-      {/* outer ghost shell */}
-      <mesh scale={1.35}>
-        <icosahedronGeometry args={[0.85, 0]} />
-        <meshBasicMaterial color="#9bd4ff" wireframe transparent opacity={0.18} />
-      </mesh>
+    <group
+      ref={group}
+      position={[1.7, -0.4, 0]}
+      scale={1.1}
+      rotation={[0, -0.35, 0]}
+    >
+      <primitive object={cloned} />
     </group>
   );
 }
@@ -159,10 +209,12 @@ export function HeroBackground() {
         <LatticeBackdrop />
 
         {/* Foreground geometry */}
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[2, 3, 4]} intensity={1.2} color="#ffd9b0" />
-        <directionalLight position={[-3, -1, 2]} intensity={0.6} color="#88aaff" />
-        <HeroShard />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[2, 3, 4]} intensity={1.4} color="#ffd9b0" />
+        <directionalLight position={[-3, -1, 2]} intensity={0.7} color="#88aaff" />
+        <Suspense fallback={null}>
+          <Robot />
+        </Suspense>
 
         <EffectComposer multisampling={0}>
           <Bloom
