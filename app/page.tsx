@@ -1,9 +1,9 @@
-import { AuroraBackground } from "./components/AuroraBackground";
+import { HeroBackground } from "./components/HeroBackground";
 
 export default function Home() {
   return (
     <div className="relative flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-black text-white">
-      <AuroraBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
+      <HeroBackground />
       <div className="pointer-events-none absolute inset-0 z-0 bg-black/30" />
       <Grain />
       <Nav />
