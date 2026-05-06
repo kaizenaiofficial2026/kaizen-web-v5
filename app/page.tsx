@@ -1,16 +1,10 @@
+import { AuroraBackground } from "./components/AuroraBackground";
+
 export default function Home() {
   return (
     <div className="relative flex h-screen max-h-screen w-screen flex-col overflow-hidden bg-black text-white">
-      <video
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        src="/video/12662100_1280_720_30fps.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      />
-      <div className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
+      <AuroraBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-black/30" />
       <Grain />
       <Nav />
 
