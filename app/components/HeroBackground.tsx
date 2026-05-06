@@ -1,6 +1,6 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
@@ -9,6 +9,9 @@ import * as THREE from "three";
 
 const ROBOT_URL = "/models/friendly_robot.glb";
 useGLTF.preload(ROBOT_URL);
+
+const ROBOT_DESKTOP_POSITION: [number, number, number] = [1.45, -0.18, 0];
+const ROBOT_MOBILE_POSITION: [number, number, number] = [0.55, -0.73, 0];
 
 const lattice = {
   vertex: /* glsl */ `
@@ -89,14 +92,17 @@ function LatticeBackdrop() {
   );
 
   useFrame((state) => {
-    uniforms.uTime.value = state.clock.elapsedTime;
+    const material = ref.current;
+    if (!material) return;
+
+    material.uniforms.uTime.value = state.clock.elapsedTime;
     const { width, height } = state.size;
     const dpr = state.viewport.dpr;
-    uniforms.uResolution.value.set(width * dpr, height * dpr);
+    material.uniforms.uResolution.value.set(width * dpr, height * dpr);
   });
 
   return (
-    <mesh frustumCulled={false}>
+    <mesh frustumCulled={false} renderOrder={-1000}>
       <planeGeometry args={[2, 2]} />
       <shaderMaterial
         ref={ref}
@@ -112,28 +118,20 @@ function LatticeBackdrop() {
 
 function Robot() {
   const group = useRef<THREE.Group>(null);
-  const armsRef = useRef<THREE.Object3D | null>(null);
   const headRef = useRef<THREE.Object3D | null>(null);
-  const armsRest = useRef<{ x: number; y: number; z: number } | null>(null);
   const headRest = useRef<{ x: number; y: number; z: number } | null>(null);
 
   const { scene } = useGLTF(ROBOT_URL);
+  const { viewport } = useThree();
+  const isNarrow = viewport.width < 4;
+  const robotPosition = isNarrow ? ROBOT_MOBILE_POSITION : ROBOT_DESKTOP_POSITION;
+  const robotScale = isNarrow ? 0.34 : 0.72;
 
-  // Clone so HMR / multiple mounts don't share the same object graph,
-  // and grab the named sub-nodes once.
+  // Clone so HMR / multiple mounts don't share the same object graph.
   const cloned = useMemo(() => scene.clone(true), [scene]);
 
   useEffect(() => {
-    const arms = cloned.getObjectByName("brazos");
     const head = cloned.getObjectByName("cabeza");
-    if (arms) {
-      armsRef.current = arms;
-      armsRest.current = {
-        x: arms.rotation.x,
-        y: arms.rotation.y,
-        z: arms.rotation.z,
-      };
-    }
     if (head) {
       headRef.current = head;
       headRest.current = {
@@ -151,43 +149,39 @@ function Robot() {
     });
   }, [cloned]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
 
     // Idle float + slow turn for the whole robot
     if (group.current) {
-      group.current.position.y = 0.1 + Math.sin(t * 1.2) * 0.04;
+      group.current.position.y = robotPosition[1] + Math.sin(t * 1.2) * 0.04;
       group.current.rotation.y = -0.35 + Math.sin(t * 0.4) * 0.08;
     }
 
-    // Wave: 3-second cycle, wave for ~1.6s then rest
-    const cycle = 3.0;
-    const phase = t % cycle;
-    const waving = phase < 1.6;
-    const waveAmt = waving ? Math.sin((phase / 1.6) * Math.PI) : 0; // 0→1→0 envelope
-    const flap = waving ? Math.sin(phase * 14) : 0; // fast hand flap
-
-    if (armsRef.current && armsRest.current) {
-      // Lift arms up + side-to-side flap
-      armsRef.current.rotation.x = armsRest.current.x - waveAmt * 1.6;
-      armsRef.current.rotation.z = armsRest.current.z + flap * 0.5 * waveAmt;
-      armsRef.current.rotation.y = armsRest.current.y + flap * 0.2 * waveAmt;
-    }
-
     if (headRef.current && headRest.current) {
-      // Tiny head tilt while waving
-      headRef.current.rotation.z =
-        headRest.current.z + Math.sin(t * 1.5) * 0.04 + waveAmt * 0.08;
-      headRef.current.rotation.x =
-        headRest.current.x + Math.sin(t * 1.1) * 0.03;
+      const headTilt = headRest.current.z + Math.sin(t * 1.5) * 0.04;
+      const headNod = headRest.current.x + Math.sin(t * 1.1) * 0.03;
+
+      headRef.current.rotation.z = THREE.MathUtils.damp(
+        headRef.current.rotation.z,
+        headTilt,
+        6,
+        delta
+      );
+      headRef.current.rotation.x = THREE.MathUtils.damp(
+        headRef.current.rotation.x,
+        headNod,
+        6,
+        delta
+      );
     }
   });
 
   return (
     <group
       ref={group}
-      position={[1.7, -0.4, 0]}
-      scale={1.1}
+      position={robotPosition}
+      scale={robotScale}
       rotation={[0, -0.35, 0]}
     >
       <primitive object={cloned} />
