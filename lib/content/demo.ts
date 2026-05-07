@@ -3,6 +3,7 @@ import {
   CheckCircle2,
   Clock,
   FileText,
+  PhoneCall,
   PlayCircle,
   ShieldCheck,
   Sparkles,
@@ -18,51 +19,51 @@ export type DemoAgendaItem = {
 export const demoAgenda: DemoAgendaItem[] = [
   {
     icon: Calendar,
-    title: "Map your current workflow",
+    title: "Find where leads slip",
     description:
-      "We identify the repetitive handoffs, approvals, and reporting loops that slow your team today.",
+      "We review your calls, chats, DMs, booking flow, and the moments customers usually wait too long.",
   },
   {
     icon: PlayCircle,
-    title: "Walk through a live Kaizen flow",
+    title: "Walk through chatbot and voice flows",
     description:
-      "You will see how context enters Kaizen, how work is routed, and where humans stay in control.",
+      "You see how Kaizen answers, qualifies, books, alerts your team, and escalates when a human should step in.",
   },
   {
     icon: FileText,
-    title: "Leave with a rollout plan",
+    title: "Scope your first launch",
     description:
-      "We outline the first workflow to launch, the systems to connect, and the success metrics to track.",
+      "We define the first channel, knowledge base, integrations, timeline, and success metrics before you commit.",
   },
 ];
 
 export const demoProofPoints = [
   {
     icon: Clock,
-    title: "30 minute session",
-    description: "Focused on the workflows and systems your team already uses.",
+    title: "20 minute strategy call",
+    description: "Short, practical, and focused on the revenue leaks in your current customer flow.",
   },
   {
     icon: ShieldCheck,
-    title: "Security-ready",
-    description: "Bring access, audit, and data boundary questions into the first conversation.",
+    title: "Done-for-you setup",
+    description: "Kaizen handles design, training, integrations, testing, launch, and optimisation.",
   },
   {
     icon: CheckCircle2,
-    title: "No prep burden",
-    description: "A short workflow example is enough for us to tailor the walkthrough.",
+    title: "No technical team needed",
+    description: "Your team approves the flow; we handle the build details and launch readiness.",
   },
 ];
 
 export const demoOutcomes = [
-  "Priority workflow candidates",
-  "Integration and security fit",
-  "Recommended launch path",
-  "Success metrics for month one",
+  "Best first agent to launch",
+  "Channels and integrations to connect",
+  "Setup timeline and fixed scope",
+  "How to measure calls, bookings, and ROI",
 ];
 
 export const demoVisualSteps = [
   { icon: Sparkles, label: "Discover" },
-  { icon: PlayCircle, label: "Preview" },
-  { icon: CheckCircle2, label: "Plan" },
+  { icon: PhoneCall, label: "Hear it live" },
+  { icon: CheckCircle2, label: "Plan launch" },
 ];

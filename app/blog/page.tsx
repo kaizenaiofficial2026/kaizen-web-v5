@@ -14,7 +14,7 @@ import { siteConfig } from "@/lib/content/site";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Read Kaizen AI ideas on workflow design, AI operations, productivity, and security-first automation.",
+    "Read Kaizen AI ideas on missed-lead recovery, AI chatbots, voice agents, and appointment booking automation.",
 };
 
 export default function BlogPage() {
@@ -24,11 +24,11 @@ export default function BlogPage() {
         eyebrow="Blog"
         title={
           <>
-            Notes on building <span className="text-primary">better AI</span>{" "}
-            workflows
+            Notes on capturing{" "}
+            <span className="text-primary">every customer</span> enquiry
           </>
         }
-        subtitle="Practical essays for teams turning AI experiments into dependable operating systems."
+        subtitle="Practical essays for operators who want every call, chat, DM, and appointment request handled fast."
         actions={[
           { label: "Book a demo", href: "/demo" },
           {
@@ -42,11 +42,11 @@ export default function BlogPage() {
           <div className="border-border bg-background/45 rounded-xl border p-5">
             <BookOpen className="text-primary h-8 w-8" aria-hidden />
             <h2 className="text-foreground mt-5 text-2xl font-semibold tracking-tight">
-              Field notes for AI operators
+              Field notes for always-on customer response
             </h2>
             <p className="text-muted-foreground mt-3 leading-7">
-              Strategy, workflow patterns, rollout lessons, and security
-              practices from teams moving beyond one-off prompts.
+              Lead response strategy, chatbot patterns, voice agent rollout
+              lessons, and appointment booking ideas from the Kaizen team.
             </p>
           </div>
         </Card>
@@ -58,11 +58,11 @@ export default function BlogPage() {
             eyebrow="Latest writing"
             title={
               <>
-                Ideas for teams that want{" "}
-                <span className="text-primary">compounding output</span>
+                Ideas for teams that cannot afford{" "}
+                <span className="text-primary">missed demand</span>
               </>
             }
-            subtitle="Fresh thinking on operating rhythm, rollout quality, and the practical systems that help AI work hold up in production."
+            subtitle="Fresh thinking on response speed, natural conversations, multilingual service, and the practical path from discovery to go-live."
           />
         </FadeUp>
         <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-2">
@@ -101,8 +101,8 @@ export default function BlogPage() {
                 Want to see how these patterns map to your team?
               </h2>
               <p className="text-foreground/75 mt-5 max-w-2xl text-lead">
-                Bring one workflow that keeps slipping. We will show how Kaizen
-                would connect the context, approvals, and outcomes.
+                Bring one lead source that keeps slipping. We will show how
+                Kaizen would answer, qualify, book, and alert your team.
               </p>
             </FadeUp>
             <FadeUp delay={0.08}>

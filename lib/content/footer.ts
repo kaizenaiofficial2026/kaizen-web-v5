@@ -1,8 +1,8 @@
 import {
   TwitterIcon,
-  GithubIcon,
+  MediumIcon,
   LinkedinIcon,
-  YoutubeIcon,
+  FacebookIcon,
 } from "@/components/icons/social";
 import type { ComponentType, SVGProps } from "react";
 import type { FooterColumn } from "@/lib/types";
@@ -17,47 +17,48 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Product",
     links: [
-      { label: "Solutions", href: "/solutions" },
-      { label: "Features", href: "/#features" },
-      { label: "Pricing", href: "/#pricing" },
-      { label: "Demo", href: "/demo" },
-      { label: "Changelog", href: "/changelog" },
-      { label: "Roadmap", href: "/roadmap" },
+      { label: "AI Chatbots", href: "/solutions" },
+      { label: "AI Voice Agents", href: "/solutions" },
+      { label: "Missed-call Recovery", href: "/solutions" },
+      { label: "How it Works", href: "/demo" },
     ],
   },
   {
     heading: "Company",
     links: [
       { label: "Case Studies", href: "/case-studies" },
-      { label: "About", href: "/about" },
-      { label: "Customers", href: "/#testimonials" },
-      { label: "Careers", href: "/careers" },
-      { label: "Press", href: "/press" },
+      { label: "Results", href: "/#testimonials" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contact", href: "/demo" },
     ],
   },
   {
     heading: "Resources",
     links: [
-      { label: "Docs", href: "/docs" },
+      { label: "Solutions", href: "/solutions" },
       { label: "Blog", href: "/blog" },
-      { label: "Help Center", href: "/help" },
-      { label: "Status", href: "/status" },
+      { label: "FAQ", href: "/#faq" },
+      { label: "Book a Call", href: "/demo" },
     ],
   },
 ];
 
 export const socialLinks: SocialLink[] = [
-  { label: "Twitter", href: "https://twitter.com/kaizen_ai", icon: TwitterIcon },
-  { label: "GitHub", href: "https://github.com/kaizen-ai", icon: GithubIcon },
+  { label: "Twitter", href: "https://x.com/kaizen_ai_dev", icon: TwitterIcon },
+  {
+    label: "Medium",
+    href: "https://medium.com/@kaizenaioffcial2026",
+    icon: MediumIcon,
+  },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/company/kaizen-ai",
+    href: "https://www.linkedin.com/company/kaizenai-dev/about/?viewAsMember=true",
     icon: LinkedinIcon,
   },
   {
-    label: "YouTube",
-    href: "https://youtube.com/@kaizen-ai",
-    icon: YoutubeIcon,
+    label: "Facebook",
+    href: "https://web.facebook.com/profile.php?id=61574344472130",
+    icon: FacebookIcon,
   },
 ];
 

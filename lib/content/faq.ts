@@ -3,26 +3,26 @@ import type { FAQItem } from "@/lib/types";
 export const faqs: FAQItem[] = [
   {
     q: "What is Kaizen AI?",
-    a: "Kaizen AI is a unified intelligent toolkit that connects your data, automates repetitive work, and learns the way your team operates so every day gets a little better than the last.",
+    a: "Kaizen AI builds AI chatbots and voice agents that answer enquiries, handle calls, qualify leads, and book appointments around the clock.",
   },
   {
-    q: "How is Kaizen different from other AI tools?",
-    a: "Most tools sit on top of your work. Kaizen builds inside it — adaptive agents, a shared data layer, and prompts that improve themselves based on your actual outcomes.",
+    q: "How long does setup take?",
+    a: "Most chatbot launches take 3 to 5 days. Voice agents usually take 7 to 14 days because call flows, voice, integrations, and testing need more care.",
   },
   {
-    q: "Is my data secure?",
-    a: "Yes. All data is encrypted in transit and at rest. Enterprise customers get SSO, SCIM, audit logs, and the option of dedicated infrastructure.",
+    q: "What platforms do you integrate with?",
+    a: "We can connect websites, WhatsApp Business, Instagram DMs, Messenger, calendars, CRMs, and phone systems through tools like Twilio, HubSpot, Salesforce, Pipedrive, Zoho, Calendly, and Google Calendar.",
   },
   {
-    q: "Do you support SOC 2 and GDPR?",
-    a: "Kaizen AI is SOC 2 Type II certified and GDPR compliant. DPAs, sub-processor lists, and our latest security report are available on request.",
+    q: "Do we need a technical team?",
+    a: "No. Kaizen handles design, build, deployment, testing, and ongoing optimisation. Your team reviews the final flow before launch.",
   },
   {
-    q: "Can I cancel anytime?",
-    a: "Absolutely. Plans are billed monthly, you can downgrade or cancel at any time, and you keep access through the end of the current billing cycle.",
+    q: "What if the AI cannot answer something?",
+    a: "It escalates to a human with context. The goal is to answer routine enquiries instantly while making handoff clear when a person should step in.",
   },
   {
-    q: "Do you offer a free plan?",
-    a: "Yes — Starter is free forever and gives you access to the core AI tools. You can upgrade to Pro the moment you outgrow it.",
+    q: "What languages does it support?",
+    a: "Kaizen agents support 30+ languages across text and voice, so customers can be served in the language they are most comfortable using.",
   },
 ];

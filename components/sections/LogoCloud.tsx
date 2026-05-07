@@ -43,7 +43,7 @@ export function LogoCloud() {
           id="logos-heading"
           className="text-muted-foreground mb-8 text-center text-xs font-medium uppercase tracking-[0.22em]"
         >
-          Trusted by teams worldwide
+          Built on the world&apos;s best AI infrastructure
         </p>
         <div className="flex flex-col gap-2">
           <Row logos={partnerLogos} />

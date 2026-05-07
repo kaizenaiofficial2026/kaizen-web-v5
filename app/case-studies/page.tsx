@@ -13,7 +13,7 @@ import { caseStudies } from "@/lib/content/case-studies";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "See how teams use Kaizen AI to launch secure automation, reduce coordination work, and improve operating rhythm.",
+    "See how clinics, real estate teams, and local operators use Kaizen AI to recover missed leads and book more appointments.",
 };
 
 export default function CaseStudiesPage() {
@@ -23,11 +23,11 @@ export default function CaseStudiesPage() {
         eyebrow="Case studies"
         title={
           <>
-            Teams are turning workflow chaos into{" "}
-            <span className="text-primary">measurable output</span>
+            Real operators. Real calls.{" "}
+            <span className="text-primary">Real bookings.</span>
           </>
         }
-        subtitle="Realistic examples from operations, engineering, and security teams using Kaizen to move AI from pilot to production."
+        subtitle="Examples inspired by the original Kaizen AI proof points: missed calls recovered, after-hours chats answered, and appointment demand captured."
         actions={[
           { label: "Book a demo", href: "/demo" },
           { label: "Explore solutions", href: "/solutions", variant: "outline" },
@@ -36,10 +36,10 @@ export default function CaseStudiesPage() {
         <Card className="p-6 shadow-card">
           <div className="grid grid-cols-2 gap-4">
             {[
-              { value: "3x", label: "throughput gain" },
-              { value: "31%", label: "faster releases" },
-              { value: "9 days", label: "to production" },
-              { value: "100%", label: "workflow audit trail" },
+              { value: "+23", label: "extra bookings / month" },
+              { value: "< 5s", label: "average pickup" },
+              { value: "30+", label: "languages handled" },
+              { value: "24/7", label: "customer coverage" },
             ].map((metric) => (
               <div
                 key={metric.label}
@@ -63,11 +63,11 @@ export default function CaseStudiesPage() {
             eyebrow="Customer stories"
             title={
               <>
-                Built with the teams who{" "}
-                <span className="text-primary">own the outcome</span>
+                Proof from teams that depend on{" "}
+                <span className="text-primary">fast response</span>
               </>
             }
-            subtitle="Each story focuses on a practical first workflow, the operational problem behind it, and the measurable shift after launch."
+            subtitle="Each story follows the same pattern: find the revenue leak, train the agent, connect the channel, and measure bookings."
           />
         </FadeUp>
         <StaggerGrid className="mt-14 grid gap-6 lg:grid-cols-3">
@@ -141,11 +141,11 @@ export default function CaseStudiesPage() {
           <FadeUp>
             <Badge variant="popular">Your first workflow</Badge>
             <h2 className="text-foreground mx-auto mt-5 max-w-3xl text-h2 font-medium">
-              Bring one real workflow and leave with a practical rollout path.
+              Bring one real lead flow and leave with a launch path.
             </h2>
             <p className="text-foreground/75 mx-auto mt-5 max-w-2xl text-lead">
               A demo is the fastest way to see which Kaizen pattern maps to
-              your team&apos;s current operating friction.
+              your team&apos;s current customer response gap.
             </p>
             <Button asChild size="xl" className="mt-8">
               <Link href="/demo">Request a demo</Link>

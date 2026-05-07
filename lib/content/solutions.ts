@@ -1,13 +1,13 @@
 import {
-  Database,
-  LineChart,
-  Lock,
-  MessageSquare,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  Workflow,
-  Zap,
+  Bot,
+  CalendarCheck,
+  Headphones,
+  Languages,
+  LayoutDashboard,
+  MessageCircle,
+  PhoneCall,
+  PhoneIncoming,
+  RotateCcw,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,68 +27,68 @@ export type WorkflowUseCase = {
 
 export const solutionPillars: SolutionPillar[] = [
   {
-    icon: Workflow,
-    title: "Adaptive workflow orchestration",
+    icon: Bot,
+    title: "AI Chatbots",
     description:
-      "Map the work your team already does, then let Kaizen route, enrich, and complete the repetitive steps.",
-    highlights: ["Cross-tool handoffs", "Automated follow-ups", "Human approval gates"],
+      "A trained agent for your website and messaging channels that answers enquiries, qualifies leads, and books appointments.",
+    highlights: ["Website chat", "WhatsApp and social DMs", "FAQ and pricing knowledge"],
   },
   {
-    icon: Sparkles,
-    title: "Self-improving AI execution",
+    icon: PhoneCall,
+    title: "AI Voice Agents",
     description:
-      "Every accepted outcome becomes feedback, so prompts and playbooks get sharper without weekly rewrites.",
-    highlights: ["Outcome memory", "Prompt experiments", "Quality scoring"],
+      "A human-sounding phone agent that picks up quickly, speaks naturally, and routes callers to the right next step.",
+    highlights: ["Inbound calls", "Outbound follow-up", "Transfer to human"],
   },
   {
-    icon: ShieldCheck,
-    title: "Secure operating layer",
+    icon: LayoutDashboard,
+    title: "Command centre",
     description:
-      "Bring AI into high-trust workflows with audit trails, SSO-ready controls, and clear workspace boundaries.",
-    highlights: ["Audit history", "Role controls", "Private context"],
+      "A live view of every call, chat, lead, and booking with alerts your team can act on fast.",
+    highlights: ["Lead dashboard", "WhatsApp pings", "Monthly performance report"],
   },
 ];
 
 export const workflowUseCases: WorkflowUseCase[] = [
   {
-    icon: MessageSquare,
-    title: "Customer response loops",
-    team: "Support and success",
+    icon: Headphones,
+    title: "Dental and aesthetic clinics",
+    team: "Appointments",
     description:
-      "Summarize requests, draft replies, flag risk, and keep every customer handoff visible.",
+      "Answer common patient questions, offer available slots, and send bookings to the team without missing after-hours demand.",
   },
   {
-    icon: Database,
-    title: "Revenue operations cleanup",
-    team: "Sales and RevOps",
+    icon: PhoneIncoming,
+    title: "Real estate teams",
+    team: "Viewings",
     description:
-      "Enrich accounts, catch missing CRM data, and trigger follow-ups from live pipeline changes.",
+      "Handle calls while agents are in the field, qualify property enquiries, and schedule viewings automatically.",
   },
   {
-    icon: LineChart,
-    title: "Executive operating rhythm",
-    team: "Leadership",
+    icon: MessageCircle,
+    title: "Retail and local services",
+    team: "Enquiries",
     description:
-      "Turn scattered project signals into weekly briefs, blockers, and outcome trends.",
+      "Respond instantly across chat and social DMs with product details, availability, pricing, and next steps.",
   },
   {
-    icon: Users,
-    title: "Product delivery coordination",
-    team: "Product and engineering",
+    icon: CalendarCheck,
+    title: "Law firms and consultants",
+    team: "Consultations",
     description:
-      "Connect specs, issues, releases, and customer feedback into one reliable delivery trail.",
+      "Capture urgent enquiries, collect basic context, and book consultations without leaving callers waiting.",
   },
 ];
 
 export const solutionProof = [
-  { value: "60+", label: "tool integrations" },
-  { value: "9 days", label: "average first workflow launch" },
-  { value: "SOC 2", label: "enterprise-ready controls" },
+  { value: "0", label: "missed leads" },
+  { value: "30+", label: "languages supported" },
+  { value: "-80%", label: "cost vs. hiring" },
 ];
 
 export const solutionVisualSteps = [
-  { icon: Database, label: "Connect context" },
-  { icon: Workflow, label: "Route the work" },
-  { icon: Zap, label: "Execute safely" },
-  { icon: Lock, label: "Track outcomes" },
+  { icon: PhoneIncoming, label: "Answer every call" },
+  { icon: MessageCircle, label: "Reply to every message" },
+  { icon: Languages, label: "Serve any language" },
+  { icon: RotateCcw, label: "Recover missed leads" },
 ];

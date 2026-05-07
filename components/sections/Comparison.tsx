@@ -22,16 +22,16 @@ export function Comparison() {
         <FadeUp>
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-primary text-sm font-semibold uppercase tracking-[0.18em]">
-              Comparison
+              Work
             </span>
             <h2 className="text-foreground text-h2 mt-4 font-bold">
-              From chaos to clarity:
+              The old way vs.
               <br />
-              simplify your workflow
+              the Kaizen way
             </h2>
             <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lead">
-              Manage everything in one place — no more scattered apps or manual
-              work.
+              A missed call after hours can become a booked appointment for a
+              competitor minutes later. Kaizen closes that gap.
             </p>
           </div>
         </FadeUp>
@@ -42,12 +42,12 @@ export function Comparison() {
             <div className="flex h-full flex-col">
               <div className="border-border bg-card/40 rounded-2xl border px-6 py-5 text-center">
                 <span className="text-foreground/70 text-base font-semibold">
-                  Traditional approach
+                  Without Kaizen AI
                 </span>
               </div>
               <div className="border-border bg-card/40 mt-4 flex-1 rounded-2xl border px-6 py-8 sm:px-8">
                 <h3 className="text-foreground/80 text-lg font-semibold">
-                  Challenges
+                  Staff and manual follow-up
                 </h3>
                 <StaggerGrid
                   role="list"
@@ -89,7 +89,7 @@ export function Comparison() {
               </div>
               <div className="gold-card border-primary/40 mt-4 flex-1 rounded-2xl border px-6 py-8 sm:px-8">
                 <h3 className="text-foreground text-lg font-semibold">
-                  Our solution
+                  One AI, always on
                 </h3>
                 <StaggerGrid
                   role="list"

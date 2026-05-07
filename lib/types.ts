@@ -22,7 +22,9 @@ export type Tier = {
   ctaIcon?: "mail";
   ctaHref: string;
   seats: string;
+  seatsLabel?: string;
   storage: string;
+  storageLabel?: string;
   inheritsLabel?: string;
   features: Feature[];
   highlighted?: boolean;
@@ -46,4 +48,3 @@ export type FooterColumn = {
   heading: string;
   links: { label: string; href: string }[];
 };
-

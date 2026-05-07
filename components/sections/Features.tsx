@@ -23,14 +23,14 @@ export function Features() {
       <Container>
         <FadeUp>
           <SectionHeader
-            eyebrow="Capabilities"
+            eyebrow="Solutions"
             title={
               <>
-                Built to <span className="text-primary">compound</span> your
-                team&apos;s output
+                Every customer who reaches out{" "}
+                <span className="text-primary">gets heard and booked</span>
               </>
             }
-            subtitle="Six capabilities that work together to remove friction, automate the rote, and surface what matters next."
+            subtitle="Dental clinic, retail shop, real estate team, law firm, or aesthetic clinic: your agent is trained on your services, pricing, availability, and FAQs."
           />
         </FadeUp>
 

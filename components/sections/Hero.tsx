@@ -17,7 +17,12 @@ const HeroBackground = dynamic(
   { ssr: false, loading: () => <HeroBackgroundFallback /> },
 );
 
-const trustLogos = ["Acme", "Hyperion", "Northwind", "Lumen"];
+const heroStats = [
+  "148 calls answered today",
+  "0 missed leads",
+  "< 5s avg response",
+  "30+ languages handled",
+];
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -36,7 +41,7 @@ export function Hero() {
           className="border-primary/25 bg-card/60 text-foreground/85 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur-md sm:text-sm"
         >
           <span className="bg-primary block h-1.5 w-1.5 rounded-full" />
-          A platform for intelligent tools
+          AI chatbots and voice agents
         </motion.span>
 
         <motion.h1
@@ -49,8 +54,8 @@ export function Hero() {
           }}
           className="text-foreground text-display mt-6 max-w-4xl font-medium"
         >
-          Intelligent tools <br className="hidden sm:block" />
-          <span className="text-primary">for every workflow</span>
+          Never miss a lead. <br className="hidden sm:block" />
+          <span className="text-primary">Never lose a customer.</span>
         </motion.h1>
 
         <motion.p
@@ -63,8 +68,8 @@ export function Hero() {
           }}
           className="text-foreground/75 text-lead mt-6 max-w-xl"
         >
-          Turn ambition into progress. Adaptive automation, smart insights, and
-          seamless productivity that compound your team&apos;s output every day.
+          AI agents that answer calls, reply to messages, qualify enquiries,
+          and book appointments 24/7 in the customer&apos;s preferred language.
         </motion.p>
 
         <motion.div
@@ -78,13 +83,13 @@ export function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
           <Button asChild size="xl">
-            <Link href="#pricing">
-              Begin your journey
+            <Link href="/demo">
+              Book a strategy call
               <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
             </Link>
           </Button>
           <Button asChild variant="outline" size="xl">
-            <Link href="#features">See how it works</Link>
+            <Link href="/solutions">See solutions</Link>
           </Button>
         </motion.div>
 
@@ -95,10 +100,10 @@ export function Hero() {
           className="mt-14 flex flex-col items-center gap-4"
         >
           <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.2em]">
-            Trusted by 200+ teams shipping faster every day
+            Always on duty for calls, chats, and bookings
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 opacity-60">
-            {trustLogos.map((name) => (
+            {heroStats.map((name) => (
               <span
                 key={name}
                 className="text-foreground/70 text-sm font-semibold tracking-wide"

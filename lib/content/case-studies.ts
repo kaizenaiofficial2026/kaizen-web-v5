@@ -12,57 +12,57 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    company: "Northwind",
-    industry: "Operations",
+    company: "Lotus Dental",
+    industry: "Dental clinic",
     summary:
-      "A distributed operations team replaced manual reporting with adaptive workflows across support, finance, and product.",
+      "A Colombo clinic used Kaizen to answer missed calls instantly and turn after-hours patient enquiries into booked appointments.",
     challenge:
-      "Weekly reviews depended on four disconnected tools and a contractor stitching data together by hand.",
+      "The front desk could not reliably answer every call during busy clinic hours or after closing.",
     solution:
-      "Kaizen connected the operating stack, summarized open work, and routed follow-ups to the right owners.",
+      "Kaizen handled routine enquiries, checked appointment intent, and alerted the team when a booking needed confirmation.",
     metrics: [
-      { value: "3x", label: "weekly throughput" },
-      { value: "42%", label: "fewer status meetings" },
+      { value: "+23", label: "extra bookings / month" },
+      { value: "0", label: "unanswered routine calls" },
     ],
     quote:
-      "Kaizen gave us one operating picture and took the manual chase work off the team's plate.",
-    author: "Maya Okafor",
-    role: "Head of Operations",
+      "Now every call gets answered quickly, and the team can focus on patients already in the clinic.",
+    author: "Dr. Amara Silva",
+    role: "Clinic Director",
   },
   {
-    company: "Lumen Labs",
-    industry: "Engineering",
+    company: "Mendis Properties",
+    industry: "Real estate",
     summary:
-      "A product engineering org used Kaizen to keep product feedback, issues, and launch decisions in sync.",
+      "A property team kept enquiries moving while agents were showing homes, driving between viewings, or with clients.",
     challenge:
-      "Launch blockers were scattered across docs, issue comments, and customer requests.",
+      "High-intent calls were arriving at exactly the moments agents could not pick up.",
     solution:
-      "Kaizen summarized feedback, detected repeated blockers, and created review-ready launch briefs.",
+      "The voice agent answered property questions, qualified interest, and booked viewing requests for human follow-up.",
     metrics: [
-      { value: "31%", label: "faster release cycles" },
-      { value: "18h", label: "saved each week" },
+      { value: "< 5s", label: "average pickup" },
+      { value: "24/7", label: "phone coverage" },
     ],
     quote:
-      "It started feeling like the system knew our delivery rhythm better than our status docs did.",
-    author: "Daniel Reyes",
-    role: "VP Engineering",
+      "The agent handles the first conversation while I am with clients, so fewer leads drift away.",
+    author: "Ravi Mendis",
+    role: "Principal",
   },
   {
-    company: "Helix",
-    industry: "Security",
+    company: "Glow Aesthetics",
+    industry: "Aesthetic clinic",
     summary:
-      "A regulated platform team rolled out AI workflows after Kaizen passed review with audit and access controls in place.",
+      "A clinic captured late-night website and social enquiries in multiple languages without expanding the reception team.",
     challenge:
-      "Security requirements kept AI pilots stuck in review, with no clear owner trail or data boundary.",
+      "Patients were asking questions after hours, but replies often waited until the next business day.",
     solution:
-      "Kaizen provided workspace controls, workflow logs, and a narrow rollout path for production teams.",
+      "Kaizen answered FAQs, collected lead details, and routed appointment-ready conversations to the team.",
     metrics: [
-      { value: "9 days", label: "to production" },
-      { value: "100%", label: "audited workflows" },
+      { value: "30%", label: "new patients from bot-assisted leads" },
+      { value: "3", label: "languages in active use" },
     ],
     quote:
-      "The security review moved quickly because the control model was visible from day one.",
-    author: "Priya Shah",
-    role: "CTO",
+      "The chatbot catches demand at night and gives our team cleaner leads in the morning.",
+    author: "Nisha Perera",
+    role: "Operations",
   },
 ];

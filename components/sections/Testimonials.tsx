@@ -14,33 +14,35 @@ export function Testimonials() {
       <Container>
         <FadeUp>
           <SectionHeader
-            eyebrow="Customers"
+            eyebrow="Results"
             title={
               <>
-                Loved by teams who <span className="text-primary">ship</span>
+                Real results, <span className="text-primary">real numbers</span>
               </>
             }
-            subtitle="From operators to engineers to executives — the people closest to the work tell the story best."
+            subtitle="Operators use Kaizen to recover missed calls, capture late-night enquiries, and book more appointments without adding headcount."
           />
         </FadeUp>
 
         <FadeUp delay={0.1}>
           <p className="text-muted-foreground mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center text-sm">
             <span>
-              <span className="text-foreground font-semibold">4.9</span> ★ on G2
+              <span className="text-foreground font-semibold">+23</span> extra
+              bookings / month
             </span>
             <span aria-hidden className="text-muted-foreground/50">
               ·
             </span>
             <span>
-              <span className="text-foreground font-semibold">200+</span> teams
+              <span className="text-foreground font-semibold">30+</span>{" "}
+              languages
             </span>
             <span aria-hidden className="text-muted-foreground/50">
               ·
             </span>
             <span>
-              <span className="text-foreground font-semibold">99.99%</span>{" "}
-              uptime
+              <span className="text-foreground font-semibold">24/7/365</span>{" "}
+              coverage
             </span>
           </p>
         </FadeUp>

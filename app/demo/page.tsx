@@ -16,33 +16,33 @@ import {
 } from "@/lib/content/demo";
 import { siteConfig } from "@/lib/content/site";
 
-const demoHref = `mailto:${siteConfig.salesEmail}?subject=Request%20Kaizen%20AI%20demo`;
+const demoHref = `mailto:${siteConfig.salesEmail}?subject=Book%20a%20Kaizen%20AI%20strategy%20call`;
 
 export const metadata: Metadata = {
-  title: "Request a Demo",
+  title: "Book a Strategy Call",
   description:
-    "Request a Kaizen AI demo and see how adaptive workflows can fit your team's tools, controls, and operating rhythm.",
+    "Book a Kaizen AI strategy call to plan your chatbot, voice agent, missed-call recovery, and appointment booking rollout.",
 };
 
 export default function DemoPage() {
   return (
     <main id="main" className="relative">
       <MarketingHero
-        eyebrow="Request a demo"
+        eyebrow="Book a strategy call"
         title={
           <>
-            See where Kaizen can remove{" "}
-            <span className="text-primary">your team&apos;s friction</span>
+            Find the leads your business is{" "}
+            <span className="text-primary">losing today</span>
           </>
         }
-        subtitle="A focused walkthrough for teams ready to connect real tools, automate high-friction loops, and launch AI workflows with control."
+        subtitle="A focused call to map missed calls, slow replies, booking gaps, and the fastest AI agent to launch first."
         actions={[
-          { label: "Email sales", href: demoHref },
+          { label: "Email the team", href: demoHref },
           { label: "Explore solutions", href: "/solutions", variant: "outline" },
         ]}
       >
         <Card className="relative overflow-hidden p-6 shadow-card">
-          <Badge>30 minute walkthrough</Badge>
+          <Badge>20 minute strategy call</Badge>
           <div className="mt-6 grid gap-3">
             {demoVisualSteps.map((step, index) => {
               const Icon = step.icon;
@@ -66,8 +66,8 @@ export default function DemoPage() {
           </div>
           <div className="border-border mt-6 rounded-xl border p-5">
             <p className="text-muted-foreground text-sm leading-6">
-              Best fit for teams with a repeatable workflow, a clear owner, and
-              a goal to launch the first automation this month.
+              Best fit for businesses that rely on phone calls, website chat,
+              WhatsApp, social DMs, or appointment bookings to convert demand.
             </p>
           </div>
         </Card>
@@ -79,11 +79,11 @@ export default function DemoPage() {
             eyebrow="What happens"
             title={
               <>
-                A demo built around{" "}
-                <span className="text-primary">your workflow</span>
+                A call built around{" "}
+                <span className="text-primary">your customer flow</span>
               </>
             }
-            subtitle="No generic tour. The session starts with your operating friction and ends with a practical next step."
+            subtitle="No generic tour. The session starts with where customers reach you and ends with a practical first launch scope."
           />
         </FadeUp>
         <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-3">
@@ -116,11 +116,11 @@ export default function DemoPage() {
               eyebrow="Good fit"
               title={
                 <>
-                  Bring the messy workflow.{" "}
-                  <span className="text-primary">We will map it.</span>
+                  Bring the missed-call problem.{" "}
+                  <span className="text-primary">We will map the fix.</span>
                 </>
               }
-              subtitle="The best demo conversations are practical: one workflow, a few systems, and a measurable outcome."
+              subtitle="The best conversations are practical: one channel, clear customer questions, and a measurable booking outcome."
             />
             <ul className="mt-8 space-y-3">
               {demoOutcomes.map((outcome) => (
@@ -162,16 +162,16 @@ export default function DemoPage() {
           <FadeUp>
             <Badge variant="popular">Ready when you are</Badge>
             <h2 className="text-foreground mx-auto mt-5 max-w-3xl text-h2 font-medium">
-              Request a Kaizen AI demo with the team that will own the rollout.
+              Book the call with the team that will own the rollout.
             </h2>
             <p className="text-foreground/75 mx-auto mt-5 max-w-2xl text-lead">
               We will reply through {siteConfig.salesEmail} and coordinate a
-              time that works for your operators, builders, and decision makers.
+              time to review your channels, customers, and launch timeline.
             </p>
             <Button asChild size="xl" className="mt-8">
               <Link href={demoHref}>
                 <Mail aria-hidden />
-                Email sales
+                Email the team
               </Link>
             </Button>
           </FadeUp>

@@ -12,7 +12,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <BrandMark withPill={false} />
             <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-6">
-              Intelligent tools that compound your team&apos;s output every day.
+              AI chatbots and voice agents that never miss a customer.
             </p>
             <nav aria-label="Social" className="mt-6 flex items-center gap-3">
               {socialLinks.map((s) => {

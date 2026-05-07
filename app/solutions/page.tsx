@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "Solutions",
   description:
-    "Explore Kaizen AI solutions for adaptive workflows, secure automation, and AI-assisted team operations.",
+    "Explore Kaizen AI chatbot, voice agent, missed-call recovery, and command centre solutions for always-on customer response.",
 };
 
 export default function SolutionsPage() {
@@ -28,11 +28,11 @@ export default function SolutionsPage() {
         eyebrow="Solutions"
         title={
           <>
-            AI workflows that <span className="text-primary">fit the way</span>{" "}
-            your team already works
+            AI agents that answer, qualify, and{" "}
+            <span className="text-primary">book customers</span>
           </>
         }
-        subtitle="Kaizen connects your tools, routes high-friction work, and improves every workflow from the outcomes your team accepts."
+        subtitle="Kaizen builds chatbot and voice agents trained on your business, available across calls, website chat, WhatsApp, social DMs, and calendars."
         actions={[
           { label: "Book a demo", href: "/demo" },
           { label: "See customer proof", href: "/case-studies", variant: "outline" },
@@ -76,11 +76,11 @@ export default function SolutionsPage() {
             eyebrow="Platform pillars"
             title={
               <>
-                One system for <span className="text-primary">reliable</span>{" "}
-                AI execution
+                One AI front desk for{" "}
+                <span className="text-primary">every customer channel</span>
               </>
             }
-            subtitle="The strongest automation is not a single agent. It is a connected workflow with context, controls, and feedback."
+            subtitle="Start with the channel leaking the most leads, then expand into voice, chat, recovery, alerts, and reporting."
           />
         </FadeUp>
         <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-3">
@@ -127,11 +127,11 @@ export default function SolutionsPage() {
               eyebrow="Use cases"
               title={
                 <>
-                  Built for the teams closest to{" "}
-                  <span className="text-primary">the work</span>
+                  Built for operators who cannot afford{" "}
+                  <span className="text-primary">slow replies</span>
                 </>
               }
-              subtitle="Start with one high-friction loop, then expand Kaizen across the workflows that need shared context."
+              subtitle="From clinics to real estate to professional services, Kaizen gives every enquiry a fast, useful first response."
             />
           </FadeUp>
           <StaggerGrid className="grid gap-4 sm:grid-cols-2">
@@ -168,11 +168,11 @@ export default function SolutionsPage() {
             <FadeUp>
               <Badge variant="popular">Proof of fit</Badge>
               <h2 className="text-foreground mt-5 text-h2 font-medium">
-                Launch a useful workflow before the next planning cycle.
+                Talk on Monday. Launch your first agent fast.
               </h2>
               <p className="text-foreground/75 mt-5 max-w-2xl text-lead">
-                Kaizen is designed for practical adoption: connect the systems
-                your team already trusts, prove one workflow, then compound.
+                We handle the setup, training, integrations, test calls, and
+                ongoing tuning. Your team approves the final flow before launch.
               </p>
               <Button asChild size="xl" className="mt-8">
                 <Link href="/demo">Request a demo</Link>

@@ -1,12 +1,10 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { Check, Cloud, Mail, Sparkles, Users } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import { Container } from "@/components/primitives/Container";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { FadeUp } from "@/components/motion/FadeUp";
@@ -77,16 +75,14 @@ function formatPrice(value: number | "custom") {
 function PricingCard({
   tier,
   indexTone,
-  cadence,
 }: {
   tier: Tier;
   indexTone: number;
-  cadence: "monthly" | "annual";
 }) {
   const isHighlighted = !!tier.highlighted;
   const glyphTone =
     indexTone === 0 ? "muted" : indexTone === 1 ? "gold" : "deep";
-  const priceValue = tier.price[cadence];
+  const priceValue = tier.price.monthly;
   const isCustom = priceValue === "custom";
 
   return (
@@ -138,7 +134,7 @@ function PricingCard({
               isHighlighted ? "text-foreground/70" : "text-muted-foreground",
             )}
           >
-            /{cadence === "monthly" ? "month" : "month, billed yearly"}
+            /month
           </span>
         )}
       </div>
@@ -171,7 +167,7 @@ function PricingCard({
                 isHighlighted ? "text-foreground/70" : "text-muted-foreground"
               }
             >
-              seats available
+              {tier.seatsLabel ?? "included"}
             </span>
           </span>
         </div>
@@ -190,7 +186,7 @@ function PricingCard({
                 isHighlighted ? "text-foreground/70" : "text-muted-foreground"
               }
             >
-              of cloud storage
+              {tier.storageLabel ?? "detail"}
             </span>
           </span>
         </div>
@@ -265,8 +261,6 @@ function PricingCard({
 }
 
 export function Pricing() {
-  const [cadence, setCadence] = React.useState<"monthly" | "annual">("monthly");
-
   return (
     <section
       id="pricing"
@@ -286,50 +280,13 @@ export function Pricing() {
             eyebrow="Pricing"
             title={
               <>
-                Simple plans.
+                Choose the first agent
                 <br />
-                <span className="text-primary">Powerful results.</span>
+                <span className="text-primary">to launch.</span>
               </>
             }
-            subtitle="Pick the tier that fits today. Upgrade the moment you outgrow it."
+            subtitle="Every build is scoped around your channels, call volume, integrations, and launch timeline. Start focused, then add voice, chat, recovery, and reporting."
           />
-        </FadeUp>
-
-        <FadeUp delay={0.05}>
-          <div className="mt-10 flex items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => setCadence("monthly")}
-              className={cn(
-                "text-sm font-medium transition-colors",
-                cadence === "monthly"
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              Monthly
-            </button>
-            <Switch
-              checked={cadence === "annual"}
-              onCheckedChange={(c) => setCadence(c ? "annual" : "monthly")}
-              aria-label="Toggle annual pricing"
-            />
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setCadence("annual")}
-                className={cn(
-                  "text-sm font-medium transition-colors",
-                  cadence === "annual"
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
-                Annual
-              </button>
-              <Badge variant="success">Save 20%</Badge>
-            </div>
-          </div>
         </FadeUp>
 
         <div className="mt-12 grid items-stretch gap-6 pt-3 sm:grid-cols-3">
@@ -338,7 +295,6 @@ export function Pricing() {
               key={tier.name}
               tier={tier}
               indexTone={i}
-              cadence={cadence}
             />
           ))}
         </div>

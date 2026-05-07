@@ -3,26 +3,26 @@ import type { Testimonial } from "@/lib/types";
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "We replaced four tools and a recurring contractor with Kaizen. Our weekly throughput tripled in the first quarter and the team finally trusts the data.",
-    author: "Maya Okafor",
-    title: "Head of Operations",
-    company: "Northwind",
-    initials: "MO",
+      "We were missing calls every week. Now every call is answered instantly, and last month we booked 23 extra appointments without hiring.",
+    author: "Dr. Amara Silva",
+    title: "Clinic Director",
+    company: "Lotus Dental, Colombo",
+    initials: "AS",
   },
   {
     quote:
-      "The adaptive workflows feel like a colleague who learns your team. After two weeks, it was anticipating handoffs we hadn't even documented yet.",
-    author: "Daniel Reyes",
-    title: "VP Engineering",
-    company: "Lumen Labs",
-    initials: "DR",
+      "I used to lose leads while showing properties. The voice agent now answers enquiries and books viewings while I am with clients.",
+    author: "Ravi Mendis",
+    title: "Principal",
+    company: "Mendis Properties",
+    initials: "RM",
   },
   {
     quote:
-      "Security review was the fastest we've ever done — SOC 2, SSO, audit logs, all there on day one. We were live in production in nine days.",
-    author: "Priya Shah",
-    title: "CTO",
-    company: "Helix",
-    initials: "PS",
+      "The chatbot captures late-night leads we used to miss. A meaningful share of our new patients now comes through the bot.",
+    author: "Nisha Perera",
+    title: "Operations",
+    company: "Glow Aesthetics",
+    initials: "NP",
   },
 ];

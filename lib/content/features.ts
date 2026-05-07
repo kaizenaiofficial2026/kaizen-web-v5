@@ -1,37 +1,49 @@
-import { Sparkles, Workflow, ShieldCheck, Zap, Users, LineChart } from "lucide-react";
+import {
+  Bot,
+  CalendarCheck,
+  Languages,
+  LayoutDashboard,
+  PhoneCall,
+  RotateCcw,
+} from "lucide-react";
 import type { FeatureCard } from "@/lib/types";
 
 export const features: FeatureCard[] = [
   {
-    icon: Workflow,
-    title: "Adaptive workflows",
+    icon: Bot,
+    title: "AI Chatbots",
     description:
-      "Agents that learn how your team operates and quietly optimize the steps that slow you down — no rule-writing required.",
+      "Website, WhatsApp, Instagram, and Messenger conversations that answer questions, qualify leads, and guide visitors toward booking.",
     span: "wide",
   },
   {
-    icon: Sparkles,
-    title: "Self-improving prompts",
-    description: "Outcomes feed back into the system, so quality compounds every week.",
+    icon: PhoneCall,
+    title: "AI Voice Agents",
+    description:
+      "Natural phone agents that pick up fast, handle enquiries, book appointments, and transfer urgent calls when a human is needed.",
   },
   {
-    icon: Zap,
-    title: "Instant integrations",
-    description: "Connect Slack, GitHub, Linear, Notion, and 60+ tools in seconds.",
+    icon: RotateCcw,
+    title: "Missed-call recovery",
+    description:
+      "If a call slips through, your agent follows up automatically so warm leads do not disappear after hours.",
   },
   {
-    icon: Users,
-    title: "Realtime collaboration",
-    description: "Multiple agents and humans can work on the same task without stepping on each other.",
+    icon: LayoutDashboard,
+    title: "Command centre",
+    description:
+      "Track calls, chats, bookings, and lead alerts from a live dashboard built for operators on the move.",
   },
   {
-    icon: LineChart,
-    title: "Outcome insights",
-    description: "Dashboards that show what shipped, what stalled, and where to invest next.",
+    icon: Languages,
+    title: "30+ languages",
+    description:
+      "Serve customers in the language they prefer across text and voice, without staffing every language manually.",
   },
   {
-    icon: ShieldCheck,
-    title: "Enterprise-grade security",
-    description: "SOC 2, GDPR, SSO, SCIM, audit logs, and dedicated infra on Enterprise.",
+    icon: CalendarCheck,
+    title: "Appointment booking",
+    description:
+      "Connect calendars and CRMs so qualified enquiries become scheduled calls, viewings, consultations, or appointments.",
   },
 ];

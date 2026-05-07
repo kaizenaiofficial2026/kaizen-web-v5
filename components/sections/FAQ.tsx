@@ -28,12 +28,12 @@ export function FAQ() {
           <div className="border-border bg-card/60 rounded-2xl border px-6 py-10 backdrop-blur-md sm:px-12 sm:py-14">
             <div className="flex items-start justify-between gap-8 pb-10">
               <p className="text-muted-foreground max-w-sm text-sm leading-6 sm:text-base">
-                Got questions?
+                Can&apos;t find the answer?
                 <br />
-                Say less, we&apos;ve got answers!
+                Book a call and we&apos;ll walk you through it.
               </p>
               <h2 className="text-foreground flex items-start gap-3 font-serif text-5xl italic leading-none tracking-tight sm:text-6xl">
-                FAQ&apos;s
+                FAQ
                 <ArrowUpRight
                   aria-hidden
                   className="text-primary mt-1 h-7 w-7 sm:h-9 sm:w-9"
