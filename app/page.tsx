@@ -16,43 +16,53 @@ function HeroSection() {
   return (
     <section className="relative flex h-screen w-full flex-col overflow-hidden">
       <HeroBackground />
-      <div className="bg-primary-black/30 pointer-events-none absolute inset-0 z-0" />
+      <div className="bg-primary-black/55 pointer-events-none absolute inset-0 z-0" />
       <Grain />
       <Nav />
 
-      <main className="relative z-10 flex flex-1 flex-col justify-end px-8 pb-12 sm:px-16">
-        <h1 className="text-off-white text-5xl font-medium leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-          Kaizen AI
+      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 text-center sm:px-12">
+        <span className="border-gold-main/25 bg-dark-surface/60 text-off-white/85 inline-block rounded-md border px-4 py-1.5 text-xs backdrop-blur-md sm:text-sm">
+          A platform for intelligent tools
+        </span>
+
+        <h1 className="text-off-white mt-6 max-w-4xl text-4xl font-medium leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
+          Kaizen AI Intelligent Tools
           <br />
-          <span className="text-gold-main">Intelligent Tools</span>
+          <span className="text-gold-main">for every workflow</span>
         </h1>
 
-        <p className="text-muted-gold mt-6 max-w-xl text-sm leading-6 sm:text-base">
-          Kaizen AI Intelligent Tools empowers users with smart automation,
-          insights, and seamless productivity across digital workflows.
+        <p className="text-off-white/75 mt-6 max-w-xl text-sm leading-7 sm:text-base">
+          Turn ambition into progress. Adaptive automation, smart insights, and
+          seamless productivity that compound your team&apos;s output every day.
         </p>
 
-        <div className="mt-10 flex items-center gap-3">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a
             href="#"
-            className="bg-gold-main text-primary-black hover:bg-gold-light rounded-md px-6 py-3 text-sm font-medium transition-colors"
+            className="bg-off-white text-primary-black hover:bg-gold-light shadow-gold-main/30 group inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-medium shadow-[0_0_40px] transition-colors"
           >
-            To Try
+            Begin your Journey
+            <svg
+              aria-hidden
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
           </a>
           <a
             href="#"
-            className="border-gold-main/25 bg-gold-main/5 text-off-white hover:bg-gold-main/10 hover:border-gold-main/50 rounded-md border px-6 py-3 text-sm font-medium backdrop-blur-sm transition-colors"
+            className="border-gold-main/30 bg-primary-black/30 text-off-white hover:bg-gold-main/10 hover:border-gold-main/60 inline-flex items-center rounded-md border px-6 py-3 text-sm font-medium backdrop-blur-sm transition-colors"
           >
-            Leave a request
+            Explore Programs
           </a>
         </div>
-
-        <p className="text-muted-gold mt-6 text-xs">
-          No credit card needed. All data is secure.
-        </p>
       </main>
-
-      <LogoBar />
     </section>
   );
 }
@@ -89,23 +99,6 @@ function Nav() {
         Get Started
       </a>
     </header>
-  );
-}
-
-function LogoBar() {
-  const logos = ["productboard", "Airtable", "Basecamp", "contentful", "Airwallex"];
-  return (
-    <div className="divide-gold-main/10 border-gold-main/15 bg-dark-surface/60 relative z-10 grid grid-cols-2 divide-x border-t backdrop-blur-md sm:grid-cols-5">
-      {logos.map((name) => (
-        <div
-          key={name}
-          className="text-off-white/85 flex items-center justify-center gap-2 px-4 py-6 text-base font-medium sm:text-lg"
-        >
-          <span className="bg-gold-main/80 h-3 w-3 rounded-sm" />
-          {name}
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -219,106 +212,291 @@ function CrossIcon({ className }: { className?: string }) {
 }
 
 function ComparisonSection() {
-  const rows: { label: string; kaizen: boolean; others: boolean | string }[] = [
-    { label: "Adaptive AI workflows", kaizen: true, others: false },
-    { label: "Unified data layer across tools", kaizen: true, others: false },
-    { label: "Realtime collaborative agents", kaizen: true, others: "Limited" },
-    { label: "Enterprise-grade security & SSO", kaizen: true, others: true },
-    { label: "Self-improving prompts", kaizen: true, others: false },
-    { label: "Transparent, usage-based pricing", kaizen: true, others: false },
+  const challenges = [
+    "Prone to errors and data loss",
+    "High switching costs, low efficiency",
+    "Delays, missed follow-ups",
+    "Lack of visibility & accountability",
+    "Increased overhead & inefficiency",
+    "Time-consuming and unreliable",
+  ];
+
+  const solutions = [
+    "Centralized, secure dashboard",
+    "All-in-one platform with seamless integrations",
+    "Adaptive workflows that learn your team",
+    "Realtime collaborative agents",
+    "Self-improving prompts and outcomes",
+    "Zero maintenance, effortless updates",
   ];
 
   return (
     <SectionShell id="comparison">
-      <SectionHeader
-        eyebrow="Comparison"
-        title={
-          <>
-            Built different.
-            <br />
-            <span className="text-gold-main">Built better.</span>
-          </>
-        }
-        subtitle="See how Kaizen AI stacks up against the tools you already use."
-      />
+      <div className="mx-auto max-w-4xl text-center">
+        <span className="text-gold-main text-sm font-semibold tracking-wide">
+          Comparison
+        </span>
+        <h2 className="text-off-white mt-4 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+          From Chaos to Clarity:
+          <br />
+          Simplify Your Workflow
+        </h2>
+        <p className="text-muted-gold mx-auto mt-6 max-w-2xl text-base leading-7 sm:text-lg">
+          Manage everything in one place — no more scattered apps or manual work.
+        </p>
+      </div>
 
-      <div className="border-gold-main/15 bg-dark-surface/60 mx-auto mt-14 max-w-4xl overflow-hidden rounded-2xl border backdrop-blur-md">
-        <div className="text-muted-gold border-gold-main/10 grid grid-cols-[1.4fr_1fr_1fr] border-b px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] sm:px-8">
-          <div>Feature</div>
-          <div className="text-gold-light text-center">Kaizen AI</div>
-          <div className="text-center">Others</div>
-        </div>
-        {rows.map((row, i) => (
-          <div
-            key={row.label}
-            className={`grid grid-cols-[1.4fr_1fr_1fr] items-center px-6 py-4 sm:px-8 ${
-              i !== rows.length - 1 ? "border-gold-main/5 border-b" : ""
-            }`}
-          >
-            <div className="text-off-white text-sm sm:text-base">{row.label}</div>
-            <div className="flex justify-center">
-              <span className="bg-gold-main/15 text-gold-light inline-flex h-7 w-7 items-center justify-center rounded-full">
-                <CheckIcon className="h-4 w-4" />
-              </span>
-            </div>
-            <div className="flex justify-center">
-              {typeof row.others === "string" ? (
-                <span className="text-muted-gold text-sm">{row.others}</span>
-              ) : row.others ? (
-                <span className="text-muted-gold/80 inline-flex h-7 w-7 items-center justify-center">
-                  <CheckIcon className="h-4 w-4" />
-                </span>
-              ) : (
-                <span className="text-muted-gold/60 inline-flex h-7 w-7 items-center justify-center">
-                  <CrossIcon className="h-4 w-4" />
-                </span>
-              )}
-            </div>
+      <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        <div className="space-y-4">
+          <div className="border-gold-main/10 bg-dark-surface/40 rounded-2xl border px-6 py-5 text-center">
+            <span className="text-off-white/80 text-base font-semibold">
+              Traditional Approach
+            </span>
           </div>
-        ))}
+          <div className="border-gold-main/10 bg-dark-surface/40 rounded-2xl border px-6 py-8 sm:px-8">
+            <h3 className="text-off-white text-lg font-semibold">Challenges</h3>
+            <ul className="mt-6 space-y-4 text-sm sm:text-base">
+              {challenges.map((item) => (
+                <li
+                  key={item}
+                  className="text-off-white/70 flex items-center gap-3"
+                >
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-red-400/50 text-red-400/80">
+                    <CrossIcon className="h-3 w-3" />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="bg-gold-main rounded-2xl px-6 py-5 text-center">
+            <span className="text-primary-black inline-flex items-center gap-2 text-base font-semibold">
+              <span className="bg-primary-black/15 grid h-5 w-5 place-items-center rounded-full">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  className="h-3 w-3"
+                >
+                  <path d="M8 3v10M3 8h10" />
+                </svg>
+              </span>
+              Kaizen AI
+            </span>
+          </div>
+          <div
+            className="border-gold-main/40 rounded-2xl border px-6 py-8 sm:px-8"
+            style={{
+              backgroundImage:
+                "linear-gradient(160deg, rgba(201,160,61,0.18) 0%, rgba(141,111,36,0.22) 40%, rgba(26,22,12,0.7) 100%)",
+            }}
+          >
+            <h3 className="text-off-white text-lg font-semibold">
+              Our Solution
+            </h3>
+            <ul className="mt-6 space-y-4 text-sm sm:text-base">
+              {solutions.map((item) => (
+                <li
+                  key={item}
+                  className="text-off-white flex items-center gap-3"
+                >
+                  <span className="bg-gold-main text-primary-black grid h-5 w-5 shrink-0 place-items-center rounded-full">
+                    <CheckIcon className="h-3 w-3" />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </SectionShell>
   );
 }
 
+type Feature = string | { label: string; badge: string };
+
+type Tier = {
+  name: string;
+  description: string;
+  price: string;
+  cadence?: string;
+  cta: string;
+  ctaIcon?: "mail";
+  seats: string;
+  storage: string;
+  inheritsLabel?: string;
+  features: Feature[];
+  highlighted?: boolean;
+  popular?: boolean;
+};
+
+function SeatIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="10" cy="7" r="3" />
+      <path d="M3.5 17c1.2-3 3.7-4.5 6.5-4.5s5.3 1.5 6.5 4.5" />
+    </svg>
+  );
+}
+
+function CloudIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 15h9a3 3 0 0 0 0.4-5.97A5 5 0 0 0 5.5 10.5 3 3 0 0 0 6 15z" />
+    </svg>
+  );
+}
+
+function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="2.5" y="4.5" width="15" height="11" rx="2" />
+      <path d="M3 6l7 5 7-5" />
+    </svg>
+  );
+}
+
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 20 20" fill="currentColor" className={className}>
+      <path d="M10 2l1.6 4.4L16 8l-4.4 1.6L10 14l-1.6-4.4L4 8l4.4-1.6L10 2z" />
+    </svg>
+  );
+}
+
+function PlanGlyph({ tone }: { tone: "muted" | "gold" | "deep" }) {
+  const fillId = `pg-${tone}`;
+  const stops =
+    tone === "gold"
+      ? ["#ecd479", "#c9a03d"]
+      : tone === "deep"
+      ? ["#8d6f24", "#3a2d10"]
+      : ["#3a3528", "#171206"];
+  return (
+    <svg viewBox="0 0 40 40" className="h-10 w-10">
+      <defs>
+        <radialGradient id={fillId} cx="35%" cy="35%" r="70%">
+          <stop offset="0%" stopColor={stops[0]} />
+          <stop offset="100%" stopColor={stops[1]} />
+        </radialGradient>
+      </defs>
+      <circle cx="20" cy="20" r="18" fill={`url(#${fillId})`} />
+      <path
+        d="M11 23c4-1 6-7 10-7s5 6 9 5"
+        stroke="rgba(10,9,7,0.45)"
+        strokeWidth="2.4"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function CornerArt({ highlighted }: { highlighted?: boolean }) {
+  const stroke = highlighted ? "rgba(10,9,7,0.35)" : "rgba(201,160,61,0.18)";
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 220 220"
+      className="pointer-events-none absolute -right-6 -top-6 h-44 w-44"
+    >
+      <path
+        d="M10 130 Q70 60 120 110 T210 80"
+        stroke={stroke}
+        strokeWidth="14"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M30 170 Q90 110 140 150 T220 120"
+        stroke={stroke}
+        strokeWidth="10"
+        fill="none"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+    </svg>
+  );
+}
+
 function PricingSection() {
-  const tiers = [
+  const tiers: Tier[] = [
     {
       name: "Starter",
+      description: "Core AI tools for everyday work. Single workspace.",
       price: "$0",
       cadence: "/month",
-      description: "Try Kaizen AI on your everyday work.",
-      features: ["Up to 3 projects", "Core AI tools", "Community support"],
-      cta: "Start free",
-      highlighted: false,
+      cta: "Choose this plan",
+      seats: "2 free",
+      storage: "250MB",
+      features: [
+        "Core AI tools",
+        "Community support",
+        "Single workspace",
+      ],
     },
     {
       name: "Pro",
+      description:
+        "Adaptive workflows, realtime agents, and team collaboration.",
       price: "$29",
       cadence: "/month",
-      description: "For professionals who ship every day.",
+      cta: "Choose this plan",
+      seats: "5 free",
+      storage: "10GB",
+      inheritsLabel: "Starter +",
       features: [
-        "Unlimited projects",
-        "Adaptive workflows",
+        { label: "Adaptive workflows", badge: "AI-based" },
+        "Realtime collaboration",
         "Priority support",
-        "Team collaboration",
       ],
-      cta: "Upgrade to Pro",
       highlighted: true,
+      popular: true,
     },
     {
       name: "Enterprise",
-      price: "Custom",
-      cadence: "",
-      description: "Security, scale, and bespoke integrations.",
-      features: [
-        "SSO & SCIM",
-        "Dedicated infrastructure",
-        "Custom agents",
-        "24/7 enterprise support",
-      ],
-      cta: "Contact sales",
-      highlighted: false,
+      description: "SSO, dedicated infrastructure, and custom agents.",
+      price: "Contact us",
+      cta: "Contact us",
+      ctaIcon: "mail",
+      seats: "Unlimited",
+      storage: "1TB+",
+      inheritsLabel: "Starter & Pro +",
+      features: ["SSO & SCIM", "Dedicated infra", "24/7 support"],
     },
   ];
 
@@ -336,55 +514,181 @@ function PricingSection() {
         subtitle="Pick the tier that fits today. Upgrade the moment you outgrow it."
       />
 
-      <div className="mt-14 grid gap-6 sm:grid-cols-3">
-        {tiers.map((tier) => (
-          <div
-            key={tier.name}
-            className={`relative flex flex-col rounded-2xl border p-7 backdrop-blur-md transition-colors ${
-              tier.highlighted
-                ? "border-gold-main/60 bg-gold-main/5"
-                : "border-gold-main/15 bg-dark-surface/60 hover:border-gold-main/30"
-            }`}
-          >
-            {tier.highlighted && (
-              <span className="bg-gold-main text-primary-black absolute -top-3 left-7 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
-                Most popular
-              </span>
-            )}
-            <div className="text-muted-gold text-sm font-medium uppercase tracking-[0.18em]">
-              {tier.name}
-            </div>
-            <div className="mt-4 flex items-baseline gap-1">
-              <span className="text-off-white text-4xl font-semibold tracking-tight">
-                {tier.price}
-              </span>
-              <span className="text-muted-gold text-sm">{tier.cadence}</span>
-            </div>
-            <p className="text-muted-gold mt-3 text-sm leading-6">
-              {tier.description}
-            </p>
-            <ul className="mt-6 space-y-3 text-sm">
-              {tier.features.map((feature) => (
-                <li key={feature} className="text-off-white/90 flex items-center gap-3">
-                  <CheckIcon className="text-gold-main h-4 w-4 shrink-0" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <a
-              href="#"
-              className={`mt-8 inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-medium transition-colors ${
-                tier.highlighted
-                  ? "bg-gold-main text-primary-black hover:bg-gold-light"
-                  : "border-gold-main/30 text-off-white hover:bg-gold-main/10 hover:border-gold-main/60 border"
-              }`}
-            >
-              {tier.cta}
-            </a>
-          </div>
+      <div className="mt-16 grid items-start gap-6 sm:grid-cols-3">
+        {tiers.map((tier, i) => (
+          <PricingCard key={tier.name} tier={tier} indexTone={i} />
         ))}
       </div>
     </SectionShell>
+  );
+}
+
+function PricingCard({ tier, indexTone }: { tier: Tier; indexTone: number }) {
+  const isHighlighted = !!tier.highlighted;
+  const glyphTone =
+    indexTone === 0 ? "muted" : indexTone === 1 ? "gold" : "deep";
+
+  return (
+    <div
+      className={`relative flex flex-col overflow-hidden rounded-2xl border p-7 backdrop-blur-md ${
+        isHighlighted
+          ? "border-gold-main/50 sm:-mt-6 sm:pb-9"
+          : "border-gold-main/15 bg-dark-surface/60"
+      }`}
+      style={
+        isHighlighted
+          ? {
+              backgroundImage:
+                "linear-gradient(160deg, rgba(236,212,121,0.25) 0%, rgba(201,160,61,0.18) 35%, rgba(60,45,16,0.55) 100%)",
+            }
+          : undefined
+      }
+    >
+      <CornerArt highlighted={isHighlighted} />
+
+      {tier.popular && (
+        <span className="bg-primary-black/60 text-off-white border-gold-main/30 absolute right-5 top-5 rounded-full border px-3 py-1 text-[11px] font-medium">
+          Most popular
+        </span>
+      )}
+
+      <div className="relative">
+        <PlanGlyph tone={glyphTone as "muted" | "gold" | "deep"} />
+      </div>
+
+      <h3 className="text-off-white relative mt-6 text-2xl font-semibold tracking-tight">
+        {tier.name}
+      </h3>
+      <p
+        className={`relative mt-2 text-sm leading-6 ${
+          isHighlighted ? "text-off-white/85" : "text-muted-gold"
+        }`}
+      >
+        {tier.description}
+      </p>
+
+      <div className="relative mt-6 flex items-baseline gap-1.5">
+        <span className="text-off-white text-4xl font-semibold tracking-tight">
+          {tier.price}
+        </span>
+        {tier.cadence && (
+          <span
+            className={`text-sm ${
+              isHighlighted ? "text-off-white/70" : "text-muted-gold"
+            }`}
+          >
+            {tier.cadence}
+          </span>
+        )}
+      </div>
+
+      <a
+        href="#"
+        className={`relative mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-medium transition-colors ${
+          isHighlighted
+            ? "bg-gold-main text-primary-black hover:bg-gold-light"
+            : "bg-primary-black/60 border-gold-main/20 text-off-white hover:bg-gold-main/10 hover:border-gold-main/40 border"
+        }`}
+      >
+        {tier.ctaIcon === "mail" && <MailIcon className="h-4 w-4" />}
+        {tier.cta}
+      </a>
+
+      <div className="relative mt-6 space-y-2.5 text-sm">
+        <div className="text-off-white/85 flex items-center gap-3">
+          <SeatIcon
+            className={`h-4 w-4 ${
+              isHighlighted ? "text-off-white/80" : "text-muted-gold"
+            }`}
+          />
+          <span>
+            <span className="font-medium">{tier.seats}</span>{" "}
+            <span
+              className={isHighlighted ? "text-off-white/70" : "text-muted-gold"}
+            >
+              seats available
+            </span>
+          </span>
+        </div>
+        <div className="text-off-white/85 flex items-center gap-3">
+          <CloudIcon
+            className={`h-4 w-4 ${
+              isHighlighted ? "text-off-white/80" : "text-muted-gold"
+            }`}
+          />
+          <span>
+            <span className="font-medium">{tier.storage}</span>{" "}
+            <span
+              className={isHighlighted ? "text-off-white/70" : "text-muted-gold"}
+            >
+              of cloud storage
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div className="relative mt-6">
+        <div
+          className={`flex items-center gap-3 ${
+            tier.inheritsLabel ? "" : "opacity-0"
+          }`}
+        >
+          <span
+            className={`h-px flex-1 ${
+              isHighlighted ? "bg-off-white/15" : "bg-gold-main/15"
+            }`}
+          />
+          <span
+            className={`text-[11px] font-medium uppercase tracking-[0.18em] ${
+              isHighlighted ? "text-off-white/70" : "text-muted-gold"
+            }`}
+          >
+            {tier.inheritsLabel ?? "—"}
+          </span>
+          <span
+            className={`h-px flex-1 ${
+              isHighlighted ? "bg-off-white/15" : "bg-gold-main/15"
+            }`}
+          />
+        </div>
+      </div>
+
+      <ul className="relative mt-5 space-y-3 text-sm">
+        {tier.features.map((feature) => {
+          const label = typeof feature === "string" ? feature : feature.label;
+          const badge = typeof feature === "string" ? null : feature.badge;
+          return (
+            <li
+              key={label}
+              className="text-off-white/90 flex items-center gap-3"
+            >
+              <span
+                className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${
+                  isHighlighted
+                    ? "bg-off-white/15 text-off-white"
+                    : "bg-gold-main/15 text-gold-main"
+                }`}
+              >
+                <CheckIcon className="h-3 w-3" />
+              </span>
+              <span className="font-medium">{label}</span>
+              {badge && (
+                <span
+                  className={`ml-auto inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                    isHighlighted
+                      ? "bg-primary-black/40 text-off-white"
+                      : "bg-gold-main/10 text-gold-light"
+                  }`}
+                >
+                  <SparkleIcon className="h-3 w-3" />
+                  {badge}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 

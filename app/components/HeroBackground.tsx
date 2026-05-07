@@ -70,12 +70,12 @@ const waveShader = {
         vec3 lineCol = mix(goldDeep, goldMain, smoothstep(0.0, 0.55, gx));
         lineCol = mix(lineCol, goldLight, smoothstep(0.55, 1.0, gx));
 
-        col += line * lineCol * 0.55;
+        col += line * lineCol * 0.32;
       }
 
-      // gentle radial fade so edges stay quiet
-      float vig = smoothstep(1.3, 0.25, length(uv));
-      col *= mix(0.45, 1.0, vig);
+      // stronger radial fade so edges stay quiet
+      float vig = smoothstep(1.1, 0.2, length(uv));
+      col *= mix(0.3, 0.85, vig);
 
       // primary-black base showing through
       vec3 bg = vec3(0.039, 0.035, 0.027);
@@ -153,9 +153,9 @@ export function HeroBackground() {
 
         <EffectComposer multisampling={0}>
           <Bloom
-            intensity={0.7}
-            luminanceThreshold={0.2}
-            luminanceSmoothing={0.5}
+            intensity={0.4}
+            luminanceThreshold={0.25}
+            luminanceSmoothing={0.6}
             mipmapBlur
           />
           <ChromaticAberration
