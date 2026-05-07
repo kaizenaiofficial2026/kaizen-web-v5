@@ -1,44 +1,32 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export function BrandMark({
   className,
-  withPill = true,
 }: {
   className?: string;
   withPill?: boolean;
+  surface?: "dark" | "light";
 }) {
-  if (!withPill) {
-    return (
-      <Link
-        href="/"
-        className={cn(
-          "text-foreground inline-flex items-center gap-2 text-sm font-medium",
-          className,
-        )}
-        aria-label="Kaizen AI home"
-      >
-        <span className="bg-primary/20 grid h-5 w-5 place-items-center rounded-sm">
-          <span className="bg-primary block h-2 w-2 rounded-full" />
-        </span>
-        Kaizen.AI
-      </Link>
-    );
-  }
-
   return (
     <Link
       href="/"
       aria-label="Kaizen AI home"
       className={cn(
-        "border-border bg-card/60 text-foreground inline-flex items-center gap-2 rounded-full border py-2 pl-3 pr-5 text-sm font-medium backdrop-blur-md transition-colors hover:border-primary/40",
+        "relative block h-10 w-[152px] shrink-0 overflow-hidden sm:w-[172px]",
         className,
       )}
     >
-      <span className="bg-primary/20 grid h-5 w-5 place-items-center rounded-sm">
-        <span className="bg-primary block h-2 w-2 rounded-full" />
-      </span>
-      Kaizen.AI
+      <Image
+        src="/logo.png"
+        alt=""
+        fill
+        priority
+        sizes="(min-width: 640px) 172px, 152px"
+        className="object-cover object-center"
+        aria-hidden
+      />
     </Link>
   );
 }

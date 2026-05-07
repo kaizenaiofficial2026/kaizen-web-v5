@@ -1,266 +1,361 @@
 "use client";
 
 import Link from "next/link";
-import { Check, Cloud, Mail, Sparkles, Users } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import {
+  Bot,
+  Building2,
+  CheckCircle2,
+  Clock3,
+  Info,
+  Rocket,
+  Settings,
+  Star,
+  Tags,
+  TrendingUp,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/primitives/Container";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { FadeUp } from "@/components/motion/FadeUp";
-import { tiers } from "@/lib/content/pricing";
-import type { Tier } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-function PlanGlyph({ tone }: { tone: "muted" | "gold" | "deep" }) {
-  const fillId = `pg-${tone}`;
-  const stops =
-    tone === "gold"
-      ? ["#ecd479", "#c9a03d"]
-      : tone === "deep"
-        ? ["#8d6f24", "#3a2d10"]
-        : ["#3a3528", "#171206"];
-  return (
-    <svg viewBox="0 0 40 40" className="h-10 w-10" aria-hidden>
-      <defs>
-        <radialGradient id={fillId} cx="35%" cy="35%" r="70%">
-          <stop offset="0%" stopColor={stops[0]} />
-          <stop offset="100%" stopColor={stops[1]} />
-        </radialGradient>
-      </defs>
-      <circle cx="20" cy="20" r="18" fill={`url(#${fillId})`} />
-      <path
-        d="M11 23c4-1 6-7 10-7s5 6 9 5"
-        stroke="rgba(10,9,7,0.45)"
-        strokeWidth="2.4"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+type PricingMode = "AI Chatbot" | "AI Voice Agent";
 
-function CornerArt({ highlighted }: { highlighted?: boolean }) {
-  const stroke = highlighted ? "rgba(10,9,7,0.35)" : "rgba(201,160,61,0.18)";
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 220 220"
-      className="pointer-events-none absolute -right-6 -top-6 h-44 w-44"
-    >
-      <path
-        d="M10 130 Q70 60 120 110 T210 80"
-        stroke={stroke}
-        strokeWidth="14"
-        fill="none"
-        strokeLinecap="round"
-      />
-      <path
-        d="M30 170 Q90 110 140 150 T220 120"
-        stroke={stroke}
-        strokeWidth="10"
-        fill="none"
-        strokeLinecap="round"
-        opacity="0.6"
-      />
-    </svg>
-  );
-}
+const pricingModes: PricingMode[] = ["AI Chatbot", "AI Voice Agent"];
 
-function formatPrice(value: number | "custom") {
-  if (value === "custom") return "Contact us";
-  return `$${value}`;
-}
+const chatbotPlans = [
+  {
+    name: "Chat Starter",
+    icon: Bot,
+    rate: "$149",
+    rateSuffix: "/mo",
+    retainerLabel: "Monthly retainer",
+    retainer: "$149/mo",
+    setup: "$249 one-time setup",
+    usageLabel: "Included conversations",
+    usage: "1,000 chats/month",
+    usageNote: "~35 chats/day",
+    cta: "Get Started",
+    features: [
+      "Website chatbot for inbound enquiries",
+      "Business FAQ and service training",
+      "Lead capture with email notifications",
+      "Basic appointment request handoff",
+      "Setup includes onboarding and widget configuration",
+    ],
+  },
+  {
+    name: "Chat Growth",
+    icon: TrendingUp,
+    rate: "$299",
+    rateSuffix: "/mo",
+    retainerLabel: "Monthly retainer",
+    retainer: "$299/mo",
+    setup: "$449 one-time setup",
+    usageLabel: "Included conversations",
+    usage: "3,000 chats/month",
+    usageNote: "~100 chats/day",
+    cta: "Choose Growth",
+    popular: true,
+    features: [
+      "Website and WhatsApp enquiry handling",
+      "Lead qualification and routing",
+      "Calendar or CRM handoff",
+      "Conversation summaries and transcripts",
+      "Setup includes onboarding and workflow configuration",
+    ],
+  },
+  {
+    name: "Chat Scale",
+    icon: TrendingUp,
+    rate: "$549",
+    rateSuffix: "/mo",
+    retainerLabel: "Monthly retainer",
+    retainer: "$549/mo",
+    setup: "$799 one-time setup",
+    usageLabel: "Included conversations",
+    usage: "8,000 chats/month",
+    usageNote: "~265 chats/day",
+    cta: "Scale Faster",
+    features: [
+      "Multi-channel chatbot coverage",
+      "Advanced lead scoring and segmentation",
+      "HubSpot, Sheets, or CRM integration",
+      "Priority support and optimisation",
+      "Setup includes onboarding and conversion tuning",
+    ],
+  },
+  {
+    name: "Enterprise Chat",
+    icon: Building2,
+    rate: "Custom",
+    retainerLabel: "Monthly retainer",
+    retainer: "Custom monthly",
+    setup: "Custom setup",
+    usageLabel: "Included conversations",
+    usage: "Custom volume",
+    usageNote: "Multi-brand / multi-region",
+    cta: "Contact Sales",
+    features: [
+      "Custom chatbot workflows and approvals",
+      "CRM, API, and internal tool integrations",
+      "Dedicated support options",
+      "Advanced reporting and attribution",
+      "Custom onboarding and deployment",
+    ],
+  },
+];
 
-function PricingCard({
-  tier,
-  indexTone,
+const voicePlans = [
+  {
+    name: "VA Starter",
+    icon: Rocket,
+    rate: "$0.184",
+    rateSuffix: "/min",
+    retainerLabel: "Monthly retainer",
+    retainer: "$249/mo",
+    setup: "$349 one-time setup",
+    usageLabel: "Included usage",
+    usage: "1,350 mins/month",
+    usageNote: "~45 mins/day",
+    cta: "Get Started",
+    features: [
+      "AI voice agent for inbound calls",
+      "Call summaries and basic lead capture",
+      "Human handoff when needed",
+      "Monthly usage report",
+      "Setup includes onboarding and voice configuration",
+    ],
+  },
+  {
+    name: "VA Growth",
+    icon: TrendingUp,
+    rate: "$0.148",
+    rateSuffix: "/min",
+    retainerLabel: "Monthly retainer",
+    retainer: "$399/mo",
+    setup: "$549 one-time setup",
+    usageLabel: "Included usage",
+    usage: "2,700 mins/month",
+    usageNote: "~90 mins/day",
+    cta: "Choose Growth",
+    popular: true,
+    features: [
+      "AI voice agent for regular daily enquiries",
+      "Appointment and enquiry handling",
+      "Call transcripts and summaries",
+      "Missed-call recovery",
+      "Setup includes onboarding and voice configuration",
+    ],
+  },
+  {
+    name: "VA Scale",
+    icon: TrendingUp,
+    rate: "$0.129",
+    rateSuffix: "/min",
+    retainerLabel: "Monthly retainer",
+    retainer: "$699/mo",
+    setup: "$989 one-time setup",
+    usageLabel: "Included usage",
+    usage: "5,400 mins/month",
+    usageNote: "~3 hrs/day",
+    cta: "Scale Faster",
+    features: [
+      "Higher-volume call handling",
+      "Inbound and outbound call support",
+      "Lead follow-up workflows",
+      "Priority support",
+      "Setup includes onboarding and voice configuration",
+    ],
+  },
+  {
+    name: "Enterprise Voice",
+    icon: Building2,
+    rate: "Custom",
+    retainerLabel: "Monthly retainer",
+    retainer: "Custom monthly",
+    setup: "Custom setup",
+    usageLabel: "Included usage",
+    usage: "Custom minutes",
+    usageNote: "Multi-team / multi-branch",
+    cta: "Contact Sales",
+    features: [
+      "Custom workflows and integrations",
+      "CRM and API integrations",
+      "Dedicated support options",
+      "Advanced reporting",
+      "Custom onboarding and deployment",
+    ],
+  },
+];
+
+type DetailedPlan = (typeof voicePlans)[number] | (typeof chatbotPlans)[number];
+
+function DetailedPricingCard({
+  plan,
 }: {
-  tier: Tier;
-  indexTone: number;
+  plan: DetailedPlan;
 }) {
-  const isHighlighted = !!tier.highlighted;
-  const glyphTone =
-    indexTone === 0 ? "muted" : indexTone === 1 ? "gold" : "deep";
-  const priceValue = tier.price.monthly;
-  const isCustom = priceValue === "custom";
+  const Icon = plan.icon;
+  const isPopular = !!plan.popular;
 
   return (
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className={cn(
-        "relative flex h-full flex-col overflow-hidden rounded-2xl border p-7 backdrop-blur-md",
-        isHighlighted
-          ? "border-primary/50 gold-card-bright"
+        "relative flex h-full flex-col overflow-visible rounded-2xl border p-5 backdrop-blur-md sm:p-6",
+        isPopular
+          ? "border-primary/70 gold-card-bright shadow-[0_0_70px_-34px_color-mix(in_oklab,var(--primary)_80%,transparent)]"
           : "border-border bg-card/60",
       )}
     >
-      <CornerArt highlighted={isHighlighted} />
-
-      {tier.popular && (
+      {isPopular && (
         <Badge
           variant="popular"
-          className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 gap-1.5 px-4 py-1 text-xs"
         >
-          Most popular
+          <Star className="h-3.5 w-3.5 fill-current" />
+          Most Popular
         </Badge>
       )}
 
-      <div className="relative">
-        <PlanGlyph tone={glyphTone} />
+      <div className="flex items-start gap-4">
+        <span
+          aria-hidden
+          className={cn(
+            "grid h-12 w-12 shrink-0 place-items-center rounded-2xl border",
+            isPopular
+              ? "border-primary/30 bg-primary/20 text-primary"
+              : "border-border bg-primary/10 text-primary",
+          )}
+        >
+          <Icon className="h-6 w-6" />
+        </span>
+        <div className="min-w-0 pt-2">
+          <h3 className="text-foreground text-xl font-semibold tracking-tight">
+            {plan.name}
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {plan.rate === "Custom"
+              ? "Tailored pricing"
+              : "Effective monthly rate"}
+          </p>
+        </div>
       </div>
 
-      <h3 className="text-foreground relative mt-6 text-2xl font-semibold tracking-tight">
-        {tier.name}
-      </h3>
-      <p
-        className={cn(
-          "relative mt-2 text-sm leading-6",
-          isHighlighted ? "text-foreground/85" : "text-muted-foreground",
-        )}
-      >
-        {tier.description}
-      </p>
-
-      <div className="relative mt-6 flex items-baseline gap-1.5">
-        <span className="text-foreground text-4xl font-semibold tracking-tight">
-          {formatPrice(priceValue)}
+      <div className="mt-6 flex items-end gap-1">
+        <span
+          className={cn(
+            "text-5xl font-semibold tracking-tight",
+            isPopular ? "text-primary" : "text-foreground",
+          )}
+        >
+          {plan.rate}
         </span>
-        {!isCustom && (
-          <span
-            className={cn(
-              "text-sm",
-              isHighlighted ? "text-foreground/70" : "text-muted-foreground",
-            )}
-          >
-            /month
+        {plan.rateSuffix && (
+          <span className="pb-2 text-2xl font-semibold text-primary">
+            {plan.rateSuffix}
           </span>
         )}
       </div>
+
+      <div className="mt-5 divide-y divide-border border-y border-border">
+        <div className="flex items-center gap-3 py-3">
+          <Tags className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <div>
+            <p className="text-xs text-muted-foreground">
+              {plan.retainerLabel}
+            </p>
+            <p className="font-semibold text-foreground">{plan.retainer}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 py-3">
+          <Settings className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <div>
+            <p className="text-xs text-muted-foreground">
+              Included setup (one-time)
+            </p>
+            <p className="font-semibold text-foreground">{plan.setup}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 py-3">
+          <Clock3 className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-muted-foreground">{plan.usageLabel}</p>
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <p className="font-semibold text-foreground">{plan.usage}</p>
+              <p className="text-xs text-muted-foreground">{plan.usageNote}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul className="mt-5 flex-1 space-y-2.5 text-sm">
+        {plan.features.map((feature) => (
+          <li key={feature} className="flex gap-2.5 text-foreground/86">
+            <CheckCircle2
+              className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+              aria-hidden
+            />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
 
       <Button
         asChild
-        variant={isHighlighted ? "default" : "outline"}
         size="lg"
-        className="relative mt-6 w-full"
+        variant={isPopular ? "default" : "outline"}
+        className="mt-6 w-full"
       >
-        <Link href={tier.ctaHref}>
-          {tier.ctaIcon === "mail" && <Mail aria-hidden />}
-          {tier.cta}
-        </Link>
+        <Link href="/demo">{plan.cta}</Link>
       </Button>
-
-      <div className="relative mt-6 space-y-2.5 text-sm">
-        <div className="text-foreground/85 flex items-center gap-3">
-          <Users
-            aria-hidden
-            className={cn(
-              "h-4 w-4",
-              isHighlighted ? "text-foreground/80" : "text-muted-foreground",
-            )}
-          />
-          <span>
-            <span className="font-medium">{tier.seats}</span>{" "}
-            <span
-              className={
-                isHighlighted ? "text-foreground/70" : "text-muted-foreground"
-              }
-            >
-              {tier.seatsLabel ?? "included"}
-            </span>
-          </span>
-        </div>
-        <div className="text-foreground/85 flex items-center gap-3">
-          <Cloud
-            aria-hidden
-            className={cn(
-              "h-4 w-4",
-              isHighlighted ? "text-foreground/80" : "text-muted-foreground",
-            )}
-          />
-          <span>
-            <span className="font-medium">{tier.storage}</span>{" "}
-            <span
-              className={
-                isHighlighted ? "text-foreground/70" : "text-muted-foreground"
-              }
-            >
-              {tier.storageLabel ?? "detail"}
-            </span>
-          </span>
-        </div>
-      </div>
-
-      <div className="relative mt-6">
-        <div
-          className={cn(
-            "flex items-center gap-3",
-            !tier.inheritsLabel && "opacity-0",
-          )}
-        >
-          <span
-            className={cn(
-              "h-px flex-1",
-              isHighlighted ? "bg-foreground/15" : "bg-border",
-            )}
-          />
-          <span
-            className={cn(
-              "text-[11px] font-medium uppercase tracking-[0.18em]",
-              isHighlighted ? "text-foreground/70" : "text-muted-foreground",
-            )}
-          >
-            {tier.inheritsLabel ?? "—"}
-          </span>
-          <span
-            className={cn(
-              "h-px flex-1",
-              isHighlighted ? "bg-foreground/15" : "bg-border",
-            )}
-          />
-        </div>
-      </div>
-
-      <ul className="relative mt-5 space-y-3 text-sm">
-        {tier.features.map((feature) => {
-          const label = typeof feature === "string" ? feature : feature.label;
-          const badge = typeof feature === "string" ? null : feature.badge;
-          return (
-            <li
-              key={label}
-              className="text-foreground/90 flex items-center gap-3"
-            >
-              <span
-                aria-hidden
-                className={cn(
-                  "grid h-5 w-5 shrink-0 place-items-center rounded-full",
-                  isHighlighted
-                    ? "bg-foreground/15 text-foreground"
-                    : "bg-primary/15 text-primary",
-                )}
-              >
-                <Check className="h-3 w-3" />
-              </span>
-              <span className="font-medium">{label}</span>
-              {badge && (
-                <Badge
-                  variant={isHighlighted ? "muted" : "default"}
-                  className="ml-auto"
-                >
-                  <Sparkles className="h-3 w-3" />
-                  {badge}
-                </Badge>
-              )}
-            </li>
-          );
-        })}
-      </ul>
     </motion.div>
   );
 }
 
+function DetailedPricingGrid({
+  title,
+  subtitle,
+  plans,
+  note,
+}: {
+  title: string;
+  subtitle: string;
+  plans: DetailedPlan[];
+  note: ReactNode;
+}) {
+  return (
+    <div className="mt-12">
+      <div className="mx-auto max-w-3xl text-center">
+        <h3 className="text-h3 font-semibold text-foreground">{title}</h3>
+        <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+          {subtitle}
+        </p>
+      </div>
+
+      <div className="mt-10 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {plans.map((plan) => (
+          <DetailedPricingCard key={plan.name} plan={plan} />
+        ))}
+      </div>
+
+      <div className="mx-auto mt-6 flex max-w-3xl items-start gap-3 rounded-2xl border border-border bg-card/55 px-5 py-4 text-sm leading-6 text-muted-foreground backdrop-blur-md">
+        <Info className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+        <p>{note}</p>
+      </div>
+    </div>
+  );
+}
+
 export function Pricing() {
+  const [selectedPricing, setSelectedPricing] =
+    useState<PricingMode>("AI Voice Agent");
+
   return (
     <section
       id="pricing"
@@ -274,7 +369,7 @@ export function Pricing() {
             "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(10,9,7,0) 70%)",
         }}
       />
-      <Container>
+      <Container size="wide">
         <FadeUp>
           <SectionHeader
             eyebrow="Pricing"
@@ -289,15 +384,68 @@ export function Pricing() {
           />
         </FadeUp>
 
-        <div className="mt-12 grid items-stretch gap-6 pt-3 sm:grid-cols-3">
-          {tiers.map((tier, i) => (
-            <PricingCard
-              key={tier.name}
-              tier={tier}
-              indexTone={i}
-            />
-          ))}
-        </div>
+        <FadeUp delay={0.08}>
+          <div className="mt-8 flex justify-center">
+            <div
+              className="grid w-full max-w-md grid-cols-2 rounded-2xl border border-primary/25 bg-card/55 p-1.5 shadow-[0_18px_60px_-36px_color-mix(in_oklab,var(--primary)_55%,transparent)] backdrop-blur-md"
+              aria-label="Choose pricing type"
+            >
+              {pricingModes.map((mode) => {
+                const active = selectedPricing === mode;
+                return (
+                  <button
+                    key={mode}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setSelectedPricing(mode)}
+                    className={cn(
+                      "h-11 rounded-xl px-4 text-sm font-semibold transition-colors",
+                      active
+                        ? "bg-primary text-primary-foreground shadow-[0_12px_30px_-18px_color-mix(in_oklab,var(--primary)_80%,transparent)]"
+                        : "text-muted-foreground hover:bg-primary/10 hover:text-foreground",
+                    )}
+                  >
+                    {mode.replace("AI ", "")}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </FadeUp>
+
+        {selectedPricing === "AI Voice Agent" ? (
+          <DetailedPricingGrid
+            title="Voice Agent Pricing"
+            subtitle="Simple plans for businesses of every size. Transparent setup pricing, clear monthly retainers, and affordable per-minute value."
+            plans={voicePlans}
+            note={
+              <>
+                Additional voice minutes:{" "}
+                <span className="font-semibold text-foreground">
+                  $0.15/min
+                </span>
+                . If usage consistently exceeds your selected plan, we will
+                recommend the next package for better value.
+              </>
+            }
+          />
+        ) : (
+          <DetailedPricingGrid
+            title="Chatbot Pricing"
+            subtitle="Simple plans for website and messaging automation. Transparent setup pricing, clear monthly retainers, and included conversation volume."
+            plans={chatbotPlans}
+            note={
+              <>
+                Additional chatbot conversations:{" "}
+                <span className="font-semibold text-foreground">
+                  $0.03/conversation
+                </span>
+                . If usage consistently exceeds your selected plan, we will
+                recommend the next package for better value.
+              </>
+            }
+          />
+        )}
       </Container>
     </section>
   );

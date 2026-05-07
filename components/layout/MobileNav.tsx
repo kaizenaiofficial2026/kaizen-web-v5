@@ -34,14 +34,17 @@ export function MobileNav({ items }: { items: NavItem[] }) {
           variant="ghost"
           size="icon"
           aria-label="Open menu"
-          className="md:hidden"
+          className="text-foreground/80 hover:bg-primary/10 hover:text-primary lg:hidden"
         >
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="flex flex-col gap-8 pt-10">
+      <SheetContent
+        side="right"
+        className="flex flex-col gap-8 border-border bg-background pt-10 text-foreground"
+      >
         <SheetTitle className="sr-only">Navigation</SheetTitle>
-        <BrandMark withPill={false} />
+        <BrandMark withPill={false} surface="dark" />
         <nav aria-label="Mobile primary" className="flex flex-col gap-1">
           {items.map((item) => {
             const isActive = isNavItemActive(pathname, item.href);
@@ -51,7 +54,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "text-foreground hover:bg-primary/10 hover:text-primary -mx-3 rounded-lg px-3 py-3 text-2xl font-medium tracking-tight transition-colors",
+                    "-mx-3 rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
                     isActive && "bg-primary/15 text-primary",
                   )}
                 >
@@ -66,7 +69,11 @@ export function MobileNav({ items }: { items: NavItem[] }) {
           <SheetClose asChild>
             <Link
               href="/demo"
-              className={buttonVariants({ size: "lg", className: "w-full" })}
+              className={buttonVariants({
+                size: "lg",
+                className:
+                  "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
+              })}
             >
               Book demo
             </Link>
@@ -77,7 +84,8 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               className={buttonVariants({
                 variant: "outline",
                 size: "lg",
-                className: "w-full",
+                className:
+                  "w-full rounded-xl border-primary/40 bg-background text-foreground hover:bg-primary/10 hover:text-primary",
               })}
             >
               Contact sales
