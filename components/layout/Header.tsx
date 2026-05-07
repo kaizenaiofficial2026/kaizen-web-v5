@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/primitives/Container";
@@ -9,18 +10,17 @@ import { BrandMark } from "./BrandMark";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
 import { primaryNav } from "@/lib/content/nav";
-import { useActiveSection } from "@/lib/hooks/use-active-section";
 import { cn } from "@/lib/utils";
 
-const sectionIds = primaryNav
-  .map((n) => n.href)
-  .filter((h) => h.startsWith("#"))
-  .map((h) => h.slice(1));
+function isNavItemActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const { scrollY } = useScroll();
-  const active = useActiveSection(sectionIds);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 8);
@@ -45,8 +45,7 @@ export function Header() {
             className="border-border bg-card/60 hidden items-center gap-1 rounded-full border px-2 py-1.5 text-sm backdrop-blur-md md:flex"
           >
             {primaryNav.map((item) => {
-              const isActive =
-                item.href.startsWith("#") && active === item.href.slice(1);
+              const isActive = isNavItemActive(pathname, item.href);
               return (
                 <Link
                   key={item.href}
@@ -67,7 +66,7 @@ export function Header() {
 
           <div className="flex items-center gap-2">
             <Button asChild size="sm" className="hidden sm:inline-flex">
-              <Link href="#cta">Get started</Link>
+              <Link href="/demo">Book demo</Link>
             </Button>
             <MobileNav items={primaryNav} />
           </div>

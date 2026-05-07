@@ -1,8 +1,9 @@
 import type { NavItem } from "@/lib/types";
 
 export const primaryNav: NavItem[] = [
-  { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Customers", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Home", href: "/" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Demo", href: "/demo" },
+  { label: "Blog", href: "/blog" },
 ];

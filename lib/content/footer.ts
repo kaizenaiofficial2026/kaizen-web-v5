@@ -17,8 +17,10 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Product",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
+      { label: "Solutions", href: "/solutions" },
+      { label: "Features", href: "/#features" },
+      { label: "Pricing", href: "/#pricing" },
+      { label: "Demo", href: "/demo" },
       { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
     ],
@@ -26,8 +28,9 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Company",
     links: [
+      { label: "Case Studies", href: "/case-studies" },
       { label: "About", href: "/about" },
-      { label: "Customers", href: "#testimonials" },
+      { label: "Customers", href: "/#testimonials" },
       { label: "Careers", href: "/careers" },
       { label: "Press", href: "/press" },
     ],
