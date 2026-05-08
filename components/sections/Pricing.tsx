@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Bot,
   Building2,
@@ -17,6 +17,7 @@ import {
 import {
   animate,
   motion,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useTransform,
@@ -245,8 +246,10 @@ function AnimatedNumericText({
   className?: string;
   duration?: number;
 }) {
+  const ref = useRef<HTMLSpanElement>(null);
   const parsed = useMemo(() => parseNumericText(value), [value]);
   const reducedMotion = useReducedMotion();
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
   const count = useMotionValue(parsed && reducedMotion ? parsed.value : 0);
   const text = useTransform(() => {
     if (!parsed) {
@@ -264,6 +267,10 @@ function AnimatedNumericText({
       return;
     }
 
+    if (!isInView && !reducedMotion) {
+      return;
+    }
+
     count.set(reducedMotion ? parsed.value : 0);
 
     if (reducedMotion) {
@@ -276,14 +283,14 @@ function AnimatedNumericText({
     });
 
     return () => controls.stop();
-  }, [count, duration, parsed, reducedMotion]);
+  }, [count, duration, isInView, parsed, reducedMotion]);
 
   if (!parsed) {
-    return <span className={className}>{value}</span>;
+    return <span ref={ref} className={className}>{value}</span>;
   }
 
   return (
-    <motion.span aria-label={value} className={className}>
+    <motion.span ref={ref} aria-label={value} className={className}>
       {text}
     </motion.span>
   );
@@ -365,9 +372,7 @@ function DetailedPricingCard({
             <p className="text-xs text-muted-foreground">
               {plan.retainerLabel}
             </p>
-            <p className="font-semibold text-foreground">
-              <AnimatedNumericText value={plan.retainer} duration={1.2} />
-            </p>
+            <p className="font-semibold text-foreground">{plan.retainer}</p>
           </div>
         </div>
         <div className="flex items-center gap-3 py-3">
@@ -376,9 +381,7 @@ function DetailedPricingCard({
             <p className="text-xs text-muted-foreground">
               Included setup (one-time)
             </p>
-            <p className="font-semibold text-foreground">
-              <AnimatedNumericText value={plan.setup} duration={1.2} />
-            </p>
+            <p className="font-semibold text-foreground">{plan.setup}</p>
           </div>
         </div>
         <div className="flex items-center gap-3 py-3">
@@ -386,12 +389,8 @@ function DetailedPricingCard({
           <div className="min-w-0 flex-1">
             <p className="text-xs text-muted-foreground">{plan.usageLabel}</p>
             <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <p className="font-semibold text-foreground">
-                <AnimatedNumericText value={plan.usage} duration={1.35} />
-              </p>
-              <p className="text-xs text-muted-foreground">
-                <AnimatedNumericText value={plan.usageNote} duration={1.35} />
-              </p>
+              <p className="font-semibold text-foreground">{plan.usage}</p>
+              <p className="text-xs text-muted-foreground">{plan.usageNote}</p>
             </div>
           </div>
         </div>
