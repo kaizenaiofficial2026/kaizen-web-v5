@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   Bot,
   Building2,
@@ -14,7 +14,13 @@ import {
   Tags,
   TrendingUp,
 } from "lucide-react";
-import { motion } from "motion/react";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/primitives/Container";
@@ -194,6 +200,95 @@ const voicePlans = [
 
 type DetailedPlan = (typeof voicePlans)[number] | (typeof chatbotPlans)[number];
 
+type ParsedNumericText = {
+  prefix: string;
+  value: number;
+  decimals: number;
+  suffix: string;
+};
+
+function parseNumericText(value: string): ParsedNumericText | null {
+  const match = value.match(/^([^0-9-]*)(-?[\d,]+(?:\.\d+)?)(.*)$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, prefix, rawValue, suffix] = match;
+  const normalizedValue = Number(rawValue.replaceAll(",", ""));
+
+  if (!Number.isFinite(normalizedValue)) {
+    return null;
+  }
+
+  return {
+    prefix,
+    value: normalizedValue,
+    decimals: rawValue.includes(".") ? rawValue.split(".")[1].length : 0,
+    suffix,
+  };
+}
+
+function formatAnimatedNumber(value: number, decimals: number) {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(value);
+}
+
+function AnimatedNumericText({
+  value,
+  className,
+  duration = 1.6,
+}: {
+  value: string;
+  className?: string;
+  duration?: number;
+}) {
+  const parsed = useMemo(() => parseNumericText(value), [value]);
+  const reducedMotion = useReducedMotion();
+  const count = useMotionValue(parsed && reducedMotion ? parsed.value : 0);
+  const text = useTransform(() => {
+    if (!parsed) {
+      return value;
+    }
+
+    return `${parsed.prefix}${formatAnimatedNumber(
+      count.get(),
+      parsed.decimals,
+    )}${parsed.suffix}`;
+  });
+
+  useEffect(() => {
+    if (!parsed) {
+      return;
+    }
+
+    count.set(reducedMotion ? parsed.value : 0);
+
+    if (reducedMotion) {
+      return;
+    }
+
+    const controls = animate(count, parsed.value, {
+      duration,
+      ease: "easeOut",
+    });
+
+    return () => controls.stop();
+  }, [count, duration, parsed, reducedMotion]);
+
+  if (!parsed) {
+    return <span className={className}>{value}</span>;
+  }
+
+  return (
+    <motion.span aria-label={value} className={className}>
+      {text}
+    </motion.span>
+  );
+}
+
 function DetailedPricingCard({
   plan,
 }: {
@@ -248,14 +343,14 @@ function DetailedPricingCard({
       </div>
 
       <div className="mt-6 flex items-end gap-1">
-        <span
+        <AnimatedNumericText
+          value={plan.rate}
           className={cn(
             "text-5xl font-semibold tracking-tight",
             isPopular ? "text-primary" : "text-foreground",
           )}
-        >
-          {plan.rate}
-        </span>
+          duration={1.8}
+        />
         {plan.rateSuffix && (
           <span className="pb-2 text-2xl font-semibold text-primary">
             {plan.rateSuffix}
@@ -270,7 +365,9 @@ function DetailedPricingCard({
             <p className="text-xs text-muted-foreground">
               {plan.retainerLabel}
             </p>
-            <p className="font-semibold text-foreground">{plan.retainer}</p>
+            <p className="font-semibold text-foreground">
+              <AnimatedNumericText value={plan.retainer} duration={1.2} />
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-3 py-3">
@@ -279,7 +376,9 @@ function DetailedPricingCard({
             <p className="text-xs text-muted-foreground">
               Included setup (one-time)
             </p>
-            <p className="font-semibold text-foreground">{plan.setup}</p>
+            <p className="font-semibold text-foreground">
+              <AnimatedNumericText value={plan.setup} duration={1.2} />
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-3 py-3">
@@ -287,8 +386,12 @@ function DetailedPricingCard({
           <div className="min-w-0 flex-1">
             <p className="text-xs text-muted-foreground">{plan.usageLabel}</p>
             <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <p className="font-semibold text-foreground">{plan.usage}</p>
-              <p className="text-xs text-muted-foreground">{plan.usageNote}</p>
+              <p className="font-semibold text-foreground">
+                <AnimatedNumericText value={plan.usage} duration={1.35} />
+              </p>
+              <p className="text-xs text-muted-foreground">
+                <AnimatedNumericText value={plan.usageNote} duration={1.35} />
+              </p>
             </div>
           </div>
         </div>
