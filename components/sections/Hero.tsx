@@ -30,7 +30,7 @@ export function Hero() {
   return (
     <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden pb-24 pt-32 sm:pt-40">
       {reduced ? <HeroBackgroundFallback /> : <HeroBackground />}
-      <div className="bg-background/46 pointer-events-none absolute inset-0 z-0" />
+      <div className="bg-background/34 pointer-events-none absolute inset-0 z-0" />
       <Grain />
 
       <Container className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
