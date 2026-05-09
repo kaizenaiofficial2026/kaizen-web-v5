@@ -1,159 +1,147 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const shaderAnimation = {
-  vertex: /* glsl */ `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = vec4(position.xy, 0.0, 1.0);
-    }
-  `,
-  fragment: /* glsl */ `
-    precision highp float;
-    uniform float uTime;
-    uniform vec2 uResolution;
-    uniform vec2 uMouse;
-    varying vec2 vUv;
-
-    float bandLayer(vec2 uv, float time, float channelOffset) {
-      float layer = 0.0;
-
-      for (int band = 0; band < 7; band++) {
-        float fi = float(band);
-        float angle = 0.58 + fi * 0.18;
-        vec2 direction = normalize(vec2(cos(angle), sin(angle)));
-        vec2 crossDirection = vec2(-direction.y, direction.x);
-
-        float sweep = fract(time + channelOffset + fi * 0.075) * 4.2 - 2.1;
-        float bend =
-          sin(dot(uv, crossDirection) * 2.9 + time * 2.2 + fi) * 0.12
-          + mod(uv.x + uv.y + fi * 0.04, 0.22) * 0.42;
-        float field = dot(uv, direction) + bend;
-        float distanceField = abs(sweep - field);
-
-        layer += 0.0036 * (fi + 1.0) / max(distanceField, 0.01);
-      }
-
-      return layer;
-    }
-
-    void main() {
-      vec2 uv = (gl_FragCoord.xy * 2.0 - uResolution.xy) / min(uResolution.x, uResolution.y);
-      vec2 m = uMouse * 2.0 - 1.0;
-      uv += vec2(m.x * 0.08, m.y * 0.05);
-
-      float time = uTime * 0.22;
-      vec3 bands = vec3(
-        bandLayer(uv, time, 0.0),
-        bandLayer(uv, time, 0.016),
-        bandLayer(uv, time, 0.032)
-      );
-
-      vec3 bg = vec3(0.039, 0.035, 0.027);
-      vec3 gold = vec3(1.0, 0.72, 0.12);
-      vec3 ember = vec3(1.0, 0.44, 0.10);
-      vec3 teal = vec3(0.12, 0.98, 0.88);
-
-      vec3 color = bands.r * gold + bands.g * ember * 0.72 + bands.b * teal * 0.72;
-      color *= 0.92;
-
-      vec2 frameUv = abs((gl_FragCoord.xy / uResolution.xy) * 2.0 - 1.0);
-      float edgeFade = smoothstep(1.08, 0.34, max(frameUv.x, frameUv.y));
-      color *= mix(0.55, 1.0, edgeFade);
-      color += bg;
-
-      gl_FragColor = vec4(color, 1.0);
-    }
-  `,
+type ShaderScene = {
+  camera: THREE.Camera;
+  scene: THREE.Scene;
+  renderer: THREE.WebGLRenderer;
+  uniforms: {
+    time: { value: number };
+    resolution: { value: THREE.Vector2 };
+  };
+  animationId: number;
 };
 
-function ShaderField() {
-  const ref = useRef<THREE.ShaderMaterial>(null);
-  const targetMouse = useRef(new THREE.Vector2(0.5, 0.5));
-
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uResolution: { value: new THREE.Vector2(1, 1) },
-      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-    }),
-    []
-  );
+export function HeroBackground() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<ShaderScene | null>(null);
 
   useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      targetMouse.current.set(
-        e.clientX / window.innerWidth,
-        1.0 - e.clientY / window.innerHeight
+    const container = containerRef.current;
+    if (!container) return;
+
+    const vertexShader = /* glsl */ `
+      void main() {
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = /* glsl */ `
+      precision highp float;
+      uniform vec2 resolution;
+      uniform float time;
+
+      void main(void) {
+        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+        float t = time * 0.05;
+        float lineWidth = 0.0026;
+
+        vec3 color = vec3(0.0);
+
+        for (int i = 0; i < 5; i++) {
+          float fi = float(i);
+          float diagonalGrid = mod(uv.x + uv.y, 0.2);
+          color.r += lineWidth * fi * fi / abs(fract(t + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+          color.g += lineWidth * fi * fi / abs(fract(t - 0.01 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+          color.b += lineWidth * fi * fi / abs(fract(t - 0.02 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+        }
+
+        vec3 brandTint = vec3(
+          color.r * 1.05 + color.g * 0.42,
+          color.r * 0.74 + color.g * 0.58 + color.b * 0.16,
+          color.b * 0.95 + color.g * 0.22
+        );
+        brandTint = 1.0 - exp(-brandTint * 0.52);
+
+        vec3 base = vec3(0.039, 0.035, 0.027);
+        gl_FragColor = vec4(base + brandTint * 0.82, 1.0);
+      }
+    `;
+
+    const camera = new THREE.Camera();
+    camera.position.z = 1;
+
+    const scene = new THREE.Scene();
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const uniforms = {
+      time: { value: 1 },
+      resolution: { value: new THREE.Vector2() },
+    };
+
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader,
+      fragmentShader,
+    });
+
+    scene.add(new THREE.Mesh(geometry, material));
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+      preserveDrawingBuffer: true,
+    });
+    renderer.setClearColor("#0a0907");
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.domElement.style.display = "block";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.width = "100%";
+    container.appendChild(renderer.domElement);
+
+    const onWindowResize = () => {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      renderer.setSize(width, height, false);
+      uniforms.resolution.value.set(
+        renderer.domElement.width,
+        renderer.domElement.height,
       );
     };
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
+
+    const animate = () => {
+      const animationId = requestAnimationFrame(animate);
+      uniforms.time.value += 0.075;
+      renderer.render(scene, camera);
+
+      if (sceneRef.current) {
+        sceneRef.current.animationId = animationId;
+      }
+    };
+
+    sceneRef.current = {
+      camera,
+      scene,
+      renderer,
+      uniforms,
+      animationId: 0,
+    };
+
+    onWindowResize();
+    window.addEventListener("resize", onWindowResize);
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", onWindowResize);
+      cancelAnimationFrame(sceneRef.current?.animationId ?? 0);
+
+      if (renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
+      }
+
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      sceneRef.current = null;
+    };
   }, []);
 
-  useFrame((state) => {
-    const material = ref.current;
-    if (!material) return;
-
-    material.uniforms.uTime.value = state.clock.elapsedTime;
-
-    const { width, height } = state.size;
-    const dpr = state.viewport.dpr;
-    material.uniforms.uResolution.value.set(width * dpr, height * dpr);
-
-    const m = material.uniforms.uMouse.value as THREE.Vector2;
-    m.lerp(targetMouse.current, 0.05);
-  });
-
   return (
-    <mesh frustumCulled={false} renderOrder={-1000}>
-      <planeGeometry args={[2, 2]} />
-      <shaderMaterial
-        ref={ref}
-        uniforms={uniforms}
-        vertexShader={shaderAnimation.vertex}
-        fragmentShader={shaderAnimation.fragment}
-        depthTest={false}
-        depthWrite={false}
-      />
-    </mesh>
-  );
-}
-
-export function HeroBackground() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-0">
-      <Canvas
-        gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
-        camera={{ position: [0, 0, 4], fov: 45 }}
-        dpr={[1, 2]}
-      >
-        <color attach="background" args={["#0a0907"]} />
-
-        <ShaderField />
-
-        <EffectComposer multisampling={0}>
-          <Bloom
-            intensity={0.58}
-            luminanceThreshold={0.18}
-            luminanceSmoothing={0.5}
-            mipmapBlur
-          />
-          <ChromaticAberration
-            offset={[0.0006, 0.0009]}
-            blendFunction={BlendFunction.NORMAL}
-            radialModulation={false}
-            modulationOffset={0}
-          />
-          <Vignette eskil={false} offset={0.22} darkness={0.58} />
-        </EffectComposer>
-      </Canvas>
-    </div>
+    <div
+      ref={containerRef}
+      aria-hidden
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden bg-background"
+    />
   );
 }
