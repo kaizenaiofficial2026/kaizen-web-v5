@@ -7,7 +7,7 @@ export const tiers: Tier[] = [
       "A trained website and messaging agent for enquiries, lead capture, and booking.",
     price: { monthly: "custom", annual: "custom" },
     cta: "Book a call",
-    ctaHref: "/demo",
+    ctaHref: "/book-demo",
     seats: "Website + WhatsApp",
     seatsLabel: "channels included",
     storage: "3-5 days",

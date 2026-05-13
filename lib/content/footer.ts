@@ -17,10 +17,10 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Product",
     links: [
-      { label: "AI Chatbots", href: "/solutions" },
-      { label: "AI Voice Agents", href: "/solutions" },
+      { label: "AI Chatbots", href: "/solutions/chatbots" },
+      { label: "AI Voice Agents", href: "/solutions/voice-agents" },
       { label: "Missed-call Recovery", href: "/solutions" },
-      { label: "How it Works", href: "/demo" },
+      { label: "Live Demo", href: "/demo" },
     ],
   },
   {
@@ -29,7 +29,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Case Studies", href: "/case-studies" },
       { label: "Results", href: "/#testimonials" },
       { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/demo" },
+      { label: "Contact", href: "/book-demo" },
     ],
   },
   {
@@ -38,7 +38,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Solutions", href: "/solutions" },
       { label: "Blog", href: "/blog" },
       { label: "FAQ", href: "/#faq" },
-      { label: "Book a Call", href: "/demo" },
+      { label: "Book a Call", href: "/book-demo" },
     ],
   },
 ];

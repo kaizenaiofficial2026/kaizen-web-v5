@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 export type NavItem = {
   label: string;
   href: string;
+  children?: { label: string; href: string }[];
 };
 
 export type Feature = string | { label: string; badge: string };

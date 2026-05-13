@@ -37,10 +37,10 @@ const chatbotPlans = [
   {
     name: "Chat Starter",
     icon: Bot,
-    rate: "$149",
+    rate: "$109",
     rateSuffix: "/mo",
     retainerLabel: "Monthly retainer",
-    retainer: "$149/mo",
+    retainer: "$109/mo",
     setup: "$249 one-time setup",
     usageLabel: "Included conversations",
     usage: "1,000 chats/month",
@@ -52,66 +52,6 @@ const chatbotPlans = [
       "Lead capture with email notifications",
       "Basic appointment request handoff",
       "Setup includes onboarding and widget configuration",
-    ],
-  },
-  {
-    name: "Chat Growth",
-    icon: TrendingUp,
-    rate: "$299",
-    rateSuffix: "/mo",
-    retainerLabel: "Monthly retainer",
-    retainer: "$299/mo",
-    setup: "$449 one-time setup",
-    usageLabel: "Included conversations",
-    usage: "3,000 chats/month",
-    usageNote: "~100 chats/day",
-    cta: "Choose Growth",
-    popular: true,
-    features: [
-      "Website and WhatsApp enquiry handling",
-      "Lead qualification and routing",
-      "Calendar or CRM handoff",
-      "Conversation summaries and transcripts",
-      "Setup includes onboarding and workflow configuration",
-    ],
-  },
-  {
-    name: "Chat Scale",
-    icon: TrendingUp,
-    rate: "$549",
-    rateSuffix: "/mo",
-    retainerLabel: "Monthly retainer",
-    retainer: "$549/mo",
-    setup: "$799 one-time setup",
-    usageLabel: "Included conversations",
-    usage: "8,000 chats/month",
-    usageNote: "~265 chats/day",
-    cta: "Scale Faster",
-    features: [
-      "Multi-channel chatbot coverage",
-      "Advanced lead scoring and segmentation",
-      "HubSpot, Sheets, or CRM integration",
-      "Priority support and optimisation",
-      "Setup includes onboarding and conversion tuning",
-    ],
-  },
-  {
-    name: "Enterprise Chat",
-    icon: Building2,
-    rate: "Custom",
-    retainerLabel: "Monthly retainer",
-    retainer: "Custom monthly",
-    setup: "Custom setup",
-    usageLabel: "Included conversations",
-    usage: "Custom volume",
-    usageNote: "Multi-brand / multi-region",
-    cta: "Contact Sales",
-    features: [
-      "Custom chatbot workflows and approvals",
-      "CRM, API, and internal tool integrations",
-      "Dedicated support options",
-      "Advanced reporting and attribution",
-      "Custom onboarding and deployment",
     ],
   },
 ];
@@ -302,7 +242,7 @@ function DetailedPricingCard({
   plan: DetailedPlan;
 }) {
   const Icon = plan.icon;
-  const isPopular = !!plan.popular;
+  const isPopular = "popular" in plan && !!plan.popular;
 
   return (
     <motion.div
@@ -414,7 +354,7 @@ function DetailedPricingCard({
         variant={isPopular ? "default" : "outline"}
         className="mt-6 w-full"
       >
-        <Link href="/demo">{plan.cta}</Link>
+        <Link href="/book-demo">{plan.cta}</Link>
       </Button>
     </motion.div>
   );
@@ -440,7 +380,12 @@ function DetailedPricingGrid({
         </p>
       </div>
 
-      <div className="mt-10 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <div
+        className={cn(
+          "mt-10 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4",
+          plans.length === 1 && "mx-auto max-w-md md:grid-cols-1 xl:grid-cols-1",
+        )}
+      >
         {plans.map((plan) => (
           <DetailedPricingCard key={plan.name} plan={plan} />
         ))}

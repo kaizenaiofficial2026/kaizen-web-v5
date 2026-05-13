@@ -30,7 +30,7 @@ export default function BlogPage() {
         }
         subtitle="Practical essays for operators who want every call, chat, DM, and appointment request handled fast."
         actions={[
-          { label: "Book a demo", href: "/demo" },
+          { label: "Book a demo", href: "/book-demo" },
           {
             label: "Contact the team",
             href: `mailto:${siteConfig.email}`,
@@ -107,7 +107,7 @@ export default function BlogPage() {
             </FadeUp>
             <FadeUp delay={0.08}>
               <Button asChild size="xl">
-                <Link href="/demo">Request a demo</Link>
+                <Link href="/book-demo">Request a demo</Link>
               </Button>
             </FadeUp>
           </div>

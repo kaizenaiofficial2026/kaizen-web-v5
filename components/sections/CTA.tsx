@@ -39,7 +39,7 @@ export function CTA() {
         <FadeUp delay={0.16}>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Button asChild size="xl" className="uppercase tracking-[0.08em]">
-              <Link href="/demo">
+              <Link href="/book-demo">
                 Book a free call
                 <ArrowUpRight />
               </Link>

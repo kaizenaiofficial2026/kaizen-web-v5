@@ -34,7 +34,7 @@ export default function SolutionsPage() {
         }
         subtitle="Kaizen builds chatbot and voice agents trained on your business, available across calls, website chat, WhatsApp, social DMs, and calendars."
         actions={[
-          { label: "Book a demo", href: "/demo" },
+          { label: "Book a demo", href: "/book-demo" },
           { label: "See customer proof", href: "/case-studies", variant: "outline" },
         ]}
       >
@@ -86,9 +86,24 @@ export default function SolutionsPage() {
         <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-3">
           {solutionPillars.map((pillar) => {
             const Icon = pillar.icon;
+            const id =
+              pillar.title === "AI Chatbots"
+                ? "chatbots"
+                : pillar.title === "AI Voice Agents"
+                  ? "voice-agents"
+                  : undefined;
+            const href =
+              pillar.title === "AI Chatbots"
+                ? "/solutions/chatbots"
+                : pillar.title === "AI Voice Agents"
+                  ? "/solutions/voice-agents"
+                  : undefined;
             return (
               <StaggerItem key={pillar.title}>
-                <Card className="hover:border-primary/40 flex h-full flex-col p-7 transition-colors">
+                <Card
+                  id={id}
+                  className="hover:border-primary/40 scroll-mt-28 flex h-full flex-col p-7 transition-colors"
+                >
                   <div className="border-primary/30 bg-primary/10 text-primary grid h-12 w-12 place-items-center rounded-xl border">
                     <Icon className="h-6 w-6" aria-hidden />
                   </div>
@@ -112,6 +127,11 @@ export default function SolutionsPage() {
                       </li>
                     ))}
                   </ul>
+                  {href && (
+                    <Button asChild variant="outline" className="mt-7">
+                      <Link href={href}>Explore {pillar.title}</Link>
+                    </Button>
+                  )}
                 </Card>
               </StaggerItem>
             );
@@ -175,7 +195,7 @@ export default function SolutionsPage() {
                 ongoing tuning. Your team approves the final flow before launch.
               </p>
               <Button asChild size="xl" className="mt-8">
-                <Link href="/demo">Request a demo</Link>
+                <Link href="/book-demo">Request a demo</Link>
               </Button>
             </FadeUp>
             <StaggerGrid className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">

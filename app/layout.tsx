@@ -7,6 +7,7 @@ import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/lib/content/site";
 
 const geistSans = Geist({
@@ -85,7 +86,7 @@ export const viewport: Viewport = {
   themeColor: "#0a0907",
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -102,13 +103,15 @@ export default function RootLayout({
       )}
     >
       <body className="bg-background text-foreground min-h-dvh font-sans">
-        <MotionProvider>
-          <SkipLink />
-          <Header />
-          {children}
-          <Footer />
-          <ChatWidget />
-        </MotionProvider>
+        <ThemeProvider>
+          <MotionProvider>
+            <SkipLink />
+            <Header />
+            {children}
+            <Footer />
+            <ChatWidget />
+          </MotionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

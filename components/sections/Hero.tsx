@@ -83,7 +83,7 @@ export function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
           <Button asChild size="xl">
-            <Link href="/demo">
+            <Link href="/book-demo">
               Book a strategy call
               <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
             </Link>

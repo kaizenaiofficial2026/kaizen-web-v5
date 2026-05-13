@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { primaryNav } from "@/lib/content/nav";
 import { cn } from "@/lib/utils";
 
@@ -46,10 +47,51 @@ export function Header() {
 
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-9 text-[15px] font-semibold text-foreground/62 lg:flex"
+            className="hidden items-center gap-8 text-[15px] font-semibold text-foreground/62 lg:flex"
           >
             {primaryNav.map((item) => {
               const isActive = isNavItemActive(pathname, item.href);
+              const hasChildren = !!item.children?.length;
+
+              if (hasChildren) {
+                return (
+                  <div key={item.href} className="group relative">
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-md py-7 transition-colors",
+                        isActive ? "text-primary" : "hover:text-foreground",
+                      )}
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                        aria-hidden
+                      />
+                    </Link>
+                    <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 -translate-y-1 rounded-2xl border border-primary/20 bg-background/95 p-2 opacity-0 shadow-[0_24px_70px_-38px_rgba(201,160,61,0.8)] backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                      {item.children?.map((child) => {
+                        const isChildActive =
+                          pathname === child.href.split("#")[0];
+                        return (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className={cn(
+                              "block rounded-xl px-4 py-3 text-sm font-semibold text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary",
+                              isChildActive && "text-primary",
+                            )}
+                          >
+                            {child.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={item.href}
@@ -63,9 +105,6 @@ export function Header() {
                   )}
                 >
                   {item.label}
-                  {item.href === "/solutions" && (
-                    <ChevronDown className="h-4 w-4" aria-hidden />
-                  )}
                 </Link>
               );
             })}
@@ -73,17 +112,18 @@ export function Header() {
 
           <div className="flex items-center justify-end gap-5">
             <Link
-              href="/demo"
+              href="/login"
               className="hidden text-[15px] font-semibold text-foreground/62 transition-colors hover:text-primary md:inline-flex"
             >
               Client portal
             </Link>
+            <ThemeToggle className="hidden md:inline-flex" />
             <Button
               asChild
               size="lg"
               className="hidden rounded-xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[0_16px_36px_-18px_color-mix(in_oklab,var(--primary)_75%,transparent)] hover:bg-accent sm:inline-flex"
             >
-              <Link href="/demo">Book demo</Link>
+              <Link href="/book-demo">Book demo</Link>
             </Button>
             <MobileNav items={primaryNav} />
           </div>
