@@ -6,6 +6,7 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 import { siteConfig } from "@/lib/content/site";
 
 const geistSans = Geist({
@@ -106,6 +107,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <ChatWidget />
         </MotionProvider>
       </body>
     </html>

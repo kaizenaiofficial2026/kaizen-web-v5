@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { HeroBackgroundFallback } from "@/components/backgrounds/HeroBackgroundFallback";
 
 type ShaderScene = {
   camera: THREE.Camera;
@@ -18,10 +19,11 @@ type ShaderScene = {
 export function HeroBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<ShaderScene | null>(null);
+  const [renderFallback, setRenderFallback] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || renderFallback) return;
 
     const vertexShader = /* glsl */ `
       void main() {
@@ -87,11 +89,20 @@ export function HeroBackground() {
 
     scene.add(new THREE.Mesh(geometry, material));
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: false,
-      preserveDrawingBuffer: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: false,
+        powerPreference: "high-performance",
+        failIfMajorPerformanceCaveat: false,
+      });
+    } catch (error) {
+      console.warn("Falling back to the CSS hero background.", error);
+      queueMicrotask(() => setRenderFallback(true));
+      return;
+    }
     renderer.setClearColor("#0a0907");
     const desktopMotionQuery = window.matchMedia("(min-width: 1024px)");
     const getPixelRatioCap = () => (desktopMotionQuery.matches ? 1.5 : 2);
@@ -103,6 +114,11 @@ export function HeroBackground() {
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.width = "100%";
     container.appendChild(renderer.domElement);
+
+    const onContextLost = (event: Event) => {
+      event.preventDefault();
+      setRenderFallback(true);
+    };
 
     uniforms.extraWaveOpacity.value = desktopMotionQuery.matches ? 1 : 0;
 
@@ -143,6 +159,7 @@ export function HeroBackground() {
     };
 
     onWindowResize();
+    renderer.domElement.addEventListener("webglcontextlost", onContextLost);
     window.addEventListener("resize", onWindowResize);
     desktopMotionQuery.addEventListener("change", onMotionQueryChange);
     animate();
@@ -150,6 +167,7 @@ export function HeroBackground() {
     return () => {
       window.removeEventListener("resize", onWindowResize);
       desktopMotionQuery.removeEventListener("change", onMotionQueryChange);
+      renderer.domElement.removeEventListener("webglcontextlost", onContextLost);
       cancelAnimationFrame(sceneRef.current?.animationId ?? 0);
 
       if (renderer.domElement.parentNode === container) {
@@ -161,7 +179,11 @@ export function HeroBackground() {
       material.dispose();
       sceneRef.current = null;
     };
-  }, []);
+  }, [renderFallback]);
+
+  if (renderFallback) {
+    return <HeroBackgroundFallback />;
+  }
 
   return (
     <div
