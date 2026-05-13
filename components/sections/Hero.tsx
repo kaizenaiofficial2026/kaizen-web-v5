@@ -28,7 +28,7 @@ export function Hero() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden pb-24 pt-32 sm:pt-40">
+    <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden pb-24 pt-32 sm:pt-40 lg:min-h-[100dvh] lg:pb-20 lg:pt-28 2xl:pb-24 2xl:pt-32">
       {reduced ? <HeroBackgroundFallback /> : <HeroBackground />}
       <div className="bg-background/34 pointer-events-none absolute inset-0 z-0" />
       <Grain />
