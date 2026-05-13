@@ -54,8 +54,7 @@ export function HeroBackground() {
         float t = time * 0.05;
         float lineWidth = 0.0026;
         vec3 color = waveContribution(uv, t, lineWidth, 1.0);
-        color += waveContribution(uv, t + 0.45, lineWidth, 0.72 * extraWaveOpacity);
-        color += waveContribution(uv, t + 0.9, lineWidth, 0.72 * extraWaveOpacity);
+        color += waveContribution(uv, t + 0.45, lineWidth, 0.5 * extraWaveOpacity);
 
         vec3 brandTint = vec3(
           color.r * 1.05 + color.g * 0.42,
@@ -94,17 +93,25 @@ export function HeroBackground() {
       preserveDrawingBuffer: true,
     });
     renderer.setClearColor("#0a0907");
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const desktopMotionQuery = window.matchMedia("(min-width: 1024px)");
+    const getPixelRatioCap = () => (desktopMotionQuery.matches ? 1.5 : 2);
+
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, getPixelRatioCap()),
+    );
     renderer.domElement.style.display = "block";
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.width = "100%";
     container.appendChild(renderer.domElement);
 
-    const desktopMotionQuery = window.matchMedia("(min-width: 1024px)");
     uniforms.extraWaveOpacity.value = desktopMotionQuery.matches ? 1 : 0;
 
     const onMotionQueryChange = (event: MediaQueryListEvent) => {
       uniforms.extraWaveOpacity.value = event.matches ? 1 : 0;
+      renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio, getPixelRatioCap()),
+      );
+      onWindowResize();
     };
 
     const onWindowResize = () => {
