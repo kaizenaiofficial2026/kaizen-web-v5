@@ -156,6 +156,51 @@
       height: 0;
     }
   }
+
+  @keyframes kaizen-status-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(0.86);
+    }
+    50% {
+      opacity: 0;
+      transform: scale(1.45);
+    }
+  }
+
+  @keyframes kaizen-check-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.72) rotate(-10deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes kaizen-x-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(253, 164, 175, 0.28);
+      transform: scale(0.92);
+    }
+    100% {
+      box-shadow: 0 0 0 8px rgba(253, 164, 175, 0);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes kaizen-sheen {
+    0%,
+    42%,
+    100% {
+      transform: translateX(0) rotate(12deg);
+    }
+    68% {
+      transform: translateX(360%) rotate(12deg);
+    }
+  }
 }
 
 @layer components {
