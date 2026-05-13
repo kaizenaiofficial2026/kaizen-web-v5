@@ -9,6 +9,7 @@ type ShaderScene = {
   renderer: THREE.WebGLRenderer;
   uniforms: {
     time: { value: number };
+    extraWaveOpacity: { value: number };
     resolution: { value: THREE.Vector2 };
   };
   animationId: number;
@@ -32,21 +33,29 @@ export function HeroBackground() {
       precision highp float;
       uniform vec2 resolution;
       uniform float time;
+      uniform float extraWaveOpacity;
 
-      void main(void) {
-        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
-        float t = time * 0.05;
-        float lineWidth = 0.0026;
-
+      vec3 waveContribution(vec2 uv, float phase, float lineWidth, float weight) {
         vec3 color = vec3(0.0);
 
         for (int i = 0; i < 5; i++) {
           float fi = float(i);
           float diagonalGrid = mod(uv.x + uv.y, 0.2);
-          color.r += lineWidth * fi * fi / abs(fract(t + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
-          color.g += lineWidth * fi * fi / abs(fract(t - 0.01 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
-          color.b += lineWidth * fi * fi / abs(fract(t - 0.02 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+          color.r += weight * lineWidth * fi * fi / abs(fract(phase + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+          color.g += weight * lineWidth * fi * fi / abs(fract(phase - 0.01 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
+          color.b += weight * lineWidth * fi * fi / abs(fract(phase - 0.02 + fi * 0.01) * 5.0 - length(uv) + diagonalGrid);
         }
+
+        return color;
+      }
+
+      void main(void) {
+        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+        float t = time * 0.05;
+        float lineWidth = 0.0026;
+        vec3 color = waveContribution(uv, t, lineWidth, 1.0);
+        color += waveContribution(uv, t + 0.45, lineWidth, 0.72 * extraWaveOpacity);
+        color += waveContribution(uv, t + 0.9, lineWidth, 0.72 * extraWaveOpacity);
 
         vec3 brandTint = vec3(
           color.r * 1.05 + color.g * 0.42,
@@ -67,6 +76,7 @@ export function HeroBackground() {
     const geometry = new THREE.PlaneGeometry(2, 2);
     const uniforms = {
       time: { value: 1 },
+      extraWaveOpacity: { value: 0 },
       resolution: { value: new THREE.Vector2() },
     };
 
@@ -89,6 +99,13 @@ export function HeroBackground() {
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.width = "100%";
     container.appendChild(renderer.domElement);
+
+    const desktopMotionQuery = window.matchMedia("(min-width: 1024px)");
+    uniforms.extraWaveOpacity.value = desktopMotionQuery.matches ? 1 : 0;
+
+    const onMotionQueryChange = (event: MediaQueryListEvent) => {
+      uniforms.extraWaveOpacity.value = event.matches ? 1 : 0;
+    };
 
     const onWindowResize = () => {
       const width = container.clientWidth;
@@ -120,10 +137,12 @@ export function HeroBackground() {
 
     onWindowResize();
     window.addEventListener("resize", onWindowResize);
+    desktopMotionQuery.addEventListener("change", onMotionQueryChange);
     animate();
 
     return () => {
       window.removeEventListener("resize", onWindowResize);
+      desktopMotionQuery.removeEventListener("change", onMotionQueryChange);
       cancelAnimationFrame(sceneRef.current?.animationId ?? 0);
 
       if (renderer.domElement.parentNode === container) {
