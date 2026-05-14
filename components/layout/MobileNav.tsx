@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { BrandMark } from "./BrandMark";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import type { NavItem } from "@/lib/types";
 import { siteConfig } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
@@ -54,7 +53,6 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <div className="flex items-center justify-between gap-4">
           <BrandMark withPill={false} surface="dark" />
-          <ThemeToggle />
         </div>
         <nav aria-label="Mobile primary" className="flex flex-col gap-1">
           {items.map((item) => {
@@ -107,6 +105,18 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         <div className="flex flex-col gap-3">
           <SheetClose asChild>
             <Link
+              href="/login"
+              className={buttonVariants({
+                size: "lg",
+                className:
+                  "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
+              })}
+            >
+              Login
+            </Link>
+          </SheetClose>
+          <SheetClose asChild>
+            <Link
               href="/book-demo"
               className={buttonVariants({
                 size: "lg",
@@ -115,19 +125,6 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               })}
             >
               Book a Call
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link
-              href="/login"
-              className={buttonVariants({
-                variant: "outline",
-                size: "lg",
-                className:
-                  "w-full rounded-xl border-primary/40 bg-background text-foreground hover:bg-primary/10 hover:text-primary",
-              })}
-            >
-              Client portal
             </Link>
           </SheetClose>
           <SheetClose asChild>

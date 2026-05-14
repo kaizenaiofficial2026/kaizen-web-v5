@@ -17,7 +17,7 @@ export function HeroBackgroundFallback({ className }: { className?: string }) {
     >
       <div
         aria-hidden
-        className="absolute inset-[-20%] opacity-60 blur-[1px] animate-[kaizen-fallback-wave_8s_linear_infinite]"
+        className="absolute inset-[-20%] opacity-60 blur-[1px] animate-[kaizen-fallback-wave_16s_linear_infinite]"
         style={{
           backgroundImage:
             "repeating-linear-gradient(135deg, rgba(201,160,61,0) 0 10%, rgba(236,212,121,0.16) 12%, rgba(80,140,255,0.12) 13%, rgba(201,160,61,0) 18%)",

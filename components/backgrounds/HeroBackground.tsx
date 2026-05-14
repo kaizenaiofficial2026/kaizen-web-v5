@@ -142,7 +142,7 @@ export function HeroBackground() {
 
     const animate = () => {
       const animationId = requestAnimationFrame(animate);
-      uniforms.time.value += 0.075;
+      uniforms.time.value += 0.038;
       renderer.render(scene, camera);
 
       if (sceneRef.current) {

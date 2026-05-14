@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { primaryNav } from "@/lib/content/nav";
 import { cn } from "@/lib/utils";
 
@@ -121,17 +120,17 @@ export function Header() {
           </nav>
 
           <div className="flex items-center justify-end gap-5">
-            <Link
-              href="/login"
-              className="hidden text-[15px] font-semibold text-foreground/62 transition-colors hover:text-primary md:inline-flex"
-            >
-              Client portal
-            </Link>
-            <ThemeToggle className="hidden md:inline-flex" />
             <Button
               asChild
-              size="lg"
-              className="hidden rounded-xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[0_16px_36px_-18px_color-mix(in_oklab,var(--primary)_75%,transparent)] hover:bg-accent sm:inline-flex"
+              size="sm"
+              className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex"
+            >
+              <Link href="/login">Login</Link>
+            </Button>
+            <Button
+              asChild
+              size="sm"
+              className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex"
             >
               <Link href="/book-demo">Book a Call</Link>
             </Button>

@@ -9,6 +9,24 @@ import { Container } from "@/components/primitives/Container";
 import { Grain } from "@/components/primitives/Grain";
 import { HeroBackgroundFallback } from "@/components/backgrounds/HeroBackgroundFallback";
 
+const trustItems = [
+  "Inbound Calls",
+  "Outbound Calls",
+  "WhatsApp Chats",
+  "Instagram DMs",
+  "Messenger",
+  "Lead Conversion",
+  "Bookings",
+];
+
+const trustRows = [trustItems.slice(0, 4), trustItems.slice(4)];
+
+const proofItems = [
+  "Trained on your business",
+  "Human-like conversations",
+  "Built to convert",
+];
+
 const HeroBackground = dynamic(
   () =>
     import("@/components/backgrounds/HeroBackground").then(
@@ -16,13 +34,6 @@ const HeroBackground = dynamic(
     ),
   { ssr: false, loading: () => <HeroBackgroundFallback /> },
 );
-
-const heroStats = [
-  "148 calls answered today",
-  "0 missed leads",
-  "< 5s avg response",
-  "30+ languages handled",
-];
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -33,17 +44,7 @@ export function Hero() {
       <div className="bg-background/34 pointer-events-none absolute inset-0 z-0" />
       <Grain />
 
-      <Container className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="border-primary/25 bg-card/60 text-foreground/85 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs backdrop-blur-md sm:text-sm"
-        >
-          <span className="bg-primary block h-1.5 w-1.5 rounded-full" />
-          AI chatbots and voice agents
-        </motion.span>
-
+      <Container className="relative z-10 flex flex-1 flex-col items-center justify-start pt-2 text-center sm:pt-4 lg:pt-6 2xl:pt-8">
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,10 +53,12 @@ export function Hero() {
             delay: 0.08,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="text-foreground text-display mt-6 max-w-4xl font-medium"
+          className="[font-family:var(--font-syne)] max-w-5xl text-[clamp(3.35rem,6vw+0.8rem,6.35rem)] font-bold leading-[0.96] text-[#f0ead8]"
         >
-          Never miss a lead. <br className="hidden sm:block" />
-          <span className="text-primary">Never lose a customer.</span>
+          Your AI Sales Team{" "}
+          <span className="block bg-gradient-to-r from-[#a07820] via-[#edd070] to-[#c49a30] bg-clip-text text-transparent">
+            Never Sleeps.
+          </span>
         </motion.h1>
 
         <motion.p
@@ -66,10 +69,29 @@ export function Hero() {
             delay: 0.16,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="text-foreground/75 text-lead mt-6 max-w-xl"
+          className="[font-family:var(--font-dm-sans)] mt-6 max-w-3xl text-[1.08rem] leading-8 text-foreground sm:text-[1.24rem] sm:leading-9"
         >
-          AI agents that answer calls, reply to messages, qualify enquiries,
-          and book appointments 24/7 in the customer&apos;s preferred language.
+          Custom-built AI voice and chat systems that answer calls, reply to
+          messages, follow up with leads, book appointments, and help your
+          business close more sales 24/7/365.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.7,
+            delay: 0.2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="mt-7 flex max-w-4xl flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center text-base font-semibold text-foreground sm:text-lg"
+        >
+          {proofItems.map((item, index) => (
+            <span key={item} className="inline-flex items-center gap-4">
+              {index > 0 && <span aria-hidden>•</span>}
+              {item}
+            </span>
+          ))}
         </motion.p>
 
         <motion.div
@@ -80,38 +102,53 @@ export function Hero() {
             delay: 0.24,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+          className="mt-8 flex flex-wrap items-center justify-center gap-3"
         >
-          <Button asChild size="xl">
+          <Button
+            asChild
+            size="xl"
+            className="rounded-xl border border-primary/65 bg-[linear-gradient(135deg,rgba(237,208,112,0.22),rgba(160,120,32,0.12))] px-7 font-extrabold text-[#f0ead8] shadow-[0_18px_42px_-28px_rgba(237,208,112,0.65),inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-primary/85 hover:bg-[linear-gradient(135deg,rgba(237,208,112,0.30),rgba(160,120,32,0.16))] hover:shadow-[0_0_34px_rgba(237,208,112,0.18),0_20px_50px_-30px_rgba(237,208,112,0.75),inset_0_1px_0_rgba(255,255,255,0.22)]"
+          >
             <Link href="/book-demo">
-              Book a strategy call
+              Book a free strategy call
               <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="xl">
-            <Link href="/solutions">See solutions</Link>
+          <Button
+            asChild
+            variant="outline"
+            size="xl"
+            className="rounded-xl border-white/18 bg-black/20 font-bold text-foreground/78 shadow-none backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-white/34 hover:bg-white/[0.045] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.14)]"
+          >
+            <Link href="/demo">See live demo</Link>
           </Button>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-14 flex flex-col items-center gap-4"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.7,
+            delay: 0.32,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="mt-8 flex w-full max-w-6xl flex-col items-center justify-center gap-3 text-[10px] font-bold uppercase text-foreground/68 sm:text-[11px] lg:text-xs"
         >
-          <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.2em]">
-            Always on duty for calls, chats, and bookings
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 opacity-60">
-            {heroStats.map((name) => (
-              <span
-                key={name}
-                className="text-foreground/70 text-sm font-semibold tracking-wide"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
+          {trustRows.map((row) => (
+            <div
+              key={row.join("-")}
+              className="flex flex-nowrap items-center justify-center gap-3 sm:gap-4"
+            >
+              {row.map((item) => (
+                <span
+                  key={item}
+                  className="whitespace-nowrap rounded-full border border-primary/22 bg-card/35 px-3 py-1.5 shadow-[0_8px_26px_-22px_rgba(255,255,255,0.35)] backdrop-blur-md"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          ))}
         </motion.div>
       </Container>
 

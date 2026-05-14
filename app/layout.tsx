@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import {
+  DM_Sans,
+  Geist,
+  Geist_Mono,
+  Instrument_Serif,
+  Syne,
+} from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/motion/MotionProvider";
@@ -27,6 +33,19 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -99,6 +118,8 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         instrumentSerif.variable,
+        syne.variable,
+        dmSans.variable,
         "dark h-full antialiased",
       )}
     >

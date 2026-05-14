@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -9,12 +11,21 @@ export function BrandMark({
   withPill?: boolean;
   surface?: "dark" | "light";
 }) {
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    if (window.location.pathname !== "/") return;
+
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   return (
     <Link
       href="/"
+      scroll
+      onClick={handleClick}
       aria-label="Kaizen AI home"
       className={cn(
-        "relative block h-10 w-[152px] shrink-0 overflow-hidden sm:w-[172px]",
+        "relative block h-12 w-[182px] shrink-0 -translate-y-1 overflow-hidden sm:w-[206px]",
         className,
       )}
     >
@@ -23,7 +34,7 @@ export function BrandMark({
         alt=""
         fill
         priority
-        sizes="(min-width: 640px) 172px, 152px"
+        sizes="(min-width: 640px) 206px, 182px"
         className="object-cover object-center"
         aria-hidden
       />
