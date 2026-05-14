@@ -2,12 +2,15 @@ import {
   Bot,
   CalendarCheck,
   CheckCircle2,
+  Cog,
   Languages,
   MessageCircle,
   PhoneCall,
   PhoneForwarded,
+  PlugZap,
   RotateCcw,
   ShieldCheck,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
 
@@ -116,5 +119,52 @@ export const voiceAgentProduct: ProductPageContent = {
     { value: "7-14", label: "day typical voice launch" },
     { value: "< 5s", label: "average pickup target" },
     { value: "24/7", label: "always-on coverage" },
+  ],
+};
+
+export const customAutomationProduct: ProductPageContent = {
+  eyebrow: "Custom AI Automations",
+  title: "AI workflows that connect your tools and",
+  accent: "remove manual work",
+  subtitle:
+    "Custom automations for lead routing, follow-ups, CRM updates, internal alerts, and repeatable back-office tasks across the systems your team already uses.",
+  badge: "CRM · Forms · Scheduling · Notifications",
+  primaryCta: "Book an automation call",
+  secondaryCta: "See pricing",
+  heroSteps: [
+    { icon: Workflow, label: "Map", value: "Your workflow" },
+    { icon: PlugZap, label: "Connect", value: "Your tools" },
+    { icon: Cog, label: "Automate", value: "Repeat tasks" },
+  ],
+  features: [
+    {
+      icon: Workflow,
+      title: "Built around your process",
+      description:
+        "We map the steps your team repeats every day, then design an AI-assisted workflow that fits your handoff rules.",
+    },
+    {
+      icon: PlugZap,
+      title: "Connects your stack",
+      description:
+        "Automate CRM updates, form intake, appointment reminders, internal notifications, and lead follow-up across your existing tools.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Keeps humans in control",
+      description:
+        "Add approval points, escalation rules, and activity summaries so your team can trust what the automation is doing.",
+    },
+  ],
+  outcomes: [
+    "Reduce copy-paste work between forms, inboxes, CRMs, and calendars",
+    "Trigger follow-ups when leads, bookings, or support requests come in",
+    "Keep teams updated with summaries, alerts, and next-step prompts",
+    "Document the workflow so it can scale without becoming fragile",
+  ],
+  proof: [
+    { value: "1-2", label: "priority workflows to start" },
+    { value: "24/7", label: "automation coverage" },
+    { value: "Human", label: "approval where needed" },
   ],
 };

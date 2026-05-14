@@ -13,9 +13,19 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { primaryNav } from "@/lib/content/nav";
 import { cn } from "@/lib/utils";
 
-function isNavItemActive(pathname: string, href: string) {
+function isHrefActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isNavItemActive(
+  pathname: string,
+  item: (typeof primaryNav)[number],
+) {
+  return (
+    (item.href ? isHrefActive(pathname, item.href) : false) ||
+    Boolean(item.children?.some((child) => isHrefActive(pathname, child.href)))
+  );
 }
 
 export function Header() {
@@ -50,14 +60,14 @@ export function Header() {
             className="hidden items-center gap-8 text-[15px] font-semibold text-foreground/62 lg:flex"
           >
             {primaryNav.map((item) => {
-              const isActive = isNavItemActive(pathname, item.href);
+              const isActive = isNavItemActive(pathname, item);
               const hasChildren = !!item.children?.length;
 
               if (hasChildren) {
                 return (
-                  <div key={item.href} className="group relative">
-                    <Link
-                      href={item.href}
+                  <div key={item.label} className="group relative">
+                    <button
+                      type="button"
                       aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "inline-flex items-center gap-1.5 rounded-md py-7 transition-colors",
@@ -66,11 +76,11 @@ export function Header() {
                     >
                       {item.label}
                       <ChevronDown
-                        className="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                        className="h-4 w-4 transition-transform group-hover:rotate-180"
                         aria-hidden
                       />
-                    </Link>
-                    <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 -translate-y-1 rounded-2xl border border-primary/20 bg-background/95 p-2 opacity-0 shadow-[0_24px_70px_-38px_rgba(201,160,61,0.8)] backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                    </button>
+                    <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 -translate-y-1 rounded-2xl border border-primary/20 bg-background/95 p-2 opacity-0 shadow-[0_24px_70px_-38px_rgba(201,160,61,0.8)] backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       {item.children?.map((child) => {
                         const isChildActive =
                           pathname === child.href.split("#")[0];
@@ -94,8 +104,8 @@ export function Header() {
 
               return (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={item.href ?? item.label}
+                  href={item.href ?? "/"}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "inline-flex items-center gap-1.5 rounded-md transition-colors",
@@ -123,7 +133,7 @@ export function Header() {
               size="lg"
               className="hidden rounded-xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[0_16px_36px_-18px_color-mix(in_oklab,var(--primary)_75%,transparent)] hover:bg-accent sm:inline-flex"
             >
-              <Link href="/book-demo">Book demo</Link>
+              <Link href="/book-demo">Book a Call</Link>
             </Button>
             <MobileNav items={primaryNav} />
           </div>

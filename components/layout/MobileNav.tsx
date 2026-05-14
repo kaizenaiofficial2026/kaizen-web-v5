@@ -19,9 +19,16 @@ import type { NavItem } from "@/lib/types";
 import { siteConfig } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
 
-function isNavItemActive(pathname: string, href: string) {
+function isHrefActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isNavItemActive(pathname: string, item: NavItem) {
+  return (
+    (item.href ? isHrefActive(pathname, item.href) : false) ||
+    Boolean(item.children?.some((child) => isHrefActive(pathname, child.href)))
+  );
 }
 
 export function MobileNav({ items }: { items: NavItem[] }) {
@@ -51,21 +58,33 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         </div>
         <nav aria-label="Mobile primary" className="flex flex-col gap-1">
           {items.map((item) => {
-            const isActive = isNavItemActive(pathname, item.href);
+            const isActive = isNavItemActive(pathname, item);
             return (
-              <div key={item.href}>
-                <SheetClose asChild>
-                  <Link
-                    href={item.href}
+              <div key={item.href ?? item.label}>
+                {item.href ? (
+                  <SheetClose asChild>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
+                        isActive && "bg-primary/15 text-primary",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <div
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
+                      "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72",
                       isActive && "bg-primary/15 text-primary",
                     )}
                   >
                     {item.label}
-                  </Link>
-                </SheetClose>
+                  </div>
+                )}
                 {!!item.children?.length && (
                   <div className="mt-1 space-y-1 border-l border-primary/20 pl-4">
                     {item.children.map((child) => (
@@ -95,7 +114,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
                   "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
               })}
             >
-              Book demo
+              Book a Call
             </Link>
           </SheetClose>
           <SheetClose asChild>
