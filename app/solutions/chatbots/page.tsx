@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { ProductDetailPage } from "@/components/sections/products/ProductDetailPage";
-import { chatbotProduct } from "@/lib/content/product-pages";
+import { ChatbotSolutionPage } from "@/components/sections/products/ChatbotSolutionPage";
 
 export const metadata: Metadata = {
   title: "AI Chatbots",
@@ -9,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function ChatbotsPage() {
-  return <ProductDetailPage product={chatbotProduct} />;
+  return <ChatbotSolutionPage />;
 }

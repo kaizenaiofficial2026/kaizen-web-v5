@@ -1,12 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  turbopack: {
-    root: process.cwd(),
-  },
-  experimental: {
-    optimizePackageImports: ["motion"],
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
