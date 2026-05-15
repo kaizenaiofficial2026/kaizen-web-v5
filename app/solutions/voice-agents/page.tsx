@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { ProductDetailPage } from "@/components/sections/products/ProductDetailPage";
-import { voiceAgentProduct } from "@/lib/content/product-pages";
+import { VoiceAgentSolutionPage } from "@/components/sections/products/VoiceAgentSolutionPage";
 
 export const metadata: Metadata = {
   title: "AI Voice Agents",
@@ -9,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function VoiceAgentsPage() {
-  return <ProductDetailPage product={voiceAgentProduct} />;
+  return <VoiceAgentSolutionPage />;
 }
