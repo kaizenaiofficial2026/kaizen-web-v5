@@ -57,6 +57,9 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  icons: {
+    icon: "/favicon.ico",
+  },
   keywords: [
     "AI chatbots",
     "AI voice agents",
