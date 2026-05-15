@@ -2,7 +2,7 @@ import { Hero } from "@/components/sections/Hero";
 import { LogoCloud } from "@/components/sections/LogoCloud";
 import { Features } from "@/components/sections/Features";
 import { Comparison } from "@/components/sections/Comparison";
-import { Pricing } from "@/components/sections/Pricing";
+import { SimpleProcess } from "@/components/sections/SimpleProcess";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { CTA } from "@/components/sections/CTA";
 import { FAQ } from "@/components/sections/FAQ";
@@ -14,9 +14,9 @@ export default function Home() {
       <LogoCloud />
       <Features />
       <Comparison />
-      <Pricing />
-      <Testimonials />
+      <SimpleProcess />
       <CTA />
+      <Testimonials />
       <FAQ />
     </main>
   );

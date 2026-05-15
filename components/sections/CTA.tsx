@@ -8,7 +8,7 @@ export function CTA() {
   return (
     <section
       id="cta"
-      className="bg-background relative w-full overflow-hidden py-32 sm:py-40"
+      className="bg-background relative w-full overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       <div
         aria-hidden
@@ -24,28 +24,28 @@ export function CTA() {
       />
       <Container className="relative z-10 text-center">
         <FadeUp>
-          <h2 className="text-foreground text-display font-bold uppercase">
+          <h2 className="text-foreground text-h1 font-bold uppercase">
             Stop <span className="text-primary">missing leads</span>.
             <br className="hidden sm:block" />
             Start <span className="text-primary">growing</span>.
           </h2>
         </FadeUp>
         <FadeUp delay={0.08}>
-          <p className="text-foreground/75 mx-auto mt-6 max-w-2xl text-lead">
+          <p className="text-foreground/75 mx-auto mt-5 max-w-2xl text-lead">
             Book a focused call and we&apos;ll show where your business is
             losing customers today, plus the fastest AI agent to launch first.
           </p>
         </FadeUp>
         <FadeUp delay={0.16}>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="xl" className="uppercase tracking-[0.08em]">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+            <Button asChild size="xl">
               <Link href="/book-demo">
-                Book a free call
+                Book a Free Call
                 <ArrowUpRight />
               </Link>
             </Button>
             <Button asChild variant="outline" size="xl">
-              <Link href="/solutions">See solutions</Link>
+              <Link href="/demo">See Live Demo</Link>
             </Button>
           </div>
         </FadeUp>

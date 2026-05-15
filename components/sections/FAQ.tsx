@@ -13,7 +13,7 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="relative w-full overflow-hidden py-24 sm:py-32 lg:py-40"
+      className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24"
     >
       <div
         aria-hidden
@@ -25,8 +25,8 @@ export function FAQ() {
       />
       <Container>
         <FadeUp>
-          <div className="border-border bg-card/60 rounded-2xl border px-6 py-10 backdrop-blur-md sm:px-12 sm:py-14">
-            <div className="flex items-start justify-between gap-8 pb-10">
+          <div className="border-border bg-card/60 rounded-2xl border px-6 py-8 backdrop-blur-md sm:px-10 sm:py-10">
+            <div className="flex items-start justify-between gap-8 pb-8">
               <p className="text-muted-foreground max-w-sm text-sm leading-6 sm:text-base">
                 Can&apos;t find the answer?
                 <br />
