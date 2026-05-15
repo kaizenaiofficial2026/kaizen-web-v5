@@ -5,14 +5,11 @@ import Link from "next/link";
 import {
   ArrowDown,
   ArrowRight,
-  BarChart3,
   Bot,
   CalendarCheck,
   Check,
-  CheckCircle2,
   ChevronRight,
   CircleDot,
-  Clock3,
   Globe2,
   Handshake,
   Image as ImageIcon,
@@ -25,7 +22,6 @@ import {
   Play,
   PlugZap,
   Send,
-  ShieldCheck,
   Sparkles,
   ThumbsUp,
   Users,
@@ -66,27 +62,6 @@ const coreFeatures = [
   { title: "Image/video responses", Icon: ImageIcon },
   { title: "Lead dashboard", Icon: LayoutDashboard },
   { title: "Business-trained knowledge", Icon: Bot },
-];
-
-const demoQuestions = [
-  {
-    label: "Book appointment",
-    question: "Do you have a slot this week?",
-    answer:
-      "Yes. Thursday 4:30 PM and Saturday 10:00 AM are open. I can reserve one and send the prep details now.",
-  },
-  {
-    label: "Ask price",
-    question: "How much is the starter package?",
-    answer:
-      "Starter setup begins from $109/month. I can ask two quick questions and suggest the right plan.",
-  },
-  {
-    label: "Send brochure",
-    question: "Can you send me the service details?",
-    answer:
-      "Absolutely. I can send the brochure, pricing summary, and examples directly in this chat.",
-  },
 ];
 
 const featureDemos: FeatureDemo[] = [
@@ -151,13 +126,31 @@ const featureDemos: FeatureDemo[] = [
   },
 ];
 
-const metrics = [
-  { value: "Under 5 sec", label: "response time", Icon: Clock3 },
-  { value: "24/7", label: "availability", Icon: CheckCircle2 },
-  { value: "30+", label: "supported languages", Icon: Languages },
-  { value: "4+", label: "customer channels", Icon: MessagesSquare },
-  { value: "More", label: "leads captured", Icon: BarChart3 },
-  { value: "Less", label: "staff pressure", Icon: ShieldCheck },
+const outcomeMetrics = [
+  {
+    value: "+ Revenue Opportunities",
+    label: "More Revenue Opportunities",
+    text: "Capture enquiries before they go cold.",
+    Icon: Sparkles,
+  },
+  {
+    value: "+ Sales Conversions",
+    label: "Higher Sales Conversion",
+    text: "Guide interested customers toward booking or buying.",
+    Icon: Check,
+  },
+  {
+    value: "Instant Replies",
+    label: "Faster Customer Response",
+    text: "Reply across website, WhatsApp, Instagram, and Facebook.",
+    Icon: Send,
+  },
+  {
+    value: "24/7 Conversations",
+    label: "More Conversations Handled",
+    text: "Let AI manage repeat enquiries while your team closes.",
+    Icon: MessagesSquare,
+  },
 ];
 
 const intakeChannels = [
@@ -387,81 +380,6 @@ function VisualDemo({ type, large = false }: { type: FeatureDemo["visual"]; larg
   );
 }
 
-function DemoPreview() {
-  const [active, setActive] = useState(demoQuestions[0]);
-
-  return (
-    <Card className="overflow-hidden p-0 shadow-[0_34px_100px_-62px_rgba(201,160,61,0.8)]">
-      <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="border-b border-border p-6 sm:p-8 lg:border-b-0 lg:border-r">
-          <Badge>Live Demo Preview</Badge>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Experience the AI before your customers do.
-          </h2>
-          <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
-            Ask a question and see how a Kaizen chat agent responds like a
-            trained member of your team.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-2">
-            {demoQuestions.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                onClick={() => setActive(item)}
-                className={cn(
-                  "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
-                  active.label === item.label
-                    ? "border-primary/50 bg-primary/16 text-primary"
-                    : "border-border bg-background/35 text-foreground/72 hover:border-primary/34 hover:text-primary",
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          <Button asChild variant="outline" className="mt-8">
-            <Link href="/demo">
-              Open live demo
-              <ArrowRight aria-hidden />
-            </Link>
-          </Button>
-        </div>
-        <div className="relative min-h-[390px] bg-[radial-gradient(80%_80%_at_50%_0%,rgba(201,160,61,0.18),transparent_72%)] p-6 sm:p-8">
-          <div className="mx-auto flex h-full max-w-md flex-col rounded-[1.75rem] border border-white/10 bg-black/28 p-4">
-            <div className="flex items-center gap-3 border-b border-white/8 pb-4">
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-primary/14 text-primary">
-                <Bot className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-foreground">
-                  Kaizen chat agent
-                </p>
-                <p className="text-xs text-[#25d366]">Online now</p>
-              </div>
-            </div>
-            <div className="flex-1 space-y-3 py-5">
-              <div className="max-w-[82%] rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.06] px-4 py-3 text-sm text-foreground/82">
-                {active.question}
-              </div>
-              <div className="ml-auto max-w-[88%] rounded-2xl rounded-tr-md border border-primary/28 bg-primary/14 px-4 py-3 text-sm leading-6 text-foreground">
-                {active.answer}
-              </div>
-              <div className="ml-auto flex max-w-[82%] items-center gap-2 rounded-2xl rounded-tr-md border border-primary/20 bg-black/24 px-4 py-3 text-xs text-foreground/74">
-                <LayoutDashboard className="h-4 w-4 text-primary" />
-                Lead saved to dashboard
-              </div>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-xs text-muted-foreground">
-              <span className="h-2 w-2 rounded-full bg-primary" />
-              Try another question above
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
 function WorkflowDiagram() {
   return (
     <div className="mt-12">
@@ -551,7 +469,7 @@ export function ChatbotSolutionPage() {
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Button asChild size="xl">
-                <Link href="#try-it">
+                <Link href="/demo">
                   Try It Yourself
                   <ArrowRight aria-hidden />
                 </Link>
@@ -576,10 +494,6 @@ export function ChatbotSolutionPage() {
           </FadeUp>
         </Container>
       </section>
-
-      <MarketingSection id="try-it" className="py-16 sm:py-20 lg:py-24">
-        <DemoPreview />
-      </MarketingSection>
 
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
         <FadeUp>
@@ -679,30 +593,43 @@ export function ChatbotSolutionPage() {
             title={
               <>
                 Built to improve the{" "}
-                <span className="text-primary">numbers that matter.</span>
+                <span className="text-primary">outcomes that matter.</span>
               </>
             }
           />
         </FadeUp>
-        <StaggerGrid className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {metrics.map(({ value, label, Icon }) => (
-            <StaggerItem key={`${value}-${label}`}>
-              <Card className="relative overflow-hidden p-6">
+        <div className="mt-12 overflow-hidden rounded-[1.5rem] border border-primary/22 bg-[linear-gradient(145deg,rgba(201,160,61,0.12),rgba(255,255,255,0.045))] shadow-[0_32px_110px_-76px_rgba(201,160,61,0.9)]">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4">
+            {outcomeMetrics.map(({ value, label, text, Icon }) => (
+              <div
+                key={label}
+                className="relative min-h-[220px] border-b border-primary/16 p-6 last:border-b-0 sm:[&:nth-child(3)]:border-b-0 sm:[&:nth-child(4)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+              >
                 <div
                   aria-hidden
-                  className="absolute right-0 top-0 h-24 w-24 rounded-full bg-primary/12 blur-2xl"
+                  className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 />
-                <Icon className="relative h-6 w-6 text-primary" />
-                <p className="relative mt-5 text-3xl font-semibold tracking-tight text-primary">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/22 bg-primary/12 text-primary">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <span className="rounded-full border border-primary/18 bg-black/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary/80">
+                    Outcome
+                  </span>
+                </div>
+                <p className="mt-7 text-2xl font-semibold tracking-tight text-primary">
                   {value}
                 </p>
-                <p className="relative mt-1 text-sm font-medium text-foreground/72">
+                <h2 className="mt-3 text-lg font-semibold leading-tight text-foreground">
                   {label}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {text}
                 </p>
-              </Card>
-            </StaggerItem>
-          ))}
-        </StaggerGrid>
+              </div>
+            ))}
+          </div>
+        </div>
       </MarketingSection>
 
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
