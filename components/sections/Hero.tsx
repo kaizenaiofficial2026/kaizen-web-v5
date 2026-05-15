@@ -53,7 +53,7 @@ export function Hero() {
             delay: 0.08,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="[font-family:var(--font-syne)] max-w-5xl text-[clamp(3.35rem,6vw+0.8rem,6.35rem)] font-bold leading-[0.96] text-[#f0ead8]"
+          className="[font-family:var(--font-syne)] max-w-5xl text-[clamp(3.35rem,6vw+0.8rem,6.35rem)] font-bold leading-[0.96] text-[#d8c58a] drop-shadow-[0_3px_22px_rgba(0,0,0,0.78)] [text-shadow:0_1px_0_rgba(255,255,255,0.08),0_0_34px_rgba(0,0,0,0.65)]"
         >
           Your AI Sales Team{" "}
           <span className="block bg-gradient-to-r from-[#a07820] via-[#edd070] to-[#c49a30] bg-clip-text text-transparent">
@@ -107,7 +107,7 @@ export function Hero() {
           <Button
             asChild
             size="xl"
-            className="rounded-xl border border-primary/65 bg-[linear-gradient(135deg,rgba(237,208,112,0.22),rgba(160,120,32,0.12))] px-7 font-extrabold text-[#f0ead8] shadow-[0_18px_42px_-28px_rgba(237,208,112,0.65),inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-primary/85 hover:bg-[linear-gradient(135deg,rgba(237,208,112,0.30),rgba(160,120,32,0.16))] hover:shadow-[0_0_34px_rgba(237,208,112,0.18),0_20px_50px_-30px_rgba(237,208,112,0.75),inset_0_1px_0_rgba(255,255,255,0.22)]"
+            className="rounded-xl border border-[#8d6f24]/65 bg-[linear-gradient(135deg,rgba(141,111,36,0.34),rgba(72,55,18,0.24))] px-7 font-extrabold text-[#f0ead8] shadow-[0_18px_42px_-30px_rgba(141,111,36,0.72),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-[#a07820]/85 hover:bg-[linear-gradient(135deg,rgba(160,120,32,0.42),rgba(72,55,18,0.28))] hover:shadow-[0_0_30px_rgba(141,111,36,0.18),0_20px_50px_-32px_rgba(141,111,36,0.75),inset_0_1px_0_rgba(255,255,255,0.16)]"
           >
             <Link href="/book-demo">
               Book a free strategy call
