@@ -24,6 +24,18 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 import { Container } from "@/components/primitives/Container";
@@ -35,6 +47,11 @@ type IconItem = {
   title: string;
   text: string;
   Icon: LucideIcon;
+};
+
+type HandleCard = IconItem & {
+  expanded: string;
+  demoLine: string;
 };
 
 type ImpactMetric = {
@@ -57,45 +74,77 @@ const trustChips = [
   "Multi-language support",
 ];
 
-const handleCards: IconItem[] = [
+const handleCards: HandleCard[] = [
   {
     title: "Answer incoming enquiries",
     text: "Never leave callers waiting in silence.",
+    expanded:
+      "The voice agent answers common customer questions instantly, captures useful details, and keeps the call moving.",
+    demoLine:
+      "Hi, thanks for calling. I can help with that. Could I quickly get your name and the service you are interested in?",
     Icon: PhoneIncoming,
   },
   {
     title: "Call missed leads back instantly",
     text: "Recover interest while it is still warm.",
+    expanded:
+      "When a call is missed, the agent can follow up quickly and collect the reason for the enquiry.",
+    demoLine:
+      "Hi, I am calling back from the team. I saw we missed your call. What can I help you with today?",
     Icon: PhoneOutgoing,
   },
   {
     title: "Book appointments automatically",
     text: "Guide callers into confirmed next steps.",
+    expanded:
+      "The agent can collect booking details, confirm preferred timing, and guide the customer toward the next step.",
+    demoLine:
+      "Yes, I can help book that. What day works best for you, and do you prefer morning or afternoon?",
     Icon: CalendarCheck,
   },
   {
     title: "Qualify sales prospects",
     text: "Ask the right questions before handoff.",
+    expanded:
+      "The agent asks focused questions so your team receives clearer, warmer leads instead of vague callbacks.",
+    demoLine:
+      "Before I send this to the team, could I ask what service you need and when you are hoping to get started?",
     Icon: UserCheck,
   },
   {
     title: "Follow up automatically",
     text: "Keep leads moving without manual chasing.",
+    expanded:
+      "The agent can remind leads, check interest, and keep the conversation alive without adding staff pressure.",
+    demoLine:
+      "Just following up on your enquiry. Are you still interested, or would you like me to arrange a call with the team?",
     Icon: PhoneForwarded,
   },
   {
     title: "Escalate hot leads to your team",
     text: "Send context when a human should close.",
+    expanded:
+      "When the conversation needs a person, the agent can pass the call context and urgency to your team.",
+    demoLine:
+      "This sounds important. I can send your details and call summary to the team so they can contact you directly.",
     Icon: Users,
   },
   {
     title: "Speak multiple languages",
     text: "Support callers in the languages you need.",
+    expanded:
+      "The agent can be configured for the languages your customers actually use, including mixed-language conversations.",
+    demoLine:
+      "Yes, I can support multiple languages depending on your setup. Which language would you prefer?",
     Icon: Languages,
   },
   {
     title: "Update CRM / dashboard",
     text: "Store outcomes, intent, and call notes.",
+    expanded:
+      "After the call, key details can be prepared for your dashboard or connected CRM workflow.",
+    demoLine:
+      "I have captured the customer name, intent, preferred time, and next action for the team dashboard.",
     Icon: LayoutDashboard,
   },
 ];
@@ -524,7 +573,95 @@ function ImpactStrip() {
   );
 }
 
+function ModalWaveform({ active }: { active: boolean }) {
+  const bars = [22, 46, 32, 58, 38, 76, 48, 30, 68, 42, 26, 54, 70, 34];
+
+  return (
+    <div className="flex h-24 items-center gap-1.5 rounded-2xl border border-white/10 bg-black/24 px-4">
+      {bars.map((height, index) => (
+        <span
+          key={`${height}-${index}`}
+          className={cn(
+            "w-full rounded-full bg-[linear-gradient(180deg,rgba(201,160,61,0.96),rgba(201,160,61,0.2))]",
+            active && "modalWaveActive",
+          )}
+          style={{
+            height,
+            animationDelay: `${index * 70}ms`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function DemoModalOrb({ active }: { active: boolean }) {
+  return (
+    <div className="relative mx-auto grid h-56 w-56 place-items-center">
+      <span
+        aria-hidden
+        className={cn(
+          "absolute h-52 w-52 rounded-full border border-primary/20 bg-primary/10 blur-sm",
+          active ? "voiceOrbRingSpeaking" : "voiceOrbRingIdle",
+        )}
+      />
+      <span
+        aria-hidden
+        className={cn(
+          "absolute h-40 w-40 rounded-full border border-white/10 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.65),rgba(201,160,61,0.76)_28%,rgba(104,79,25,0.94)_66%,rgba(12,10,6,0.98)_100%)] shadow-[0_0_90px_-18px_rgba(201,160,61,1),inset_0_1px_22px_rgba(255,255,255,0.3)]",
+          active ? "voiceOrbSpeaking" : "voiceOrbIdle",
+        )}
+      />
+      <span
+        aria-hidden
+        className="absolute left-[82px] top-[62px] h-10 w-14 rounded-full bg-white/30 blur-md"
+      />
+      <span className="relative grid h-20 w-20 place-items-center rounded-full border border-white/18 bg-black/24 text-primary backdrop-blur-md">
+        <Mic className="h-8 w-8" />
+      </span>
+    </div>
+  );
+}
+
 export function VoiceAgentSolutionPage() {
+  const [activeUseCase, setActiveUseCase] = useState<HandleCard | null>(null);
+  const [isModalPlaying, setIsModalPlaying] = useState(false);
+  const modalTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (modalTimer.current) {
+        window.clearTimeout(modalTimer.current);
+      }
+    };
+  }, []);
+
+  function playUseCaseDemo() {
+    if (modalTimer.current) {
+      window.clearTimeout(modalTimer.current);
+    }
+
+    setIsModalPlaying(true);
+    modalTimer.current = window.setTimeout(() => {
+      setIsModalPlaying(false);
+      modalTimer.current = null;
+    }, 3000);
+  }
+
+  function closeUseCaseModal(open: boolean) {
+    if (open) {
+      return;
+    }
+
+    if (modalTimer.current) {
+      window.clearTimeout(modalTimer.current);
+      modalTimer.current = null;
+    }
+
+    setIsModalPlaying(false);
+    setActiveUseCase(null);
+  }
+
   return (
     <main id="main" className="relative">
       <section className="relative w-full overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40">
@@ -585,23 +722,119 @@ export function VoiceAgentSolutionPage() {
           />
         </FadeUp>
         <StaggerGrid className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {handleCards.map(({ title, text, Icon }) => (
-            <StaggerItem key={title}>
-              <Card className="group h-full p-5 transition-colors hover:border-primary/38">
+          {handleCards.map((card) => (
+            <StaggerItem key={card.title}>
+              <Card
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveUseCase(card)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActiveUseCase(card);
+                  }
+                }}
+                className="group relative h-full cursor-pointer overflow-hidden p-5 transition-colors hover:border-primary/38 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/18 bg-primary/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary/80 opacity-80 transition-opacity group-hover:opacity-100">
+                  <Play className="h-3 w-3 fill-current" />
+                  Demo
+                </span>
                 <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary transition-transform group-hover:scale-105">
-                  <Icon className="h-6 w-6" />
+                  <card.Icon className="h-6 w-6" />
                 </span>
                 <h2 className="mt-5 text-lg font-semibold leading-tight text-foreground">
-                  {title}
+                  {card.title}
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {text}
+                  {card.text}
                 </p>
               </Card>
             </StaggerItem>
           ))}
         </StaggerGrid>
       </MarketingSection>
+
+      <Dialog open={Boolean(activeUseCase)} onOpenChange={closeUseCaseModal}>
+        <DialogContent className="max-h-[90dvh] max-w-5xl overflow-y-auto rounded-[2rem] border-primary/24 bg-[linear-gradient(145deg,rgba(22,19,13,0.98),rgba(5,5,4,0.98))] p-0 shadow-[0_45px_140px_-70px_rgba(201,160,61,1)]">
+          {activeUseCase && (
+            <div className="relative overflow-hidden">
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(65%_65%_at_72%_16%,rgba(201,160,61,0.22),transparent_68%)]"
+              />
+              <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(300px,0.8fr)] lg:p-10">
+                <div>
+                  <Badge>Voice Demo Preview</Badge>
+                  <DialogTitle className="mt-5 text-3xl font-medium leading-tight text-foreground sm:text-4xl">
+                    {activeUseCase.title}
+                  </DialogTitle>
+                  <DialogDescription className="mt-4 text-base leading-7 text-muted-foreground">
+                    {activeUseCase.expanded}
+                  </DialogDescription>
+
+                  <div className="mt-7 rounded-2xl border border-white/10 bg-black/28 p-4">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+                      Sample voice line
+                    </p>
+                    <p className="mt-3 text-base leading-7 text-foreground">
+                      &quot;{activeUseCase.demoLine}&quot;
+                    </p>
+                  </div>
+
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-primary/16 bg-primary/8 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+                        Status
+                      </p>
+                      <p className="mt-2 text-sm text-foreground/84">
+                        {isModalPlaying
+                          ? "Playing placeholder demo"
+                          : "Ready to preview"}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                        Later
+                      </p>
+                      <p className="mt-2 text-sm text-foreground/84">
+                        Replace with real AI voice recordings.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.75rem] border border-primary/18 bg-black/30 p-5 backdrop-blur-md">
+                  <DemoModalOrb active={isModalPlaying} />
+                  <div className="mt-2 flex items-center justify-center">
+                    <span className="inline-flex h-8 items-center gap-2 rounded-full border border-primary/18 bg-primary/10 px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+                      <span
+                        className={cn(
+                          "h-1.5 w-1.5 rounded-full bg-primary",
+                          isModalPlaying && "animate-pulse",
+                        )}
+                      />
+                      {isModalPlaying ? "AI speaking" : "Demo idle"}
+                    </span>
+                  </div>
+                  <div className="mt-5">
+                    <ModalWaveform active={isModalPlaying} />
+                  </div>
+                  <Button
+                    type="button"
+                    size="xl"
+                    className="mt-5 w-full"
+                    onClick={playUseCaseDemo}
+                  >
+                    <Play aria-hidden className="fill-current" />
+                    Play demo placeholder
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
         <FadeUp>
@@ -639,20 +872,28 @@ export function VoiceAgentSolutionPage() {
             subtitle="Short answers for how Kaizen handles calls, handoffs, languages, and bookings."
           />
         </FadeUp>
-        <StaggerGrid className="mt-12 grid gap-4 lg:grid-cols-2">
-          {faqs.map((item) => (
-            <StaggerItem key={item.q}>
-              <div className="h-full rounded-2xl border border-border bg-card/38 p-6 backdrop-blur-md">
-                <h3 className="text-lg font-semibold leading-snug text-foreground">
+        <FadeUp delay={0.1}>
+          <Accordion
+            type="single"
+            collapsible
+            className="mx-auto mt-12 max-w-4xl space-y-4"
+          >
+            {faqs.map((item, index) => (
+              <AccordionItem
+                key={item.q}
+                value={`voice-faq-${index}`}
+                className="overflow-hidden rounded-2xl border border-border bg-card/42 px-5 backdrop-blur-md transition-colors hover:border-primary/28 sm:px-7"
+              >
+                <AccordionTrigger className="py-6 text-base normal-case tracking-normal text-foreground sm:py-7 sm:text-lg lg:text-xl">
                   {item.q}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                </AccordionTrigger>
+                <AccordionContent className="grid-cols-1 gap-0 pb-6 sm:grid-cols-1 sm:pb-7">
                   {item.a}
-                </p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerGrid>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </FadeUp>
       </MarketingSection>
 
       <section className="relative w-full overflow-hidden py-20 sm:py-28 lg:py-32">
@@ -745,6 +986,16 @@ export function VoiceAgentSolutionPage() {
             opacity: 0;
           }
         }
+        @keyframes modalWaveActive {
+          0%, 100% {
+            transform: scaleY(0.46);
+            opacity: 0.48;
+          }
+          50% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+        }
         .voiceOrbIdle {
           animation: voiceOrbIdle 4.6s ease-in-out infinite;
         }
@@ -756,6 +1007,10 @@ export function VoiceAgentSolutionPage() {
         }
         .voiceOrbRingSpeaking {
           animation: voiceOrbRingSpeaking 1.05s ease-out infinite;
+        }
+        .modalWaveActive {
+          transform-origin: center;
+          animation: modalWaveActive 1.05s ease-in-out infinite;
         }
       `}</style>
     </main>
