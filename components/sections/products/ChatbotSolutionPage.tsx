@@ -48,78 +48,110 @@ type FeatureDemo = {
   title: string;
   description: string;
   detail: string;
+  transcript: string;
   Icon: LucideIcon;
   tags: string[];
-  visual: "language" | "slang" | "handoff" | "media" | "dashboard" | "knowledge";
+  visual:
+    | "website"
+    | "social"
+    | "language"
+    | "slang"
+    | "handoff"
+    | "media"
+    | "dashboard"
+    | "knowledge";
 };
-
-const coreFeatures = [
-  { title: "Website & WhatsApp replies", Icon: MessageCircle },
-  { title: "Instagram / Facebook DMs", Icon: MessagesSquare },
-  { title: "Human handoff", Icon: Handshake },
-  { title: "Multi-language support", Icon: Languages },
-  { title: "Local slang and mixed language", Icon: Globe2 },
-  { title: "Image/video responses", Icon: ImageIcon },
-  { title: "Lead dashboard", Icon: LayoutDashboard },
-  { title: "Business-trained knowledge", Icon: Bot },
-];
 
 const featureDemos: FeatureDemo[] = [
   {
-    title: "Multi-language Support",
+    title: "Website & WhatsApp replies",
+    description: "Replies instantly when customers ask on your site or WhatsApp.",
+    detail:
+      "Kaizen agents answer common questions, qualify interest, and guide customers toward booking without waiting for staff.",
+    transcript:
+      "Customer: Do you have appointments this week?\nKaizen AI: Yes. Thursday 4:30 PM and Saturday 10:00 AM are available.",
+    Icon: MessageCircle,
+    tags: ["Website", "WhatsApp", "Instant replies"],
+    visual: "website",
+  },
+  {
+    title: "Instagram / Facebook DMs",
+    description: "Responds to social media enquiries before interest goes cold.",
+    detail:
+      "The agent can handle DMs from social channels, answer product or service questions, and capture the lead source.",
+    transcript:
+      "Customer: Is this package still available?\nKaizen AI: Yes, I can help. Would you like pricing or available slots?",
+    Icon: MessagesSquare,
+    tags: ["Instagram", "Facebook", "DMs"],
+    visual: "social",
+  },
+  {
+    title: "Human handoff",
+    description:
+      "Hands over to your team with full conversation context when needed.",
+    detail:
+      "When a customer is urgent, complex, or high value, Kaizen routes the chat to a human with the lead details already summarized.",
+    transcript:
+      "Kaizen AI: I’ll send this to the team with your request, preferred time, and contact details.",
+    Icon: Handshake,
+    tags: ["Context", "Priority", "Handoff"],
+    visual: "handoff",
+  },
+  {
+    title: "Multi-language support",
     description: "Handles English, Sinhala, Tamil, Arabic, and more.",
     detail:
       "Kaizen agents can respond in the customer's preferred language while keeping the same service rules, pricing, and booking flow.",
+    transcript:
+      "Customer: Can I chat in Sinhala?\nKaizen AI: Yes. I can continue in the language you prefer.",
     Icon: Languages,
     tags: ["English", "Sinhala", "Tamil", "Arabic"],
     visual: "language",
   },
   {
-    title: "Local Slang & Mixed Language",
+    title: "Local slang and mixed language",
     description:
       "Understands Singlish, Tinglish, casual spelling, and mixed-language messages.",
     detail:
       "Customers do not need to write perfect formal messages. The agent can interpret casual local phrasing and still guide them clearly.",
+    transcript:
+      "Customer: whitening ekak book krgnna puluwanda?\nKaizen AI: Yes, I can help book it. What day works best?",
     Icon: Globe2,
     tags: ["Singlish", "Tinglish", "Mixed chat"],
     visual: "slang",
   },
   {
-    title: "Human Escalation",
-    description:
-      "Hands over to your team with full conversation context when needed.",
-    detail:
-      "When a customer is urgent, complex, or high value, Kaizen routes the chat to a human with the lead details already summarized.",
-    Icon: Users,
-    tags: ["Context", "Priority", "Handoff"],
-    visual: "handoff",
-  },
-  {
-    title: "Media Responses",
+    title: "Image/video responses",
     description:
       "Can send images, videos, menus, brochures, price lists, and product visuals.",
     detail:
       "The agent can share rich media so customers can see packages, proof, examples, or menus without waiting for staff.",
-    Icon: Video,
+    transcript:
+      "Kaizen AI: I’ve sent the brochure and price list here. Would you like me to explain the packages?",
+    Icon: ImageIcon,
     tags: ["Images", "Videos", "PDFs"],
     visual: "media",
   },
   {
-    title: "Dashboard Control",
+    title: "Lead dashboard",
     description:
       "Tracks leads, conversations, bookings, and customer intent in one place.",
     detail:
       "Your team gets a clean operating view of conversations, qualified leads, booking intent, and follow-up priorities.",
+    transcript:
+      "Lead saved: Booking intent, WhatsApp source, Saturday preference, follow-up needed.",
     Icon: LayoutDashboard,
     tags: ["Leads", "Bookings", "Intent"],
     visual: "dashboard",
   },
   {
-    title: "Business-Trained Knowledge",
+    title: "Business-trained knowledge",
     description:
       "Learns your services, prices, FAQs, opening hours, policies, and sales process.",
     detail:
       "The agent is configured around your actual business content before launch, so replies feel specific instead of generic.",
+    transcript:
+      "Kaizen AI: Your selected service starts at the listed price and is available during opening hours.",
     Icon: Bot,
     tags: ["FAQs", "Prices", "Policies"],
     visual: "knowledge",
@@ -261,6 +293,42 @@ function VisualDemo({ type, large = false }: { type: FeatureDemo["visual"]; larg
         className="absolute inset-0 bg-[radial-gradient(70%_70%_at_70%_10%,rgba(201,160,61,0.26),transparent_62%)]"
       />
       <div className="relative flex h-full flex-col justify-between p-4">
+        {type === "website" && (
+          <>
+            <div className="space-y-2 text-sm">
+              <p className="max-w-[82%] rounded-2xl rounded-tl-md bg-white/[0.07] px-3 py-2 text-foreground/78">
+                Are there slots this week?
+              </p>
+              <p className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md bg-primary/14 px-3 py-2 text-foreground">
+                Yes. I can show the next available times.
+              </p>
+            </div>
+            <span className="ml-auto inline-flex items-center gap-2 rounded-full bg-primary/16 px-3 py-1 text-xs text-primary">
+              <Send className="h-3.5 w-3.5" />
+              Instant reply
+            </span>
+          </>
+        )}
+        {type === "social" && (
+          <>
+            <div className="grid grid-cols-[auto_1fr] gap-3">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/24 text-primary">
+                <MessagesSquare className="h-5 w-5" />
+              </span>
+              <div className="space-y-2 text-sm">
+                <p className="rounded-2xl rounded-tl-md bg-white/[0.07] px-3 py-2 text-foreground/78">
+                  Package details pls
+                </p>
+                <p className="rounded-2xl rounded-tr-md bg-primary/14 px-3 py-2 text-foreground">
+                  Sure. I can send pricing and available dates.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-primary">
+              Social DM captured
+            </span>
+          </>
+        )}
         {type === "language" && (
           <>
             <div className="grid grid-cols-2 gap-2">
@@ -498,7 +566,6 @@ export function ChatbotSolutionPage() {
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
         <FadeUp>
           <SectionHeader
-            eyebrow="Core Features"
             title={
               <>
                 What your{" "}
@@ -506,65 +573,38 @@ export function ChatbotSolutionPage() {
                 you
               </>
             }
+            subtitle="Tap any feature to preview the demo flow."
           />
         </FadeUp>
         <StaggerGrid className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {coreFeatures.map(({ title, Icon }) => (
-            <StaggerItem key={title}>
-              <Card className="group h-full p-5 transition-colors hover:border-primary/38">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary transition-transform group-hover:scale-105">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <h2 className="mt-5 text-lg font-semibold leading-tight text-foreground">
-                  {title}
-                </h2>
-              </Card>
-            </StaggerItem>
-          ))}
-        </StaggerGrid>
-      </MarketingSection>
-
-      <MarketingSection className="py-16 sm:py-20 lg:py-24">
-        <FadeUp>
-          <SectionHeader
-            eyebrow="Advanced Capabilities"
-            title={
-              <>
-                Smarter than a basic chatbot. Built for{" "}
-                <span className="text-primary">real customer conversations.</span>
-              </>
-            }
-            subtitle="Tap any card to preview how each capability works."
-          />
-        </FadeUp>
-        <StaggerGrid className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {featureDemos.map((feature) => {
             const Icon = feature.Icon;
+
             return (
               <StaggerItem key={feature.title}>
-                <button
-                  type="button"
+                <Card
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setActiveFeature(feature)}
-                  className="group h-full w-full overflow-hidden rounded-2xl border border-border bg-card/60 p-5 text-left text-card-foreground backdrop-blur-md transition-colors hover:border-primary/42"
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveFeature(feature);
+                    }
+                  }}
+                  className="group relative h-full cursor-pointer overflow-hidden p-5 transition-colors hover:border-primary/38 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  <VisualDemo type={feature.visual} />
-                  <div className="mt-5 flex items-start justify-between gap-4">
-                    <div>
-                      <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/12 text-primary">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <h2 className="mt-4 text-xl font-semibold tracking-tight text-foreground">
-                        {feature.title}
-                      </h2>
-                    </div>
-                    <span className="rounded-full border border-primary/18 bg-primary/10 p-2 text-primary transition-transform group-hover:translate-x-1">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </button>
+                  <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/18 bg-primary/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary/80 opacity-80 transition-opacity group-hover:opacity-100">
+                    <ArrowRight className="h-3 w-3" />
+                    Preview
+                  </span>
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <h2 className="mt-5 text-lg font-semibold leading-tight text-foreground">
+                    {feature.title}
+                  </h2>
+                </Card>
               </StaggerItem>
             );
           })}
@@ -683,6 +723,16 @@ export function ChatbotSolutionPage() {
                   >
                     {tag}
                   </span>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-primary/18 bg-black/26 p-4">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+                Demo transcript
+              </p>
+              <div className="mt-3 space-y-2 text-sm leading-6 text-foreground/84">
+                {activeFeature.transcript.split("\n").map((line) => (
+                  <p key={line}>{line}</p>
                 ))}
               </div>
             </div>
