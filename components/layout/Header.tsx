@@ -31,6 +31,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
+  const isLoginActive = isHrefActive(pathname, "/login");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 8);
@@ -81,8 +82,10 @@ export function Header() {
                     </button>
                     <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 -translate-y-1 rounded-2xl border border-primary/20 bg-background/95 p-2 opacity-0 shadow-[0_24px_70px_-38px_rgba(201,160,61,0.8)] backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       {item.children?.map((child) => {
-                        const isChildActive =
-                          pathname === child.href.split("#")[0];
+                        const isChildActive = isHrefActive(
+                          pathname,
+                          child.href.split("#")[0],
+                        );
                         return (
                           <Link
                             key={child.href}
@@ -123,9 +126,14 @@ export function Header() {
             <Button
               asChild
               size="sm"
-              className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex"
+              className={cn(
+                "hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex",
+                isLoginActive && "border-primary/55 text-primary",
+              )}
             >
-              <Link href="/login">Login</Link>
+              <Link href="/login" aria-current={isLoginActive ? "page" : undefined}>
+                Login
+              </Link>
             </Button>
             <Button
               asChild

@@ -2,17 +2,8 @@ import type { NavItem } from "@/lib/types";
 
 export const primaryNav: NavItem[] = [
   { label: "Home", href: "/" },
-  {
-    label: "Solutions",
-    children: [
-      { label: "Chatbots", href: "/solutions/chatbots" },
-      { label: "Voice Agents", href: "/solutions/voice-agents" },
-      {
-        label: "Custom AI Automations",
-        href: "/solutions/custom-ai-automations",
-      },
-    ],
-  },
+  { label: "Chat Agents", href: "/solutions/chatbots" },
+  { label: "Voice Agents", href: "/solutions/voice-agents" },
   { label: "Demo", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
   {
@@ -26,6 +17,10 @@ export const primaryNav: NavItem[] = [
         href: "/industries/legal-professional-service",
       },
       { label: "Hospitality & Food", href: "/industries/hospitality-food" },
+      {
+        label: "Custom AI Automations",
+        href: "/solutions/custom-ai-automations",
+      },
     ],
   },
   { label: "Blog", href: "/blog" },

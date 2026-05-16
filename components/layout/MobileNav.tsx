@@ -33,6 +33,7 @@ function isNavItemActive(pathname: string, item: NavItem) {
 export function MobileNav({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isLoginActive = isHrefActive(pathname, "/login");
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -85,16 +86,24 @@ export function MobileNav({ items }: { items: NavItem[] }) {
                 )}
                 {!!item.children?.length && (
                   <div className="mt-1 space-y-1 border-l border-primary/20 pl-4">
-                    {item.children.map((child) => (
-                      <SheetClose asChild key={child.href}>
-                        <Link
-                          href={child.href}
-                          className="block rounded-lg px-3 py-2 text-base font-semibold text-foreground/58 transition-colors hover:bg-primary/10 hover:text-primary"
-                        >
-                          {child.label}
-                        </Link>
-                      </SheetClose>
-                    ))}
+                    {item.children.map((child) => {
+                      const isChildActive = isHrefActive(pathname, child.href);
+
+                      return (
+                        <SheetClose asChild key={child.href}>
+                          <Link
+                            href={child.href}
+                            aria-current={isChildActive ? "page" : undefined}
+                            className={cn(
+                              "block rounded-lg px-3 py-2 text-base font-semibold text-foreground/58 transition-colors hover:bg-primary/10 hover:text-primary",
+                              isChildActive && "bg-primary/10 text-primary",
+                            )}
+                          >
+                            {child.label}
+                          </Link>
+                        </SheetClose>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -109,8 +118,12 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               className={buttonVariants({
                 size: "lg",
                 className:
-                  "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
+                  cn(
+                    "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
+                    isLoginActive && "ring-2 ring-primary/45 ring-offset-2 ring-offset-background",
+                  ),
               })}
+              aria-current={isLoginActive ? "page" : undefined}
             >
               Login
             </Link>
