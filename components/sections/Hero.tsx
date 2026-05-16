@@ -44,7 +44,7 @@ export function Hero() {
       <div className="bg-background/34 pointer-events-none absolute inset-0 z-0" />
       <Grain />
 
-      <Container className="relative z-10 flex flex-1 flex-col items-center justify-start pt-2 text-center sm:pt-4 lg:pt-6 2xl:pt-8">
+      <Container className="relative z-10 flex flex-1 flex-col items-center justify-start pt-8 text-center sm:pt-10 lg:pt-14 2xl:pt-16">
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
