@@ -328,20 +328,25 @@ export function ChatWidget() {
         onClick={() => setOpen((current) => !current)}
         aria-label={open ? "Close Kaizen AI chat" : "Open Kaizen AI chat"}
         aria-expanded={open}
-        className="pointer-events-auto fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[73] inline-flex h-14 items-center gap-3 rounded-2xl border border-primary/30 bg-primary px-4 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
+        className="group pointer-events-auto fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[73] inline-flex h-16 w-16 items-center justify-start overflow-hidden rounded-full border border-primary/30 bg-primary p-3 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-[width,background-color,border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[13.75rem] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent hover:shadow-[0_28px_76px_-26px_color-mix(in_oklab,var(--primary)_95%,transparent)] focus-visible:w-[13.75rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
       >
-        <span className="relative grid h-8 w-8 place-items-center rounded-xl bg-primary-foreground/15">
+        <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-foreground/15 transition-colors duration-500 group-hover:bg-primary-foreground/20 group-focus-visible:bg-primary-foreground/20">
           {open ? (
-            <X className="h-4 w-4" aria-hidden />
+            <X className="h-5 w-5" aria-hidden />
           ) : (
-            <MessageCircle className="h-4 w-4" aria-hidden />
+            <MessageCircle className="h-5 w-5" aria-hidden />
           )}
           {!open && (
             <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-primary bg-emerald-400" />
           )}
         </span>
-        <span className="hidden text-sm font-bold sm:inline">Ask Kaizen</span>
-        <Sparkles className="hidden h-4 w-4 sm:block" aria-hidden />
+        <span className="ml-1.5 max-w-0 translate-x-0.5 whitespace-nowrap text-base font-bold opacity-0 transition-[max-width,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-w-32 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+          Ask Kaizen
+        </span>
+        <Sparkles
+          className="ml-auto h-5 w-5 shrink-0 translate-x-2 opacity-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+          aria-hidden
+        />
       </button>
     </div>
   );
