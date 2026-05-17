@@ -10,9 +10,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { ChatWidget } from "@/components/chat/ChatWidget";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/lib/content/site";
 
@@ -130,10 +128,7 @@ export default function RootLayout({
         <ThemeProvider>
           <MotionProvider>
             <SkipLink />
-            <Header />
-            {children}
-            <Footer />
-            <ChatWidget />
+            <SiteChrome>{children}</SiteChrome>
           </MotionProvider>
         </ThemeProvider>
       </body>

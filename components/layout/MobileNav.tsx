@@ -30,10 +30,15 @@ function isNavItemActive(pathname: string, item: NavItem) {
   );
 }
 
-export function MobileNav({ items }: { items: NavItem[] }) {
+export function MobileNav({
+  items,
+  onLoginClick,
+}: {
+  items: NavItem[];
+  onLoginClick: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isLoginActive = isHrefActive(pathname, "/login");
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -112,22 +117,17 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         </nav>
         <Separator />
         <div className="flex flex-col gap-3">
-          <SheetClose asChild>
-            <Link
-              href="/login"
-              className={buttonVariants({
-                size: "lg",
-                className:
-                  cn(
-                    "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
-                    isLoginActive && "ring-2 ring-primary/45 ring-offset-2 ring-offset-background",
-                  ),
-              })}
-              aria-current={isLoginActive ? "page" : undefined}
-            >
-              Login
-            </Link>
-          </SheetClose>
+          <Button
+            type="button"
+            size="lg"
+            className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent"
+            onClick={() => {
+              setOpen(false);
+              onLoginClick();
+            }}
+          >
+            Login
+          </Button>
           <SheetClose asChild>
             <Link
               href="/book-demo"
