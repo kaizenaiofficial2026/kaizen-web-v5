@@ -51,11 +51,7 @@ export function Header() {
       >
         <div className="mx-auto w-full px-6 sm:px-10 lg:px-[72px]">
           <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center gap-6">
-            <BrandMark
-              surface="dark"
-              withPill={false}
-              className="text-xl tracking-tight"
-            />
+            <BrandMark className="text-xl tracking-tight" />
 
             <nav
               aria-label="Primary"

@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { SiteChrome } from "@/components/layout/SiteChrome";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/lib/content/site";
 
 const geistSans = Geist({
@@ -106,7 +105,7 @@ export const viewport: Viewport = {
   themeColor: "#0a0907",
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark light",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -121,16 +120,14 @@ export default function RootLayout({
         instrumentSerif.variable,
         syne.variable,
         dmSans.variable,
-        "dark h-full antialiased",
+        "h-full antialiased",
       )}
     >
       <body className="bg-background text-foreground min-h-dvh font-sans">
-        <ThemeProvider>
-          <MotionProvider>
-            <SkipLink />
-            <SiteChrome>{children}</SiteChrome>
-          </MotionProvider>
-        </ThemeProvider>
+        <MotionProvider>
+          <SkipLink />
+          <SiteChrome>{children}</SiteChrome>
+        </MotionProvider>
       </body>
     </html>
   );

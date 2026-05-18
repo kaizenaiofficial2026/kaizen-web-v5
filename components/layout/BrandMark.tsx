@@ -8,8 +8,6 @@ export function BrandMark({
   className,
 }: {
   className?: string;
-  withPill?: boolean;
-  surface?: "dark" | "light";
 }) {
   function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
     if (window.location.pathname !== "/") return;

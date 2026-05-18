@@ -58,7 +58,7 @@ export function MobileNav({
       >
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <div className="flex items-center justify-between gap-4">
-          <BrandMark withPill={false} surface="dark" />
+          <BrandMark />
         </div>
         <nav aria-label="Mobile primary" className="flex flex-col gap-1">
           {items.map((item) => {

@@ -10,7 +10,7 @@ export function Footer() {
       <Container className="py-16 sm:py-20">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
-            <BrandMark withPill={false} />
+            <BrandMark />
             <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-6">
               AI chatbots and voice agents that never miss a customer.
             </p>

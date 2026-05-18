@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   /* Brand palette */
   --primary-black: #0a0907;
@@ -53,31 +51,6 @@
   --text-h2: clamp(1.875rem, 3.5vw + 0.75rem, 3.5rem);
   --text-h3: clamp(1.25rem, 1.5vw + 0.75rem, 1.75rem);
   --text-lead: clamp(1rem, 0.5vw + 0.9rem, 1.25rem);
-}
-
-.light {
-  --primary-black: #fbf7ee;
-  --dark-surface: #fffaf0;
-  --off-white: #18140b;
-  --muted-gold: #6f6546;
-
-  --background: #fbf7ee;
-  --foreground: #18140b;
-  --card: color-mix(in oklab, #fffaf0 88%, transparent);
-  --card-foreground: #18140b;
-  --popover: #fffaf0;
-  --popover-foreground: #18140b;
-  --primary-foreground: #171107;
-  --secondary: color-mix(in oklab, #efe4ce 74%, transparent);
-  --secondary-foreground: #18140b;
-  --muted: color-mix(in oklab, #efe4ce 58%, transparent);
-  --muted-foreground: #6f6546;
-  --accent-foreground: #171107;
-  --destructive-foreground: #fffaf0;
-  --border: color-mix(in oklab, var(--gold-deep) 22%, transparent);
-  --input: color-mix(in oklab, var(--gold-deep) 18%, transparent);
-  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.65) inset, 0 20px 60px -24px rgba(70, 55, 18, 0.28);
-  --shadow-soft: 0 8px 30px -16px rgba(70, 55, 18, 0.28);
 }
 
 @theme inline {
