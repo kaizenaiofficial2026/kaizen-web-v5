@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
+import { ClinicsHealthcareIndustryPage } from "@/components/sections/industries/ClinicsHealthcareIndustryPage";
+import { RetailEcommerceIndustryPage } from "@/components/sections/industries/RetailEcommerceIndustryPage";
 import { getIndustry, industries } from "@/lib/content/industries";
 
 type IndustryPageProps = {
@@ -39,6 +41,14 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
 
   if (!industry) {
     notFound();
+  }
+
+  if (industry.slug === "retail-ecommerce") {
+    return <RetailEcommerceIndustryPage />;
+  }
+
+  if (industry.slug === "clinics-healthcare") {
+    return <ClinicsHealthcareIndustryPage />;
   }
 
   return (
