@@ -19,6 +19,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://api.kaizenai.dev";
+
 type ChatMessage = {
   id: number;
   role: "assistant" | "user";
@@ -40,46 +43,12 @@ const initialMessages: ChatMessage[] = [
   },
 ];
 
-function getBotReply(message: string) {
-  const normalized = message.toLowerCase();
-
-  if (
-    normalized.includes("price") ||
-    normalized.includes("pricing") ||
-    normalized.includes("cost") ||
-    normalized.includes("plan")
-  ) {
-    return "Kaizen has chatbot and voice-agent plans for different volumes. The fastest way to choose the right one is to share your channels, enquiry volume, and whether you need calls, chat, or both.";
-  }
-
-  if (
-    normalized.includes("call") ||
-    normalized.includes("voice") ||
-    normalized.includes("phone")
-  ) {
-    return "Yes. Kaizen can answer inbound calls, qualify leads, capture details, summarize conversations, and help route or book appointments when your team is unavailable.";
-  }
-
-  if (
-    normalized.includes("launch") ||
-    normalized.includes("setup") ||
-    normalized.includes("fast") ||
-    normalized.includes("time")
-  ) {
-    return "Most chatbot launches can be ready in a few days. Voice agents usually need more testing because call flows, tone, and handoff rules matter more.";
-  }
-
-  if (
-    normalized.includes("what") ||
-    normalized.includes("do") ||
-    normalized.includes("help") ||
-    normalized.includes("kaizen")
-  ) {
-    return "Kaizen answers messages and calls, qualifies enquiries, follows up quickly, and helps turn missed leads into booked appointments across chat, WhatsApp, and voice.";
-  }
-
-  return "That is a good question. Kaizen is built to recover missed leads, answer customer enquiries, and book more appointments without adding headcount. A quick demo is the best next step for a specific recommendation.";
+function makeSessionId() {
+  return `web-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
+
+let _msgId = 1;
+const nextMsgId = () => ++_msgId;
 
 const panelVariants: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.98 },
@@ -104,7 +73,8 @@ export function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const sessionIdRef = useRef<string>(makeSessionId());
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -131,42 +101,85 @@ export function ChatWidget() {
   }, [messages, isTyping, open, reducedMotion]);
 
   useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
+    return () => { abortRef.current?.abort(); };
   }, []);
 
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || isTyping) return;
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
 
+    const userMsgId = nextMsgId();
+    const assistantMsgId = nextMsgId();
     setMessages((current) => [
       ...current,
-      { id: Date.now(), role: "user", text: trimmed },
+      { id: userMsgId, role: "user", text: trimmed },
     ]);
     setInput("");
     setIsTyping(true);
 
-    timeoutRef.current = setTimeout(
-      () => {
-        setMessages((current) => [
-          ...current,
-          {
-            id: Date.now() + 1,
-            role: "assistant",
-            text: getBotReply(trimmed),
-          },
-        ]);
-        setIsTyping(false);
-      },
-      reducedMotion ? 0 : 520,
-    );
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current }),
+        signal: controller.signal,
+      });
+
+      if (!response.ok || !response.body) throw new Error("API error");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      const msgId = assistantMsgId;
+      let assistantText = "";
+      let firstChunk = true;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const lines = decoder.decode(value, { stream: true }).split("\n");
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          let parsed: { chunk?: string; done?: boolean };
+          try { parsed = JSON.parse(line.slice(6)); } catch { continue; }
+          if (parsed.done) break;
+          if (parsed.chunk) {
+            if (firstChunk) {
+              firstChunk = false;
+              setIsTyping(false);
+              assistantText = parsed.chunk;
+              setMessages((current) => [
+                ...current,
+                { id: msgId, role: "assistant", text: parsed.chunk! },
+              ]);
+            } else {
+              assistantText += parsed.chunk;
+              const snapshot = assistantText;
+              setMessages((current) =>
+                current.map((m) => (m.id === msgId ? { ...m, text: snapshot } : m))
+              );
+            }
+          }
+        }
+      }
+
+      if (firstChunk) setIsTyping(false);
+    } catch (err) {
+      if ((err as Error).name === "AbortError") return;
+      setIsTyping(false);
+      setMessages((current) => [
+        ...current,
+        {
+          id: assistantMsgId,
+          role: "assistant",
+          text: "I'm having trouble connecting right now. Please try again in a moment.",
+        },
+      ]);
+    }
   };
 
   return (
