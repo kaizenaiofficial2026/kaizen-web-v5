@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Pricing } from "@/components/sections/Pricing";
+import { Pricing, type PricingType } from "@/components/sections/Pricing";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -7,11 +7,21 @@ export const metadata: Metadata = {
     "Kaizen AI pricing for chatbot, voice agent, and custom automation rollouts.",
 };
 
-export default function PricingPage() {
+function normalizePricingType(value: string | string[] | undefined): PricingType {
+  const selectedValue = Array.isArray(value) ? value[0] : value;
+  return selectedValue === "voice" ? "voice" : "chat";
+}
+
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string | string[] }>;
+}) {
+  const initialType = normalizePricingType((await searchParams).type);
+
   return (
     <main id="main" className="relative">
-      <h1 className="sr-only">Pricing</h1>
-      <Pricing />
+      <Pricing key={initialType} initialType={initialType} />
     </main>
   );
 }

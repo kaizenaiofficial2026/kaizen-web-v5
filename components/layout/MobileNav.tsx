@@ -1,9 +1,9 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -18,15 +18,90 @@ import type { NavItem } from "@/lib/types";
 import { siteConfig } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
 
-function isHrefActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+function getPathFromHref(href: string) {
+  return href.split(/[?#]/)[0] || "/";
 }
 
-function isNavItemActive(pathname: string, item: NavItem) {
+function getSearchFromHref(href: string) {
+  const queryStart = href.indexOf("?");
+  if (queryStart === -1) return "";
+
+  const hashStart = href.indexOf("#", queryStart);
+  return href.slice(queryStart, hashStart === -1 ? undefined : hashStart);
+}
+
+function normalizeSearch(search: string) {
+  const params = new URLSearchParams(search);
+  return params.toString();
+}
+
+function subscribeToLocationChange(callback: () => void) {
+  window.addEventListener("popstate", callback);
+  window.addEventListener("kaizen-locationchange", callback);
+
+  return () => {
+    window.removeEventListener("popstate", callback);
+    window.removeEventListener("kaizen-locationchange", callback);
+  };
+}
+
+function getSearchSnapshot() {
+  return window.location.search;
+}
+
+function getServerSearchSnapshot() {
+  return "";
+}
+
+function notifyLocationChange() {
+  const dispatch = () => {
+    window.dispatchEvent(new Event("kaizen-locationchange"));
+  };
+
+  window.setTimeout(dispatch, 0);
+  window.setTimeout(dispatch, 120);
+}
+
+function isHrefActive(pathname: string, currentSearch: string, href: string) {
+  const hrefPath = getPathFromHref(href);
+  const hrefSearch = getSearchFromHref(href);
+  const pathMatches =
+    hrefPath === "/"
+      ? pathname === "/"
+      : pathname === hrefPath || pathname.startsWith(`${hrefPath}/`);
+
+  if (!pathMatches) return false;
+
+  if (hrefSearch) {
+    const normalizedCurrentSearch = normalizeSearch(currentSearch);
+    const normalizedHrefSearch = normalizeSearch(hrefSearch);
+
+    if (
+      hrefPath === "/pricing" &&
+      !normalizedCurrentSearch &&
+      normalizedHrefSearch === "type=chat"
+    ) {
+      return true;
+    }
+
+    return normalizedCurrentSearch === normalizedHrefSearch;
+  }
+
+  return true;
+}
+
+function isNavItemActive(
+  pathname: string,
+  currentSearch: string,
+  item: NavItem,
+) {
   return (
-    (item.href ? isHrefActive(pathname, item.href) : false) ||
-    Boolean(item.children?.some((child) => isHrefActive(pathname, child.href)))
+    (item.href ? isHrefActive(pathname, currentSearch, item.href) : false) ||
+    Boolean(
+      item.children?.some((child) =>
+        isHrefActive(pathname, currentSearch, child.href),
+      ),
+    )
   );
 }
 
@@ -38,7 +113,15 @@ export function MobileNav({
   onLoginClick: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {},
+  );
   const pathname = usePathname();
+  const currentSearch = useSyncExternalStore(
+    subscribeToLocationChange,
+    getSearchSnapshot,
+    getServerSearchSnapshot,
+  );
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -62,13 +145,85 @@ export function MobileNav({
         </div>
         <nav aria-label="Mobile primary" className="flex flex-col gap-1">
           {items.map((item) => {
-            const isActive = isNavItemActive(pathname, item);
+            const isActive = isNavItemActive(pathname, currentSearch, item);
+            const hasChildren = !!item.children?.length;
+            const expanded = expandedItems[item.label] ?? isActive;
+
+            if (hasChildren) {
+              return (
+                <div key={item.href ?? item.label}>
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    onClick={() =>
+                      setExpandedItems((current) => ({
+                        ...current,
+                        [item.label]: !expanded,
+                      }))
+                    }
+                    className={cn(
+                      "-mx-3 flex w-[calc(100%+1.5rem)] items-center justify-between gap-3 rounded-lg px-3 py-3 text-left text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
+                      isActive && "bg-primary/15 text-primary",
+                    )}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown
+                      className={cn(
+                        "h-5 w-5 shrink-0 transition-transform",
+                        expanded && "rotate-180",
+                      )}
+                      aria-hidden
+                    />
+                  </button>
+                  <div
+                    className={cn(
+                      "grid transition-[grid-template-rows,opacity] duration-200",
+                      expanded
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0",
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="mt-1 space-y-1 border-l border-primary/20 pl-4">
+                        {item.children?.map((child) => {
+                          const isChildActive = isHrefActive(
+                            pathname,
+                            currentSearch,
+                            child.href,
+                          );
+
+                          return (
+                            <SheetClose asChild key={child.href}>
+                              <Link
+                                href={child.href}
+                                onClick={notifyLocationChange}
+                                aria-current={
+                                  isChildActive ? "page" : undefined
+                                }
+                                className={cn(
+                                  "block rounded-lg px-3 py-2 text-base font-semibold text-foreground/58 transition-colors hover:bg-primary/10 hover:text-primary",
+                                  isChildActive && "bg-primary/10 text-primary",
+                                )}
+                              >
+                                {child.label}
+                              </Link>
+                            </SheetClose>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div key={item.href ?? item.label}>
                 {item.href ? (
                   <SheetClose asChild>
                     <Link
                       href={item.href}
+                      onClick={notifyLocationChange}
                       aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
@@ -87,28 +242,6 @@ export function MobileNav({
                     )}
                   >
                     {item.label}
-                  </div>
-                )}
-                {!!item.children?.length && (
-                  <div className="mt-1 space-y-1 border-l border-primary/20 pl-4">
-                    {item.children.map((child) => {
-                      const isChildActive = isHrefActive(pathname, child.href);
-
-                      return (
-                        <SheetClose asChild key={child.href}>
-                          <Link
-                            href={child.href}
-                            aria-current={isChildActive ? "page" : undefined}
-                            className={cn(
-                              "block rounded-lg px-3 py-2 text-base font-semibold text-foreground/58 transition-colors hover:bg-primary/10 hover:text-primary",
-                              isChildActive && "bg-primary/10 text-primary",
-                            )}
-                          >
-                            {child.label}
-                          </Link>
-                        </SheetClose>
-                      );
-                    })}
                   </div>
                 )}
               </div>

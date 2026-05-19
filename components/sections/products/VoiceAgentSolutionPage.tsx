@@ -690,7 +690,7 @@ export function VoiceAgentSolutionPage() {
                 </span>
               ))}
             </div>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button asChild size="xl">
                 <Link href="/demo">
                   Speak to Our AI Agent
@@ -699,6 +699,9 @@ export function VoiceAgentSolutionPage() {
               </Button>
               <Button asChild size="xl" variant="outline">
                 <Link href="/book-demo">Book Strategy Call</Link>
+              </Button>
+              <Button asChild size="xl" variant="outline">
+                <Link href="/pricing?type=voice">View Pricing</Link>
               </Button>
             </div>
           </FadeUp>

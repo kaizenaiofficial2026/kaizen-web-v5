@@ -535,7 +535,7 @@ export function ChatbotSolutionPage() {
               WhatsApp, Instagram, and Facebook, helping customers get answers,
               book appointments, and move closer to buying.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button asChild size="xl">
                 <Link href="/demo">
                   Try It Yourself
@@ -544,6 +544,9 @@ export function ChatbotSolutionPage() {
               </Button>
               <Button asChild size="xl" variant="outline">
                 <Link href="/book-demo">Book a Call</Link>
+              </Button>
+              <Button asChild size="xl" variant="outline">
+                <Link href="/pricing?type=chat">View Pricing</Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">

@@ -5,7 +5,14 @@ export const primaryNav: NavItem[] = [
   { label: "Chat Agents", href: "/solutions/chatbots" },
   { label: "Voice Agents", href: "/solutions/voice-agents" },
   { label: "Demo", href: "/demo" },
-  { label: "Pricing", href: "/pricing" },
+  {
+    label: "Pricing",
+    href: "/pricing",
+    children: [
+      { label: "Chat Agent Pricing", href: "/pricing?type=chat" },
+      { label: "Voice Agent Pricing", href: "/pricing?type=voice" },
+    ],
+  },
   {
     label: "Industries",
     children: [
