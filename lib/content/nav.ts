@@ -18,15 +18,15 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: "Retail & E-commerce", href: "/industries/retail-ecommerce" },
       { label: "Clinics & Healthcare", href: "/industries/clinics-healthcare" },
-      { label: "RealEstate", href: "/industries/real-estate" },
+      { label: "Real Estate", href: "/industries/real-estate" },
       {
-        label: "Legal & Proffessional Service",
+        label: "Legal & Professional Services",
         href: "/industries/legal-professional-service",
       },
       { label: "Hospitality & Food", href: "/industries/hospitality-food" },
       {
         label: "Custom AI Automations",
-        href: "/solutions/custom-ai-automations",
+        href: "/industries/custom-ai-automations",
       },
     ],
   },

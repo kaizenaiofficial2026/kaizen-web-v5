@@ -8,6 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 import { ClinicsHealthcareIndustryPage } from "@/components/sections/industries/ClinicsHealthcareIndustryPage";
+import { CustomAIAutomationsPage } from "@/components/sections/industries/CustomAIAutomationsPage";
+import { HospitalityFoodIndustryPage } from "@/components/sections/industries/HospitalityFoodIndustryPage";
+import { LegalProfessionalServicesIndustryPage } from "@/components/sections/industries/LegalProfessionalServicesIndustryPage";
+import { RealEstateIndustryPage } from "@/components/sections/industries/RealEstateIndustryPage";
 import { RetailEcommerceIndustryPage } from "@/components/sections/industries/RetailEcommerceIndustryPage";
 import { getIndustry, industries } from "@/lib/content/industries";
 
@@ -49,6 +53,22 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
 
   if (industry.slug === "clinics-healthcare") {
     return <ClinicsHealthcareIndustryPage />;
+  }
+
+  if (industry.slug === "real-estate") {
+    return <RealEstateIndustryPage />;
+  }
+
+  if (industry.slug === "legal-professional-service") {
+    return <LegalProfessionalServicesIndustryPage />;
+  }
+
+  if (industry.slug === "hospitality-food") {
+    return <HospitalityFoodIndustryPage />;
+  }
+
+  if (industry.slug === "custom-ai-automations") {
+    return <CustomAIAutomationsPage />;
   }
 
   return (
