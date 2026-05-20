@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 import { VoiceDemoPanel } from "@/components/demo/VoiceDemoPanel";
+import { BrowserVoiceCall } from "@/components/demo/BrowserVoiceCall";
 
 export const metadata: Metadata = {
   title: "Live Voice Agent Demo",
@@ -56,6 +57,24 @@ export default function DemoPage() {
       >
         <VoiceDemoPanel />
       </MarketingHero>
+
+      <MarketingSection>
+        <FadeUp>
+          <SectionHeader
+            eyebrow="Try it live"
+            title={
+              <>
+                Talk to the agent{" "}
+                <span className="text-primary">right from your browser</span>
+              </>
+            }
+            subtitle="No phone needed. Click start and speak — the AI voice agent will respond in real time using your microphone."
+          />
+        </FadeUp>
+        <div className="mx-auto mt-10 max-w-lg">
+          <BrowserVoiceCall />
+        </div>
+      </MarketingSection>
 
       <MarketingSection>
         <FadeUp>

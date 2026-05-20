@@ -50,6 +50,17 @@ function makeSessionId() {
 let _msgId = 1;
 const nextMsgId = () => ++_msgId;
 
+function renderMarkdown(text: string): React.ReactNode {
+  return text.split('\n').map((line, i, arr) => {
+    const parts = line.split(/(\*\*[^*]+\*\*)/g).map((part, j) =>
+      part.startsWith('**') && part.endsWith('**')
+        ? <strong key={j}>{part.slice(2, -2)}</strong>
+        : part
+    );
+    return <span key={i}>{parts}{i < arr.length - 1 && <br />}</span>;
+  });
+}
+
 const panelVariants: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.98 },
   show: {
@@ -125,7 +136,7 @@ export function ChatWidget() {
       const response = await fetch(`${BACKEND_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current }),
+        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current, agentId: 'kaizenai' }),
         signal: controller.signal,
       });
 
@@ -259,7 +270,7 @@ export function ChatWidget() {
                         : "rounded-bl-md border border-border/70 bg-card/70 text-foreground/85",
                     )}
                   >
-                    {message.text}
+                    {message.role === 'assistant' ? renderMarkdown(message.text) : message.text}
                   </div>
                 </div>
               ))}
