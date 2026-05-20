@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 const BACKEND_WS = (process.env.NEXT_PUBLIC_BACKEND_URL ?? 'https://api.kaizenai.dev')
-  .replace(/^https?/, 'ws') + '/api/browser/stream';
+  .replace(/^http/, 'ws') + '/api/browser/stream';
 
 const SAMPLE_RATE = 24000;
 const WORKLET_PATH = '/pcm-processor.js';
