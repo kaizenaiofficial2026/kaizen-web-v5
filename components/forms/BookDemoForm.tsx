@@ -358,6 +358,8 @@ function validateForm(form: FormState): FormErrors {
 export function BookDemoForm() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
 
   const selectedCountry =
@@ -367,6 +369,7 @@ export function BookDemoForm() {
 
   const updateField = (key: keyof FormState, value: string) => {
     setForm((current) => ({ ...current, [key]: value }));
+    setSubmitError("");
     setErrors((current) => {
       if (!(key in current)) return current;
       const nextErrors = { ...current };
@@ -400,6 +403,7 @@ export function BookDemoForm() {
             className="mt-6 rounded-xl"
             onClick={() => {
               setForm(initialForm);
+              setSubmitError("");
               setSubmitted(false);
             }}
           >
@@ -423,14 +427,51 @@ export function BookDemoForm() {
       <form
         className="relative grid gap-5"
         noValidate
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
+          if (submitting) return;
+
           const nextErrors = validateForm(form);
           setErrors(nextErrors);
+          setSubmitError("");
 
           if (Object.keys(nextErrors).length > 0) return;
 
-          setSubmitted(true);
+          setSubmitting(true);
+
+          try {
+            const response = await fetch("/api/book-demo", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...form,
+                countryName: selectedCountry.name,
+                dialCode: selectedCountry.dialCode,
+                source: "Kaizen AI Website",
+              }),
+            });
+
+            const result = (await response.json().catch(() => null)) as {
+              message?: string;
+            } | null;
+
+            if (!response.ok) {
+              throw new Error(
+                result?.message ||
+                  "Something went wrong. Please try again in a moment.",
+              );
+            }
+
+            setSubmitted(true);
+          } catch (error) {
+            setSubmitError(
+              error instanceof Error
+                ? error.message
+                : "Something went wrong. Please try again in a moment.",
+            );
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
         <div>
@@ -527,8 +568,21 @@ export function BookDemoForm() {
         />
 
         <div className="grid gap-3 pt-1">
-          <Button type="submit" size="xl" className="w-full rounded-xl">
-            Request My Call
+          {submitError && (
+            <p
+              role="alert"
+              className="rounded-xl border border-destructive/35 bg-destructive/10 px-4 py-3 text-sm font-medium leading-6 text-destructive"
+            >
+              {submitError}
+            </p>
+          )}
+          <Button
+            type="submit"
+            size="xl"
+            className="w-full rounded-xl"
+            disabled={submitting}
+          >
+            {submitting ? "Sending..." : "Request My Call"}
           </Button>
           <p className="text-center text-sm leading-6 text-muted-foreground">
             No pressure. We&apos;ll review your details and suggest the best AI
