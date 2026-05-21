@@ -1,3 +1,5 @@
+import nodemailer from "nodemailer";
+
 type BookDemoPayload = {
   firstName?: unknown;
   lastName?: unknown;
@@ -15,7 +17,7 @@ type BookDemoPayload = {
   source?: unknown;
 };
 
-type ValidatedBookDemo = {
+type Lead = {
   firstName: string;
   lastName: string;
   email: string;
@@ -30,10 +32,13 @@ type ValidatedBookDemo = {
   countryName: string;
   dialCode: string;
   source: string;
+  submittedAt: string;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[0-9()+\-\s.]{6,24}$/;
+
+export const runtime = "nodejs";
 
 const allowedRoles = new Set([
   "Founder / Owner",
@@ -67,7 +72,133 @@ function jsonError(message: string, status = 400) {
   return Response.json({ ok: false, message }, { status });
 }
 
-function validatePayload(payload: BookDemoPayload): ValidatedBookDemo | string {
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getRequiredEnv(name: string) {
+  const value = process.env[name]?.trim();
+  if (!value) throw new Error(`Missing ${name}`);
+  return value;
+}
+
+function getSmtpConfig() {
+  const port = Number.parseInt(getRequiredEnv("SMTP_PORT"), 10);
+  if (!Number.isInteger(port)) throw new Error("Invalid SMTP_PORT");
+
+  return {
+    host: getRequiredEnv("SMTP_HOST"),
+    port,
+    secure: (process.env.SMTP_SECURE ?? "true").trim() !== "false",
+    user: getRequiredEnv("SMTP_USER"),
+    pass: getRequiredEnv("SMTP_PASS"),
+    fromName: process.env.SMTP_FROM_NAME?.trim() || "Kaizen AI",
+    fromEmail: getRequiredEnv("SMTP_FROM_EMAIL"),
+    leadToEmail: process.env.LEAD_TO_EMAIL?.trim() || "hello@kaizenai.dev",
+  };
+}
+
+function buildLeadText(lead: Lead) {
+  return [
+    "New Kaizen AI strategy call request",
+    "",
+    `Name: ${lead.firstName} ${lead.lastName}`,
+    `Email: ${lead.email}`,
+    `Phone: ${[lead.dialCode, lead.phone].filter(Boolean).join(" ")}`,
+    `Country: ${lead.countryName || lead.countryIso || "Not provided"}`,
+    `Company: ${lead.company}`,
+    `Website: ${lead.website || "Not provided"}`,
+    `Role: ${lead.role}`,
+    `Company size: ${lead.companySize}`,
+    `Interest: ${lead.interest}`,
+    `Project: ${lead.project || "Not provided"}`,
+    `Source: ${lead.source}`,
+    `Submitted at: ${lead.submittedAt}`,
+  ].join("\n");
+}
+
+function buildLeadHtml(lead: Lead) {
+  const rows = [
+    ["Name", `${lead.firstName} ${lead.lastName}`],
+    ["Email", lead.email],
+    ["Phone", [lead.dialCode, lead.phone].filter(Boolean).join(" ")],
+    ["Country", lead.countryName || lead.countryIso || "Not provided"],
+    ["Company", lead.company],
+    ["Website", lead.website || "Not provided"],
+    ["Role", lead.role],
+    ["Company size", lead.companySize],
+    ["Interest", lead.interest],
+    ["Project", lead.project || "Not provided"],
+    ["Source", lead.source],
+    ["Submitted at", lead.submittedAt],
+  ];
+
+  return `
+    <div style="font-family: Arial, sans-serif; color: #181713; line-height: 1.5;">
+      <h1 style="font-size: 22px; margin: 0 0 16px;">New strategy call request</h1>
+      <table style="border-collapse: collapse; width: 100%; max-width: 680px;">
+        <tbody>
+          ${rows
+            .map(
+              ([label, value]) => `
+                <tr>
+                  <th style="border: 1px solid #e6dcc4; padding: 10px; text-align: left; width: 160px; background: #faf6eb;">${escapeHtml(label)}</th>
+                  <td style="border: 1px solid #e6dcc4; padding: 10px;">${escapeHtml(value)}</td>
+                </tr>
+              `,
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function buildClientText(lead: Lead, contactEmail: string) {
+  return [
+    `Hi ${lead.firstName},`,
+    "",
+    "Thanks for requesting a Kaizen AI strategy call. We received your details and will review the best AI setup for your business.",
+    "",
+    "We will follow up with the next step soon.",
+    "",
+    `If you need to add anything, reply to ${contactEmail}.`,
+    "",
+    "Kaizen AI",
+  ].join("\n");
+}
+
+function buildClientHtml(lead: Lead, contactEmail: string) {
+  return `
+    <div style="font-family: Arial, sans-serif; color: #181713; line-height: 1.6; max-width: 620px;">
+      <h1 style="font-size: 22px; margin: 0 0 16px;">We received your request</h1>
+      <p>Hi ${escapeHtml(lead.firstName)},</p>
+      <p>Thanks for requesting a Kaizen AI strategy call. We received your details and will review the best AI setup for your business.</p>
+      <p>We will follow up with the next step soon.</p>
+      <p>If you need to add anything, reply to <a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(contactEmail)}</a>.</p>
+      <p>Kaizen AI</p>
+    </div>
+  `;
+}
+
+function assertAccepted(
+  result: { accepted?: unknown[]; rejected?: unknown[] },
+  label: string,
+) {
+  const accepted = Array.isArray(result.accepted) ? result.accepted : [];
+  const rejected = Array.isArray(result.rejected) ? result.rejected : [];
+
+  if (accepted.length === 0 || rejected.length > 0) {
+    throw new Error(`${label} was not accepted by SMTP`);
+  }
+}
+
+function validatePayload(payload: BookDemoPayload): Lead | string {
   const firstName = readString(payload.firstName, 80);
   const lastName = readString(payload.lastName, 80);
   const email = readString(payload.email, 160).toLowerCase();
@@ -117,6 +248,7 @@ function validatePayload(payload: BookDemoPayload): ValidatedBookDemo | string {
     countryName,
     dialCode,
     source,
+    submittedAt: new Date().toISOString(),
   };
 }
 
@@ -129,69 +261,51 @@ export async function POST(request: Request) {
     return jsonError("Invalid request body.");
   }
 
-  const validated = validatePayload(payload);
-  if (typeof validated === "string") return jsonError(validated);
+  const lead = validatePayload(payload);
+  if (typeof lead === "string") return jsonError(lead);
 
-  const serviceId = process.env.EMAILJS_SERVICE_ID;
-  const templateId = process.env.EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
-  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
+  let config: ReturnType<typeof getSmtpConfig>;
 
-  if (!serviceId || !templateId || !publicKey) {
+  try {
+    config = getSmtpConfig();
+  } catch (error) {
+    console.error("Book demo SMTP configuration error", error);
     return jsonError("Email delivery is not configured.", 500);
   }
 
-  const fullName = `${validated.firstName} ${validated.lastName}`;
-  const fullPhone = [validated.dialCode, validated.phone]
-    .filter(Boolean)
-    .join(" ");
-
-  const templateParams = {
-    firstName: validated.firstName,
-    lastName: validated.lastName,
-    first_name: validated.firstName,
-    last_name: validated.lastName,
-    name: fullName,
-    full_name: fullName,
-    email: validated.email,
-    reply_to: validated.email,
-    company: validated.company,
-    website: validated.website || "Not provided",
-    phone: validated.phone,
-    phone_number: validated.phone,
-    full_phone: fullPhone,
-    country: validated.countryName || validated.countryIso || "Not provided",
-    country_iso: validated.countryIso,
-    dial_code: validated.dialCode,
-    role: validated.role,
-    companySize: validated.companySize,
-    company_size: validated.companySize,
-    interest: validated.interest,
-    project: validated.project || "Not provided",
-    message: validated.project || "Not provided",
-    source: validated.source,
-    submitted_at: new Date().toISOString(),
-  };
-
-  const emailResponse = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      service_id: serviceId,
-      template_id: templateId,
-      user_id: publicKey,
-      template_params: templateParams,
-      ...(privateKey ? { accessToken: privateKey } : {}),
-    }),
+  const from = `"${config.fromName.replace(/"/g, "'")}" <${config.fromEmail}>`;
+  const transporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    auth: {
+      user: config.user,
+      pass: config.pass,
+    },
   });
 
-  if (!emailResponse.ok) {
-    const detail = await emailResponse.text();
-    console.error("EmailJS book-demo delivery failed", {
-      status: emailResponse.status,
-      detail,
+  try {
+    const leadResult = await transporter.sendMail({
+      from,
+      to: config.leadToEmail,
+      replyTo: lead.email,
+      subject: `New strategy call request from ${lead.firstName} ${lead.lastName} at ${lead.company}`,
+      text: buildLeadText(lead),
+      html: buildLeadHtml(lead),
     });
+    assertAccepted(leadResult, "Lead email");
 
+    const clientResult = await transporter.sendMail({
+      from,
+      to: lead.email,
+      replyTo: config.leadToEmail,
+      subject: "We received your Kaizen AI strategy call request",
+      text: buildClientText(lead, config.leadToEmail),
+      html: buildClientHtml(lead, config.leadToEmail),
+    });
+    assertAccepted(clientResult, "Client confirmation email");
+  } catch (error) {
+    console.error("Book demo SMTP delivery failed", error);
     return jsonError("We could not send your request. Please try again.", 502);
   }
 
