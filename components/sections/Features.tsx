@@ -11,7 +11,6 @@ import {
   FileImage,
   Globe2,
   Headphones,
-  Image as ImageIcon,
   LayoutDashboard,
   MessageCircle,
   Mic,
@@ -41,6 +40,7 @@ type Offer = {
   id: OfferId;
   label: string;
   title: string;
+  modalTitle: string;
   summary: string;
   description: string;
   Icon: LucideIcon;
@@ -55,64 +55,72 @@ type Offer = {
   }[];
   exploreLabel: string;
   exploreHref: string;
+  demoHref: string;
+  pricingHref: string;
 };
 
 const offers: Offer[] = [
   {
     id: "chat",
-    label: "AI Chat Agent",
+    label: "AI CHAT AGENT",
     title: "Turn every message into a sales opportunity.",
+    modalTitle: "Turn every message into a sales opportunity.",
     summary:
       "Instant replies across your website, WhatsApp, Instagram, and Facebook.",
     description:
-      "Instantly reply to website, WhatsApp, Instagram, and Facebook enquiries with an AI agent trained on your business, products, services, pricing, FAQs, and booking flow.",
+      "Instantly reply to website, WhatsApp, Instagram, and Facebook enquiries with an AI agent trained on your products, services, pricing, FAQs, and sales flow.",
     Icon: Bot,
     accent: "from-[#ecd479]/24 via-[#c9a03d]/12 to-transparent",
     chips: [
-      { label: "Website & WhatsApp replies", Icon: MessageCircle },
-      { label: "Instagram/Facebook DMs", Icon: Sparkles },
-      { label: "Human handoff", Icon: UserCheck },
-      { label: "Multi-language + local slang", Icon: Globe2 },
-      { label: "Image/video responses", Icon: ImageIcon },
+      { label: "Website + WhatsApp replies", Icon: MessageCircle },
+      { label: "Instagram + Facebook DMs", Icon: Sparkles },
+      { label: "Product and service answers", Icon: Bot },
+      { label: "Order capture", Icon: Check },
       { label: "Lead dashboard", Icon: LayoutDashboard },
+      { label: "Human handoff", Icon: UserCheck },
     ],
     capabilities: [
-      { label: "Escalates to staff when needed", Icon: UserCheck },
-      { label: "Singlish/Tinglish aware", Icon: Globe2 },
-      { label: "Sends brochures, menus, visuals, or prices", Icon: FileImage },
+      { label: "Sends brochures, menus, visuals, and prices", Icon: FileImage },
       { label: "Tracks conversations, leads, and bookings", Icon: LayoutDashboard },
-      { label: "Built for clinics, retail, hospitality, real estate, and services", Icon: Check },
+      { label: "Escalates to staff when needed", Icon: UserCheck },
+      { label: "Supports multilingual/local slang where configured", Icon: Globe2 },
+      { label: "Built for retail, clinics, hospitality, real estate, and service businesses", Icon: Check },
     ],
     exploreLabel: "Explore Chat Agents",
     exploreHref: "/solutions/chatbots",
+    demoHref: "/demo#chat-agent-demo",
+    pricingHref: "/pricing?type=chat",
   },
   {
     id: "voice",
-    label: "AI Voice Agent",
-    title: "Answer calls, follow up, and book appointments 24/7.",
+    label: "AI VOICE AGENT",
+    title: "Answer calls, recover missed leads, and book appointments.",
+    modalTitle: "Answer calls, follow up, and book appointments 24/7.",
     summary:
-      "Natural call handling for enquiries, missed calls, booking, and follow-up.",
+      "Natural call handling for enquiries, bookings, missed calls, and follow-ups.",
     description:
-      "A natural AI calling agent that answers inbound calls, makes outbound follow-ups, handles enquiries, recovers missed calls, books appointments, and transfers urgent conversations to your team.",
+      "A natural AI calling agent that answers inbound calls, follows up with missed leads, handles enquiries, books appointments, and transfers urgent conversations to your team.",
     Icon: Mic,
     accent: "from-[#f1ece0]/16 via-[#c9a03d]/14 to-transparent",
     chips: [
       { label: "Inbound calls", Icon: PhoneCall },
-      { label: "Outbound follow-ups", Icon: Radio },
+      { label: "Missed-call recovery", Icon: Radio },
       { label: "Appointment booking", Icon: CalendarCheck },
+      { label: "Google Calendar sync", Icon: CalendarCheck },
+      { label: "WhatsApp confirmations", Icon: MessageCircle },
       { label: "Human call transfer", Icon: Headphones },
-      { label: "Multi-language voice", Icon: Globe2 },
-      { label: "Call summaries/dashboard", Icon: LayoutDashboard },
     ],
     capabilities: [
       { label: "Qualifies enquiries before booking", Icon: Check },
-      { label: "Transfers urgent calls to your team", Icon: Headphones },
-      { label: "Recovers missed calls automatically", Icon: PhoneCall },
       { label: "Sends call summaries and lead details", Icon: LayoutDashboard },
-      { label: "Speaks naturally across languages", Icon: Globe2 },
+      { label: "Recovers missed calls automatically", Icon: PhoneCall },
+      { label: "Speaks naturally across configured languages", Icon: Globe2 },
+      { label: "Stores transcript, outcome, and caller history", Icon: FileImage },
     ],
     exploreLabel: "Explore Voice Agents",
     exploreHref: "/solutions/voice-agents",
+    demoHref: "/demo#voice-agent-demo",
+    pricingHref: "/pricing?type=voice",
   },
 ];
 
@@ -175,24 +183,13 @@ function ChatPhoneMockup() {
 
         <div className="flex-1 space-y-3 px-4 py-4">
           <div className="max-w-[82%] rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.06] px-4 py-3 text-sm leading-5 text-foreground/82">
-            Hi, do you have whitening appointments this week?
+            Hi, is this available?
           </div>
           <div className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md border border-primary/28 bg-primary/14 px-4 py-3 text-sm leading-5 text-foreground">
-            Yes. Thursday 4:30 PM and Saturday 10:00 AM are available.
+            Yes, it&apos;s available. I can also help with delivery or pickup.
           </div>
           <div className="ml-auto max-w-[84%] rounded-2xl rounded-tr-md border border-primary/28 bg-primary/14 px-4 py-3 text-sm leading-5 text-foreground">
-            I can reserve a slot and send the prep guide now.
-          </div>
-
-          <div className="ml-auto max-w-[84%] rounded-2xl border border-primary/22 bg-black/30 p-3">
-            <div className="rounded-xl border border-primary/18 bg-primary/8 p-3">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
-                Brochure sent
-              </p>
-              <p className="mt-1 text-sm text-foreground/86">
-                Whitening prep guide + price list
-              </p>
-            </div>
+            Please send your name and contact number to reserve it.
           </div>
 
           <div className="rounded-2xl border border-primary/24 bg-black/28 p-3">
@@ -202,7 +199,10 @@ function ChatPhoneMockup() {
                   Lead captured
                 </p>
                 <p className="mt-1 text-sm text-foreground">
-                  Whitening enquiry
+                  Product enquiry
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Customer details saved
                 </p>
               </div>
               <LayoutDashboard className="h-5 w-5 text-primary" />
@@ -213,7 +213,7 @@ function ChatPhoneMockup() {
         <div className="border-t border-white/8 p-4">
           <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-xs text-muted-foreground">
             <span className="h-2 w-2 rounded-full bg-primary" />
-            Replying in under 3 seconds
+            Chat demo ready
           </div>
         </div>
       </div>
@@ -318,7 +318,7 @@ function OfferModal({ offer }: { offer: Offer }) {
             {offer.label}
           </p>
           <DialogTitle className="mt-3 max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-            {offer.title}
+            {offer.modalTitle}
           </DialogTitle>
           <DialogDescription className="mt-4 max-w-2xl text-base leading-7 text-foreground/72">
             {offer.description}
@@ -356,7 +356,7 @@ function OfferModal({ offer }: { offer: Offer }) {
 
           <div className="mt-7 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/demo">
+              <Link href={offer.demoHref}>
                 See Live Demo
                 <Zap className="h-4 w-4" />
               </Link>
@@ -366,6 +366,9 @@ function OfferModal({ offer }: { offer: Offer }) {
                 {offer.exploreLabel}
                 <ArrowRight className="h-4 w-4" />
               </Link>
+            </Button>
+            <Button asChild variant="link" size="lg" className="px-1 text-primary">
+              <Link href={offer.pricingHref}>View Pricing</Link>
             </Button>
           </div>
         </div>
@@ -450,7 +453,7 @@ export function Features() {
                       <Icon className="h-7 w-7" />
                     </span>
                     <span className="rounded-full border border-white/10 bg-black/18 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-foreground/64">
-                      Open details
+                      Open Details
                     </span>
                   </span>
 

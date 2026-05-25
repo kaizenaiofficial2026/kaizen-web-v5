@@ -18,23 +18,23 @@ const Row = ({
   return (
     <div className="mask-fade-x group relative overflow-hidden">
       <motion.div
-        className="flex w-max items-center gap-12 whitespace-nowrap py-1.5 group-hover:[animation-play-state:paused]"
+        className="flex w-max items-center gap-14 whitespace-nowrap py-2.5 group-hover:[animation-play-state:paused] sm:gap-16 sm:py-3"
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
         transition={{ duration: 76, repeat: Infinity, ease: "linear" }}
       >
         {doubled.map((logo, i) => (
           <span
             key={`${logo.name}-${i}`}
-            className="grid h-14 w-28 shrink-0 place-items-center gap-1 transition-opacity sm:h-16 sm:w-32"
+            className="grid h-[4.25rem] w-[8.5rem] shrink-0 place-items-center gap-1.5 transition-opacity sm:h-20 sm:w-40"
           >
             <Image
               src={logo.src}
               alt={`${logo.name} logo`}
-              width={92}
-              height={40}
-              className="max-h-7 w-auto max-w-20 select-none object-contain opacity-35 brightness-0 invert transition-opacity hover:opacity-80 sm:max-h-8 sm:max-w-24"
+              width={116}
+              height={50}
+              className="max-h-8 w-auto max-w-24 select-none object-contain opacity-48 brightness-0 invert transition-opacity hover:opacity-85 sm:max-h-10 sm:max-w-[7.5rem]"
             />
-            <span className="select-none text-center text-[10px] font-semibold leading-none text-foreground/38 transition-colors group-hover:text-foreground/55 sm:text-[11px]">
+            <span className="select-none text-center text-[10px] font-semibold leading-none text-foreground/46 transition-colors group-hover:text-foreground/62 sm:text-xs">
               {logo.name}
             </span>
           </span>
@@ -48,16 +48,24 @@ export function LogoCloud() {
   return (
     <section
       aria-labelledby="logos-heading"
-      className="relative w-full border-y border-border/50 bg-card/20 py-8 sm:py-10"
+      className="relative w-full overflow-hidden border-t border-border/25 bg-[linear-gradient(180deg,rgba(16,14,9,0.8),rgba(12,10,7,0.72)_56%,rgba(10,9,7,0))] py-11 sm:py-14"
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(64%_70%_at_50%_6%,rgba(201,160,61,0.18),rgba(201,160,61,0.06)_44%,rgba(10,9,7,0)_76%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-background"
+      />
       <Container>
         <p
           id="logos-heading"
-          className="text-muted-foreground mb-4 text-center text-[11px] font-medium uppercase tracking-[0.22em]"
+          className="mb-7 text-center text-xs font-semibold uppercase tracking-[0.24em] text-foreground/62 sm:mb-8"
         >
           Built on the world&apos;s best AI infrastructure
         </p>
-        <div className="flex flex-col gap-1">
+        <div className="relative flex flex-col gap-2 sm:gap-3">
           <Row logos={partnerLogos} />
           <Row logos={[...partnerLogos].reverse()} reverse />
         </div>
