@@ -194,7 +194,7 @@ export function InteractiveDemoPage() {
 
   return (
     <main id="main" className="relative overflow-hidden">
-      <section className="relative overflow-hidden pb-18 pt-30 sm:pb-24 sm:pt-34 lg:pb-28 lg:pt-38">
+      <section id="voice-agent-demo" className="relative overflow-hidden pb-18 pt-30 sm:pb-24 sm:pt-34 lg:pb-28 lg:pt-38">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10"

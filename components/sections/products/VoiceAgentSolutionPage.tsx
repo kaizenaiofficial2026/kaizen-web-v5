@@ -2,13 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
+  ArrowDown,
   ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  Bell,
+  BrainCircuit,
   CalendarCheck,
   CheckCircle2,
+  Clock3,
+  ContactRound,
+  DatabaseZap,
+  FileText,
   Headphones,
   Languages,
   LayoutDashboard,
+  ListChecks,
+  MapPin,
   Mic,
   PhoneCall,
   PhoneForwarded,
@@ -16,8 +28,12 @@ import {
   PhoneOutgoing,
   Play,
   Radio,
-  UserCheck,
+  RefreshCcw,
+  Route,
+  Sparkles,
+  TicketCheck,
   Users,
+  Volume2,
   Zap,
   type LucideIcon,
 } from "lucide-react";
@@ -43,28 +59,23 @@ import { MarketingSection } from "@/components/primitives/MarketingPage";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { cn } from "@/lib/utils";
 
-type IconItem = {
+type FeatureCard = {
   title: string;
-  text: string;
-  Icon: LucideIcon;
-};
-
-type HandleCard = IconItem & {
-  expanded: string;
-  demoLine: string;
-};
-
-type ImpactMetric = {
-  value: number;
-  suffix: string;
-  label: string;
-  text: string;
+  shortText: string;
+  explanation: string;
+  example: string;
   Icon: LucideIcon;
 };
 
 type VoicePrompt = {
   question: string;
   answer: string;
+};
+
+type OutcomeCard = {
+  metric: string;
+  title: string;
+  text: string;
 };
 
 const trustChips = [
@@ -74,188 +85,387 @@ const trustChips = [
   "Multi-language support",
 ];
 
-const handleCards: HandleCard[] = [
+const featureCards: FeatureCard[] = [
   {
-    title: "Answer incoming enquiries",
-    text: "Never leave callers waiting in silence.",
-    expanded:
-      "The voice agent answers common customer questions instantly, captures useful details, and keeps the call moving.",
-    demoLine:
-      "Hi, thanks for calling. I can help with that. Could I quickly get your name and the service you are interested in?",
+    title: "Answer Incoming Calls",
+    shortText: "Never leave callers waiting in silence.",
+    explanation:
+      "The AI answers inbound calls instantly, handles customer questions, understands the caller's intent, and guides them toward the right next step.",
+    example:
+      "A customer calls after hours asking about availability. The AI answers immediately and helps them instead of letting the call go missed.",
     Icon: PhoneIncoming,
   },
   {
-    title: "Call missed leads back instantly",
-    text: "Recover interest while it is still warm.",
-    expanded:
-      "When a call is missed, the agent can follow up quickly and collect the reason for the enquiry.",
-    demoLine:
-      "Hi, I am calling back from the team. I saw we missed your call. What can I help you with today?",
-    Icon: PhoneOutgoing,
-  },
-  {
-    title: "Book appointments automatically",
-    text: "Guide callers into confirmed next steps.",
-    expanded:
-      "The agent can collect booking details, confirm preferred timing, and guide the customer toward the next step.",
-    demoLine:
-      "Yes, I can help book that. What day works best for you, and do you prefer morning or afternoon?",
-    Icon: CalendarCheck,
-  },
-  {
-    title: "Qualify sales prospects",
-    text: "Ask the right questions before handoff.",
-    expanded:
-      "The agent asks focused questions so your team receives clearer, warmer leads instead of vague callbacks.",
-    demoLine:
-      "Before I send this to the team, could I ask what service you need and when you are hoping to get started?",
-    Icon: UserCheck,
-  },
-  {
-    title: "Follow up automatically",
-    text: "Keep leads moving without manual chasing.",
-    expanded:
-      "The agent can remind leads, check interest, and keep the conversation alive without adding staff pressure.",
-    demoLine:
-      "Just following up on your enquiry. Are you still interested, or would you like me to arrange a call with the team?",
+    title: "Missed-Call Recovery",
+    shortText: "Call or message missed leads back automatically.",
+    explanation:
+      "If a call is missed, the AI can follow up automatically through WhatsApp or callback workflows so warm leads do not go cold.",
+    example:
+      "A customer calls while your team is busy. The AI follows up and asks how it can help before the customer contacts a competitor.",
     Icon: PhoneForwarded,
   },
   {
-    title: "Escalate hot leads to your team",
-    text: "Send context when a human should close.",
-    expanded:
-      "When the conversation needs a person, the agent can pass the call context and urgency to your team.",
-    demoLine:
-      "This sounds important. I can send your details and call summary to the team so they can contact you directly.",
+    title: "Appointment Booking",
+    shortText: "Book confirmed slots during the call.",
+    explanation:
+      "The AI checks live calendar availability, captures appointment details, secures the slot, and logs the booking without manual staff input.",
+    example:
+      "A caller asks for an appointment tomorrow. The AI checks available times and books the slot during the call.",
+    Icon: CalendarCheck,
+  },
+  {
+    title: "Google Calendar Sync",
+    shortText: "Sync bookings in real time.",
+    explanation:
+      "Appointments booked by the AI are synced instantly into Google Calendar with customer name, contact number, service, date, time, and slot details.",
+    example:
+      "Your team opens the calendar and sees the new booking already added.",
+    Icon: Clock3,
+  },
+  {
+    title: "WhatsApp Confirmation",
+    shortText: "Send booking details after the call.",
+    explanation:
+      "After a booking, the AI sends a WhatsApp confirmation with appointment date, time, service, price, and any important details.",
+    example:
+      "The customer receives a clear WhatsApp confirmation immediately after the call ends.",
+    Icon: Bell,
+  },
+  {
+    title: "Human Escalation",
+    shortText: "Transfer complex calls with full context.",
+    explanation:
+      "When a caller needs human support, the AI can escalate with the call summary, caller intent, and conversation context already attached.",
+    example:
+      "A high-value caller asks a complex question. The AI routes the call to your team with context.",
     Icon: Users,
   },
   {
-    title: "Speak multiple languages",
-    text: "Support callers in the languages you need.",
-    expanded:
-      "The agent can be configured for the languages your customers actually use, including mixed-language conversations.",
-    demoLine:
-      "Yes, I can support multiple languages depending on your setup. Which language would you prefer?",
-    Icon: Languages,
+    title: "Call Transcript & Summary",
+    shortText: "Every call logged with outcome.",
+    explanation:
+      "Each call is saved with a word-for-word transcript, plain English summary, caller details, duration, and outcome badge such as Booked, FAQ Answered, or Escalated.",
+    example:
+      "Your team can review what happened without listening to the entire call again.",
+    Icon: FileText,
   },
   {
-    title: "Update CRM / dashboard",
-    text: "Store outcomes, intent, and call notes.",
-    expanded:
-      "After the call, key details can be prepared for your dashboard or connected CRM workflow.",
-    demoLine:
-      "I have captured the customer name, intent, preferred time, and next action for the team dashboard.",
+    title: "Caller Memory",
+    shortText: "Recognise returning customers.",
+    explanation:
+      "The AI can use previous caller history, past bookings, and customer context so returning customers do not have to repeat themselves.",
+    example:
+      "A returning customer calls again and the AI understands their previous enquiry or booking history.",
+    Icon: ContactRound,
+  },
+  {
+    title: "Vibe Score",
+    shortText: "Know if a caller is cold, warm, or hot.",
+    explanation:
+      "Each call receives a 0-100% intent indicator to help the business identify serious callers and prioritise follow-up.",
+    example:
+      "A hot caller can be flagged for immediate team attention.",
+    Icon: BarChart3,
+  },
+  {
+    title: "Call Outcome Badge",
+    shortText: "See whether the call was booked, answered, or escalated.",
+    explanation:
+      "Every call gets a clear outcome badge such as Booked, FAQ Answered, or Escalated so your team knows what happened instantly.",
+    example:
+      "Instead of reading the full transcript, your team sees the call outcome immediately.",
+    Icon: BadgeCheck,
+  },
+  {
+    title: "Reschedule & Cancellation Handling",
+    shortText: "Manage booking changes automatically.",
+    explanation:
+      "The AI can help callers reschedule or cancel appointments through voice or WhatsApp follow-up.",
+    example:
+      "A customer calls to move an appointment. The AI checks availability and updates the booking flow.",
+    Icon: RefreshCcw,
+  },
+  {
+    title: "Live Appointment Board",
+    shortText: "Manage bookings by date and status.",
+    explanation:
+      "The dashboard shows every appointment with name, contact, service, slot, date, time, and booking status.",
+    example:
+      "Your team can see today's bookings without searching through call logs.",
     Icon: LayoutDashboard,
+  },
+  {
+    title: "Customer Directory",
+    shortText: "Store caller history in one place.",
+    explanation:
+      "Every caller profile includes contact details, call history, previous bookings, upcoming appointments, and follow-up activity.",
+    example:
+      "A receptionist can quickly see who called and what they needed.",
+    Icon: ContactRound,
+  },
+  {
+    title: "Repeat Caller Detection",
+    shortText: "Flag returning callers automatically.",
+    explanation:
+      "The AI identifies repeat callers and connects their new call to previous history.",
+    example:
+      "A customer who called last week is recognised automatically.",
+    Icon: PhoneIncoming,
+  },
+  {
+    title: "Custom Voice Brain",
+    shortText: "Trained on your services, pricing, FAQs, and policies.",
+    explanation:
+      "The AI learns your business knowledge so it can answer accurately, recommend services, explain pricing, and follow your rules.",
+    example:
+      "A caller asks about a service package and the AI explains it using your approved information.",
+    Icon: BrainCircuit,
+  },
+  {
+    title: "FAQ Handling",
+    shortText: "Answer common questions instantly.",
+    explanation:
+      "The AI answers common questions about business hours, pricing, availability, location, services, and policies.",
+    example:
+      "A customer calls asking for your location and opening hours. The AI answers immediately.",
+    Icon: Headphones,
+  },
+  {
+    title: "Smart Service Recommendations",
+    shortText: "Recommend services by need and budget.",
+    explanation:
+      "The AI can ask the right questions and guide callers toward the most relevant service.",
+    example:
+      "A caller explains their problem and the AI suggests the most suitable appointment type.",
+    Icon: Sparkles,
+  },
+  {
+    title: "Knowledge Base Updates",
+    shortText: "Update business knowledge anytime.",
+    explanation:
+      "When services, pricing, or policies change, the AI knowledge base can be updated so future calls use the latest information.",
+    example:
+      "A new price or service is added and the AI can explain it correctly.",
+    Icon: ListChecks,
+  },
+  {
+    title: "Call Volume Analytics",
+    shortText: "Track calls by day, week, and month.",
+    explanation:
+      "The dashboard tracks total calls answered today, this week, and this month so the business can understand demand.",
+    example:
+      "You can see whether call volume is increasing after a campaign.",
+    Icon: BarChart3,
+  },
+  {
+    title: "AI Usage Minute Tracking",
+    shortText: "Monitor daily usage and limit alerts.",
+    explanation:
+      "Usage minutes are tracked daily with alerts such as Healthy, Approaching, or Near Limit.",
+    example:
+      "You can see when usage is close to the package limit.",
+    Icon: Radio,
+  },
+  {
+    title: "Peak Call Hour Heatmap",
+    shortText: "Know when customers call most.",
+    explanation:
+      "The system shows peak call hours so businesses can understand demand patterns and staffing needs.",
+    example:
+      "A clinic sees most calls happen between 6 PM and 9 PM.",
+    Icon: Clock3,
+  },
+  {
+    title: "CRM Sync",
+    shortText: "Push call data into your CRM.",
+    explanation:
+      "Call logs, appointment data, customer details, and outcomes can sync into Salesforce, HubSpot, Zoho, and other CRM systems.",
+    example:
+      "A new caller becomes a CRM lead without manual entry.",
+    Icon: DatabaseZap,
+  },
+  {
+    title: "Auto Support Ticket",
+    shortText: "Flag unresolved calls for follow-up.",
+    explanation:
+      "If a call cannot be resolved, the system can create a support flag for human follow-up.",
+    example:
+      "A complaint is flagged so your team can respond quickly.",
+    Icon: TicketCheck,
+  },
+  {
+    title: "Multi-Location Support",
+    shortText: "Separate calendars and scripts per branch.",
+    explanation:
+      "Businesses with multiple locations can use separate calendars, scripts, and workflows for each branch.",
+    example:
+      "A caller chooses the nearest branch and the AI books into that branch calendar.",
+    Icon: MapPin,
+  },
+  {
+    title: "Outbound Call Campaigns",
+    shortText: "Let AI call your leads list.",
+    explanation:
+      "The AI can make outbound calls to leads for follow-up, reminders, or campaign workflows.",
+    example:
+      "The AI calls warm leads who requested a callback.",
+    Icon: PhoneOutgoing,
+  },
+  {
+    title: "Custom Voice Persona",
+    shortText: "Choose tone, name, and language.",
+    explanation:
+      "The business can choose the tone, identity, and speaking style of the AI voice agent.",
+    example:
+      "A premium clinic may use a calm, professional voice while a retail brand may use a warmer tone.",
+    Icon: Volume2,
+  },
+  {
+    title: "Multi-Language Support",
+    shortText: "Support callers in multiple languages.",
+    explanation:
+      "Multi-language support is available on request so callers can be helped in the language they are comfortable with.",
+    example:
+      "A caller asks in Sinhala or Tamil and receives support without waiting for a specific staff member.",
+    Icon: Languages,
+  },
+];
+
+const visibleFeatureCards = featureCards.slice(0, 8);
+const expandableFeatureCards = featureCards.slice(8);
+const featureGridClassName =
+  "grid gap-3 min-[380px]:grid-cols-2 sm:gap-4 lg:grid-cols-4";
+
+const voicePrompts: VoicePrompt[] = [
+  {
+    question: "Can you book me tomorrow?",
+    answer:
+      "Yes. I can check the available slots and reserve one for you now.",
+  },
+  {
+    question: "Do you have pricing?",
+    answer:
+      "Yes. I can explain the pricing for the service you need and help choose the right option.",
+  },
+  {
+    question: "Can I speak to someone?",
+    answer:
+      "Yes. I can send this to the team with your call summary and contact details.",
+  },
+  {
+    question: "What services do you offer?",
+    answer:
+      "I can walk you through the services and recommend the best fit based on what you need.",
+  },
+  {
+    question: "Can you call me back?",
+    answer:
+      "Yes. I can capture your callback reason, preferred time, and contact number.",
+  },
+  {
+    question: "Do you support Sinhala?",
+    answer:
+      "Multi-language support can be configured for the languages your customers use most.",
+  },
+  {
+    question: "Can you send the location?",
+    answer:
+      "Yes. I can send the location and any arrival instructions after the call.",
+  },
+  {
+    question: "Is anyone available now?",
+    answer:
+      "I can check availability and either book a slot or escalate this to the team.",
   },
 ];
 
 const flowSteps = [
   { label: "Customer calls", Icon: PhoneCall },
   { label: "AI answers instantly", Icon: Zap },
-  { label: "Understands intent", Icon: Mic },
-  { label: "Answers questions", Icon: Headphones },
-  { label: "Books / qualifies / escalates", Icon: CalendarCheck },
-  { label: "Lead stored in dashboard", Icon: LayoutDashboard },
+  { label: "Understands caller intent", Icon: Mic },
+  { label: "Answers questions or recommends service", Icon: Headphones },
+  { label: "Checks calendar availability", Icon: CalendarCheck },
+  { label: "Books, qualifies, or escalates", Icon: Route },
+  { label: "Sends WhatsApp confirmation", Icon: Bell },
+  { label: "Logs transcript, summary, and outcome", Icon: FileText },
+  { label: "Syncs to dashboard, calendar, and CRM", Icon: DatabaseZap },
 ];
 
-const impactMetrics: ImpactMetric[] = [
+const outcomeCards: OutcomeCard[] = [
   {
-    value: 148,
-    suffix: "+",
-    label: "Calls Handled",
-    text: "AI can manage high call volume without staff overload.",
-    Icon: PhoneIncoming,
+    metric: "Instant",
+    title: "Inbound call answering",
+    text: "Customers are answered before they move to a competitor.",
   },
   {
-    value: 37,
-    suffix: "+",
-    label: "Appointments Booked",
-    text: "Turns conversations into confirmed next steps.",
-    Icon: CalendarCheck,
+    metric: "24/7/365",
+    title: "Always-on call coverage",
+    text: "Handle calls after hours, weekends, and holidays.",
   },
   {
-    value: 24,
-    suffix: "/7",
-    label: "Availability",
-    text: "Answers and follows up even after business hours.",
-    Icon: Radio,
+    metric: "~1,000",
+    title: "Simultaneous calls supported",
+    text: "Scale call volume without dropping quality.",
   },
   {
-    value: 5,
-    suffix: " sec",
-    label: "Response Time",
-    text: "Customers get answered before they move to competitors.",
-    Icon: Zap,
+    metric: "0",
+    title: "Hold-time experience",
+    text: "No customer waits in silence for a busy team member.",
+  },
+  {
+    metric: "Live",
+    title: "Calendar booking",
+    text: "Check availability and secure appointments during the call.",
+  },
+  {
+    metric: "Auto",
+    title: "WhatsApp confirmation",
+    text: "Send appointment details after the call.",
+  },
+  {
+    metric: "100%",
+    title: "Call visibility",
+    text: "Transcript, summary, caller details, and outcome logged.",
+  },
+  {
+    metric: "Tracked",
+    title: "Performance reporting",
+    text: "Review calls, bookings, usage, outcomes, and peak hours.",
   },
 ];
 
 const faqs = [
   {
     q: "Does the AI sound human?",
-    a: "The agent is designed to sound natural, confident, and conversational, with tone and wording trained around your business.",
+    a: "Yes. The voice agent is designed for natural, human-like conversations. It speaks clearly, listens to the caller, and responds based on your business knowledge.",
   },
   {
     q: "Can it answer inbound and make outbound calls?",
-    a: "Yes. It can answer incoming calls and also make outbound follow-ups, reminders, and lead qualification calls.",
+    a: "Yes. It can answer inbound calls and, where configured, run outbound call campaigns for follow-ups, reminders, or lead lists.",
   },
   {
     q: "Can it transfer calls to my team?",
-    a: "Yes. When a call needs human attention, it can transfer or escalate with context.",
+    a: "Yes. When the AI detects a complex request, complaint, or high-value caller, it can escalate with the conversation context attached.",
   },
   {
     q: "Can it speak multiple languages?",
-    a: "Yes. It can support multiple languages depending on the business requirements and setup.",
+    a: "Multi-language support is available on request. The agent can be configured for the languages your customers use most.",
   },
   {
     q: "Can it book appointments?",
-    a: "Yes. It can collect details, confirm availability through connected tools, and guide the customer toward booking.",
+    a: "Yes. The AI can check live Google Calendar availability, secure the slot, log the booking, and send WhatsApp confirmation.",
   },
   {
     q: "What if the AI does not know the answer?",
-    a: "It can ask clarifying questions, use approved business knowledge, or escalate to a human when needed.",
-  },
-];
-
-const voicePrompts: VoicePrompt[] = [
-  {
-    question: "Can you book me tomorrow?",
-    answer:
-      "Yes, I can help with that. What service would you like to book and what time works best?",
+    a: "It can escalate the call or create a support flag so your team can follow up with the caller.",
   },
   {
-    question: "Do you have pricing?",
-    answer:
-      "I can share the available pricing options. Which service are you interested in?",
+    q: "Where do call records go?",
+    a: "Calls are logged in the dashboard with caller number, date, duration, transcript, summary, and outcome.",
   },
   {
-    question: "Can I speak to someone?",
-    answer:
-      "Of course. I can send this to the team with your details so they can contact you directly.",
-  },
-  {
-    question: "What services do you offer?",
-    answer:
-      "I can walk you through the available services and help match the right option to what you need.",
-  },
-  {
-    question: "Can you call me back?",
-    answer:
-      "Yes. I can capture your number, preferred time, and reason for the callback.",
-  },
-  {
-    question: "Do you support Sinhala?",
-    answer:
-      "Yes. I can handle conversations in multiple languages depending on your business setup.",
-  },
-  {
-    question: "Can you send the location?",
-    answer:
-      "Yes. I can send the location link and any parking or arrival instructions your customer needs.",
-  },
-  {
-    question: "Is anyone available now?",
-    answer:
-      "I can check availability, confirm the next opening, or escalate this to the team if it is urgent.",
+    q: "Can it connect to our CRM?",
+    a: "Yes. Call logs, appointments, customer details, and outcomes can sync into tools such as Salesforce, HubSpot, Zoho, and other CRM systems.",
   },
 ];
 
@@ -315,60 +525,45 @@ function PhoneCallMockup() {
             <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.055] px-3 py-2 text-left backdrop-blur-md">
               <div className="flex items-center gap-2.5">
                 <span className="grid h-9 w-9 place-items-center rounded-full border border-primary/24 bg-primary/12 text-primary">
-                  <Mic className="h-4 w-4" />
+                  <Mic className="h-4 w-4" aria-hidden />
                 </span>
                 <div>
                   <p className="text-sm font-semibold leading-none text-foreground">
                     Kaizen Voice Agent
                   </p>
                   <p className="mt-1 text-[11px] text-muted-foreground">
-                    {isSpeaking ? "AI speaking..." : "Tap a question"}
+                    Tap a question
                   </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/12 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
                 <Radio
                   className={cn("h-3 w-3", isSpeaking && "animate-pulse")}
+                  aria-hidden
                 />
                 Live
               </span>
             </div>
 
             <div className="relative flex flex-1 flex-col items-center justify-center py-4">
-              <div className="relative grid h-40 w-40 place-items-center">
+              <div className="relative grid h-32 w-32 place-items-center">
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute h-36 w-36 rounded-full border border-primary/20 bg-primary/10 blur-sm",
+                    "absolute h-32 w-32 rounded-full border border-primary/20 bg-primary/10 blur-sm",
                     isSpeaking ? "voiceOrbRingSpeaking" : "voiceOrbRingIdle",
                   )}
                 />
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute h-28 w-28 rounded-full border border-white/10 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.62),rgba(201,160,61,0.72)_28%,rgba(104,79,25,0.92)_66%,rgba(12,10,6,0.98)_100%)] shadow-[0_0_70px_-18px_rgba(201,160,61,1),inset_0_1px_18px_rgba(255,255,255,0.28)]",
+                    "absolute h-24 w-24 rounded-full border border-white/10 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.62),rgba(201,160,61,0.72)_28%,rgba(104,79,25,0.92)_66%,rgba(12,10,6,0.98)_100%)] shadow-[0_0_70px_-18px_rgba(201,160,61,1),inset_0_1px_18px_rgba(255,255,255,0.28)]",
                     isSpeaking ? "voiceOrbSpeaking" : "voiceOrbIdle",
                   )}
                 />
-                <span
-                  aria-hidden
-                  className="absolute left-16 top-11 h-7 w-10 rounded-full bg-white/28 blur-md"
-                />
-                <span className="relative grid h-14 w-14 place-items-center rounded-full border border-white/18 bg-black/24 text-primary backdrop-blur-md">
-                  <Mic className="h-6 w-6" />
+                <span className="relative grid h-12 w-12 place-items-center rounded-full border border-white/18 bg-black/24 text-primary backdrop-blur-md">
+                  <Mic className="h-5 w-5" aria-hidden />
                 </span>
-              </div>
-              <div className="mt-1 flex h-7 items-center justify-center">
-                {isSpeaking ? (
-                  <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-                    AI speaking
-                  </span>
-                ) : (
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                    Voice preview
-                  </span>
-                )}
               </div>
             </div>
 
@@ -396,29 +591,34 @@ function PhoneCallMockup() {
             </div>
 
             <div className="mt-3 rounded-2xl border border-primary/20 bg-black/34 p-3 text-left backdrop-blur-md">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
-                  Live transcript
-                </p>
-                <span className="rounded-full bg-primary/12 px-2 py-0.5 text-[10px] font-semibold text-primary">
-                  Ready for backend
-                </span>
-              </div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+                Live transcript
+              </p>
               <p className="mt-2 text-xs leading-5 text-foreground/74">
                 <span className="text-muted-foreground">Customer:</span>{" "}
-                {activePrompt.question}
+                &quot;{activePrompt.question}&quot;
               </p>
               <p className="mt-2 text-sm leading-5 text-foreground">
-                <span className="text-primary">Kaizen AI:</span>{" "}
-                {activePrompt.answer}
+                <span className="text-primary">AI:</span> &quot;
+                {activePrompt.answer}&quot;
               </p>
+              <div className="mt-3 rounded-2xl border border-primary/20 bg-primary/8 p-3">
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+                  Call outcome
+                </p>
+                <div className="mt-2 grid gap-1.5 text-[11px] text-foreground/78">
+                  <span>Intent: Appointment booking</span>
+                  <span>Status: Ready to book</span>
+                  <span>Next step: Confirm slot</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="mt-4 flex justify-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/16 bg-black/28 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary/84">
-          <Play className="h-3 w-3" />
+          <Play className="h-3 w-3" aria-hidden />
           Replaceable with demo video
         </span>
       </div>
@@ -426,23 +626,89 @@ function PhoneCallMockup() {
   );
 }
 
+function FeaturePreviewPlaceholder({ title }: { title: string }) {
+  return (
+    <div
+      role="img"
+      aria-label={`Placeholder demo visual for ${title}`}
+      className="relative grid h-64 place-items-center overflow-hidden rounded-2xl border border-primary/18 bg-[linear-gradient(145deg,rgba(201,160,61,0.12),rgba(255,255,255,0.045))] sm:h-72"
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(70%_70%_at_70%_10%,rgba(201,160,61,0.26),transparent_62%)]"
+      />
+      <div className="relative z-10 text-center">
+        <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl border border-primary/24 bg-primary/12 text-primary">
+          <Play className="h-6 w-6" aria-hidden />
+        </span>
+        <p className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+          Demo visual will be added here
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function VoiceFeatureCard({
+  feature,
+  onSelect,
+}: {
+  feature: FeatureCard;
+  onSelect: (feature: FeatureCard) => void;
+}) {
+  const Icon = feature.Icon;
+
+  return (
+    <Card
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(feature)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSelect(feature);
+        }
+      }}
+      className="group relative h-full min-h-[170px] cursor-pointer overflow-hidden p-3 transition-colors hover:border-primary/38 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[380px]:p-4 sm:min-h-[220px] sm:p-5"
+    >
+      <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-primary/18 bg-primary/8 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-primary/80 opacity-80 transition-opacity group-hover:opacity-100 sm:right-4 sm:top-4 sm:px-2.5 sm:py-1 sm:text-[10px]">
+        Preview
+      </span>
+      <span className="grid h-10 w-10 place-items-center rounded-xl border border-primary/24 bg-primary/10 text-primary transition-transform group-hover:scale-105 sm:h-12 sm:w-12 sm:rounded-2xl">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
+      </span>
+      <h2 className="mt-4 pr-8 text-sm font-semibold leading-tight text-foreground sm:mt-5 sm:pr-0 sm:text-lg">
+        {feature.title}
+      </h2>
+      <p className="mt-2 text-xs leading-5 text-muted-foreground sm:mt-3 sm:text-sm sm:leading-6">
+        {feature.shortText}
+      </p>
+    </Card>
+  );
+}
+
 function FlowDiagram() {
   return (
     <div className="mt-12">
-      <div className="grid gap-5 lg:grid-cols-6 lg:gap-6">
+      <div className="grid gap-4 min-[380px]:grid-cols-2 lg:grid-cols-3">
         {flowSteps.map(({ label, Icon }, index) => (
           <div key={label} className="relative">
-            {index > 0 && (
-              <div
+            {index < flowSteps.length - 1 && (
+              <ArrowRight
                 aria-hidden
-                className="absolute left-6 top-0 h-5 w-px -translate-y-5 bg-primary/35 lg:left-0 lg:top-10 lg:h-px lg:w-6 lg:-translate-x-6 lg:-translate-y-0"
+                className="absolute right-4 top-4 hidden h-4 w-4 text-primary/70 lg:block"
               />
             )}
-            <div className="relative z-10 flex h-full min-h-[112px] items-center gap-4 rounded-2xl border border-primary/18 bg-card/58 p-4 backdrop-blur-md lg:flex-col lg:justify-start lg:text-center">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary shadow-[0_0_28px_-16px_rgba(201,160,61,1)]">
-                <Icon className="h-6 w-6" />
-              </span>
-              <span className="text-sm font-semibold leading-tight text-foreground">
+            <div className="relative z-10 flex h-full min-h-[132px] flex-col justify-between rounded-2xl border border-primary/18 bg-card/58 p-4 backdrop-blur-md">
+              <div className="flex items-center justify-between gap-4">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-primary/24 bg-primary/10 text-primary shadow-[0_0_28px_-16px_rgba(201,160,61,1)]">
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+                <span className="text-xs font-semibold text-primary/80">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <span className="mt-5 text-sm font-semibold leading-tight text-foreground">
                 {label}
               </span>
             </div>
@@ -451,7 +717,7 @@ function FlowDiagram() {
       </div>
       <div className="mt-7 flex justify-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/18 bg-primary/8 px-4 py-2 text-xs font-semibold text-foreground/78">
-          <CheckCircle2 className="h-4 w-4 text-primary" />
+          <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden />
           Every call becomes a trackable business outcome.
         </span>
       </div>
@@ -459,208 +725,26 @@ function FlowDiagram() {
   );
 }
 
-function CountUpNumber({
-  start,
-  value,
-  suffix,
-}: {
-  start: boolean;
-  value: number;
-  suffix: string;
-}) {
-  const [displayValue, setDisplayValue] = useState(0);
-
-  useEffect(() => {
-    if (!start) {
-      return;
-    }
-
-    let frame = 0;
-    let animationFrame = 0;
-    const totalFrames = 56;
-
-    const tick = () => {
-      frame += 1;
-      const progress = Math.min(frame / totalFrames, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setDisplayValue(Math.round(value * eased));
-
-      if (progress < 1) {
-        animationFrame = window.requestAnimationFrame(tick);
-      }
-    };
-
-    animationFrame = window.requestAnimationFrame(tick);
-
-    return () => window.cancelAnimationFrame(animationFrame);
-  }, [start, value]);
-
-  return (
-    <>
-      {displayValue}
-      {suffix}
-    </>
-  );
-}
-
-function ImpactStrip() {
-  const stripRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const node = stripRef.current;
-
-    if (!node || isVisible) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.28 },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [isVisible]);
-
-  return (
-    <div
-      ref={stripRef}
-      className="mt-12 overflow-hidden rounded-[1.75rem] border border-primary/24 bg-[linear-gradient(135deg,rgba(201,160,61,0.14),rgba(255,255,255,0.045),rgba(201,160,61,0.08))] shadow-[0_34px_100px_-72px_rgba(201,160,61,0.95)]"
-    >
-      <div className="grid divide-y divide-primary/14 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
-        {impactMetrics.map(({ value, suffix, label, text, Icon }) => (
-          <div key={label} className="relative min-h-[240px] p-6">
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-0 transition-opacity hover:opacity-100"
-              style={{
-                backgroundImage:
-                  "radial-gradient(65% 65% at 50% 0%, rgba(201,160,61,0.15), transparent 72%)",
-              }}
-            />
-            <div className="relative flex h-full flex-col">
-              <div className="flex items-center justify-between gap-4">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <span className="h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent" />
-              </div>
-              <p className="mt-7 font-serif text-5xl font-medium leading-none text-primary sm:text-6xl">
-                <CountUpNumber
-                  start={isVisible}
-                  value={value}
-                  suffix={suffix}
-                />
-              </p>
-              <h3 className="mt-4 text-xl font-semibold leading-tight text-foreground">
-                {label}
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                {text}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ModalWaveform({ active }: { active: boolean }) {
-  const bars = [22, 46, 32, 58, 38, 76, 48, 30, 68, 42, 26, 54, 70, 34];
-
-  return (
-    <div className="flex h-24 items-center gap-1.5 rounded-2xl border border-white/10 bg-black/24 px-4">
-      {bars.map((height, index) => (
-        <span
-          key={`${height}-${index}`}
-          className={cn(
-            "w-full rounded-full bg-[linear-gradient(180deg,rgba(201,160,61,0.96),rgba(201,160,61,0.2))]",
-            active && "modalWaveActive",
-          )}
-          style={{
-            height,
-            animationDelay: `${index * 70}ms`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function DemoModalOrb({ active }: { active: boolean }) {
-  return (
-    <div className="relative mx-auto grid h-56 w-56 place-items-center">
-      <span
-        aria-hidden
-        className={cn(
-          "absolute h-52 w-52 rounded-full border border-primary/20 bg-primary/10 blur-sm",
-          active ? "voiceOrbRingSpeaking" : "voiceOrbRingIdle",
-        )}
-      />
-      <span
-        aria-hidden
-        className={cn(
-          "absolute h-40 w-40 rounded-full border border-white/10 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.65),rgba(201,160,61,0.76)_28%,rgba(104,79,25,0.94)_66%,rgba(12,10,6,0.98)_100%)] shadow-[0_0_90px_-18px_rgba(201,160,61,1),inset_0_1px_22px_rgba(255,255,255,0.3)]",
-          active ? "voiceOrbSpeaking" : "voiceOrbIdle",
-        )}
-      />
-      <span
-        aria-hidden
-        className="absolute left-[82px] top-[62px] h-10 w-14 rounded-full bg-white/30 blur-md"
-      />
-      <span className="relative grid h-20 w-20 place-items-center rounded-full border border-white/18 bg-black/24 text-primary backdrop-blur-md">
-        <Mic className="h-8 w-8" />
-      </span>
-    </div>
-  );
-}
-
 export function VoiceAgentSolutionPage() {
-  const [activeUseCase, setActiveUseCase] = useState<HandleCard | null>(null);
-  const [isModalPlaying, setIsModalPlaying] = useState(false);
-  const modalTimer = useRef<number | null>(null);
+  const [activeFeature, setActiveFeature] = useState<FeatureCard | null>(null);
+  const [showMoreFeatures, setShowMoreFeatures] = useState(false);
+  const featureSectionRef = useRef<HTMLDivElement | null>(null);
+  const reducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    return () => {
-      if (modalTimer.current) {
-        window.clearTimeout(modalTimer.current);
-      }
-    };
-  }, []);
-
-  function playUseCaseDemo() {
-    if (modalTimer.current) {
-      window.clearTimeout(modalTimer.current);
-    }
-
-    setIsModalPlaying(true);
-    modalTimer.current = window.setTimeout(() => {
-      setIsModalPlaying(false);
-      modalTimer.current = null;
-    }, 3000);
-  }
-
-  function closeUseCaseModal(open: boolean) {
-    if (open) {
+  const toggleMoreFeatures = () => {
+    if (showMoreFeatures) {
+      setShowMoreFeatures(false);
+      window.setTimeout(() => {
+        featureSectionRef.current?.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
+      }, 80);
       return;
     }
 
-    if (modalTimer.current) {
-      window.clearTimeout(modalTimer.current);
-      modalTimer.current = null;
-    }
-
-    setIsModalPlaying(false);
-    setActiveUseCase(null);
-  }
+    setShowMoreFeatures(true);
+  };
 
   return (
     <main id="main" className="relative">
@@ -676,23 +760,13 @@ export function VoiceAgentSolutionPage() {
               Your Best Sales Rep Never Sleeps.
             </h1>
             <p className="mt-6 max-w-2xl text-lead text-foreground/75">
-              Custom-built AI voice agents that answer inbound calls, follow up
-              with leads, handle customer enquiries, book appointments, and help
-              your business close more sales 24/7.
+              Custom-built AI voice agents that answer inbound calls, handle
+              customer enquiries, book appointments, follow up with missed
+              leads, and help your business close more sales 24/7.
             </p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {trustChips.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-primary/18 bg-card/40 px-3 py-1 text-xs font-semibold text-foreground/76"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button asChild size="xl">
-                <Link href="/demo">
+                <Link href="/demo#voice-agent-demo">
                   Speak to Our AI Agent
                   <ArrowRight aria-hidden />
                 </Link>
@@ -704,6 +778,16 @@ export function VoiceAgentSolutionPage() {
                 <Link href="/pricing?type=voice">View Pricing</Link>
               </Button>
             </div>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {trustChips.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-primary/18 bg-card/40 px-3 py-1 text-xs font-semibold text-foreground/76"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </FadeUp>
           <FadeUp delay={0.1}>
             <PhoneCallMockup />
@@ -712,131 +796,95 @@ export function VoiceAgentSolutionPage() {
       </section>
 
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
+        <div ref={featureSectionRef} />
         <FadeUp>
           <SectionHeader
             eyebrow="What It Handles"
-            title={
-              <>
-                What your{" "}
-                <span className="text-primary">AI Voice Agent</span> handles
-                for you.
-              </>
-            }
+            title="What your AI Voice Agent handles for you."
+            subtitle="Tap any feature to preview how the voice agent works during real customer calls."
           />
         </FadeUp>
-        <StaggerGrid className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {handleCards.map((card) => (
-            <StaggerItem key={card.title}>
-              <Card
-                role="button"
-                tabIndex={0}
-                onClick={() => setActiveUseCase(card)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setActiveUseCase(card);
-                  }
-                }}
-                className="group relative h-full cursor-pointer overflow-hidden p-5 transition-colors hover:border-primary/38 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-primary/18 bg-primary/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary/80 opacity-80 transition-opacity group-hover:opacity-100">
-                  <Play className="h-3 w-3 fill-current" />
-                  Demo
-                </span>
-                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/24 bg-primary/10 text-primary transition-transform group-hover:scale-105">
-                  <card.Icon className="h-6 w-6" />
-                </span>
-                <h2 className="mt-5 text-lg font-semibold leading-tight text-foreground">
-                  {card.title}
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {card.text}
-                </p>
-              </Card>
+        <StaggerGrid className={cn("mt-12", featureGridClassName)}>
+          {visibleFeatureCards.map((feature) => (
+            <StaggerItem key={feature.title}>
+              <VoiceFeatureCard feature={feature} onSelect={setActiveFeature} />
             </StaggerItem>
           ))}
         </StaggerGrid>
+        <AnimatePresence initial={false}>
+          {showMoreFeatures && (
+            <motion.div
+              id="voice-agent-extra-features"
+              initial={reducedMotion ? false : { height: 0, opacity: 0 }}
+              animate={reducedMotion ? undefined : { height: "auto", opacity: 1 }}
+              exit={reducedMotion ? undefined : { height: 0, opacity: 0 }}
+              transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <motion.div
+                initial={reducedMotion ? false : { y: 12 }}
+                animate={reducedMotion ? undefined : { y: 0 }}
+                exit={reducedMotion ? undefined : { y: 8 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className={cn("pt-4", featureGridClassName)}
+              >
+                {expandableFeatureCards.map((feature) => (
+                  <VoiceFeatureCard
+                    key={feature.title}
+                    feature={feature}
+                    onSelect={setActiveFeature}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="mt-9 flex justify-center">
+          <Button
+            type="button"
+            variant="outline"
+            size="xl"
+            aria-expanded={showMoreFeatures}
+            aria-controls="voice-agent-extra-features"
+            onClick={toggleMoreFeatures}
+          >
+            {showMoreFeatures ? "See less" : "View more features"}
+            <ArrowDown
+              className={cn(
+                "transition-transform",
+                showMoreFeatures && "rotate-180",
+              )}
+              aria-hidden
+            />
+          </Button>
+        </div>
       </MarketingSection>
 
-      <Dialog open={Boolean(activeUseCase)} onOpenChange={closeUseCaseModal}>
-        <DialogContent className="max-h-[90dvh] max-w-5xl overflow-y-auto rounded-[2rem] border-primary/24 bg-[linear-gradient(145deg,rgba(22,19,13,0.98),rgba(5,5,4,0.98))] p-0 shadow-[0_45px_140px_-70px_rgba(201,160,61,1)]">
-          {activeUseCase && (
-            <div className="relative overflow-hidden">
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-[radial-gradient(65%_65%_at_72%_16%,rgba(201,160,61,0.22),transparent_68%)]"
-              />
-              <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(300px,0.8fr)] lg:p-10">
-                <div>
-                  <Badge>Voice Demo Preview</Badge>
-                  <DialogTitle className="mt-5 text-3xl font-medium leading-tight text-foreground sm:text-4xl">
-                    {activeUseCase.title}
-                  </DialogTitle>
-                  <DialogDescription className="mt-4 text-base leading-7 text-muted-foreground">
-                    {activeUseCase.expanded}
-                  </DialogDescription>
-
-                  <div className="mt-7 rounded-2xl border border-white/10 bg-black/28 p-4">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-                      Sample voice line
-                    </p>
-                    <p className="mt-3 text-base leading-7 text-foreground">
-                      &quot;{activeUseCase.demoLine}&quot;
-                    </p>
-                  </div>
-
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-primary/16 bg-primary/8 p-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
-                        Status
-                      </p>
-                      <p className="mt-2 text-sm text-foreground/84">
-                        {isModalPlaying
-                          ? "Playing placeholder demo"
-                          : "Ready to preview"}
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                        Later
-                      </p>
-                      <p className="mt-2 text-sm text-foreground/84">
-                        Replace with real AI voice recordings.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-primary/18 bg-black/30 p-5 backdrop-blur-md">
-                  <DemoModalOrb active={isModalPlaying} />
-                  <div className="mt-2 flex items-center justify-center">
-                    <span className="inline-flex h-8 items-center gap-2 rounded-full border border-primary/18 bg-primary/10 px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
-                      <span
-                        className={cn(
-                          "h-1.5 w-1.5 rounded-full bg-primary",
-                          isModalPlaying && "animate-pulse",
-                        )}
-                      />
-                      {isModalPlaying ? "AI speaking" : "Demo idle"}
-                    </span>
-                  </div>
-                  <div className="mt-5">
-                    <ModalWaveform active={isModalPlaying} />
-                  </div>
-                  <Button
-                    type="button"
-                    size="xl"
-                    className="mt-5 w-full"
-                    onClick={playUseCaseDemo}
-                  >
-                    <Play aria-hidden className="fill-current" />
-                    Play demo placeholder
-                  </Button>
-                </div>
-              </div>
+      <Dialog
+        open={activeFeature !== null}
+        onOpenChange={(open) => {
+          if (!open) setActiveFeature(null);
+        }}
+      >
+        {activeFeature && (
+          <DialogContent className="max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-3xl overflow-y-auto rounded-[1.5rem] border-primary/24 bg-[linear-gradient(145deg,rgba(26,22,12,0.97),rgba(9,8,6,0.99))] p-5 shadow-[0_38px_140px_-62px_rgba(201,160,61,0.86)] sm:p-7 [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/24 [&>button.absolute]:bg-black/40 [&>button.absolute]:text-foreground">
+            <FeaturePreviewPlaceholder title={activeFeature.title} />
+            <DialogTitle className="text-3xl font-semibold tracking-tight text-foreground">
+              {activeFeature.title}
+            </DialogTitle>
+            <DialogDescription className="text-base leading-7 text-muted-foreground">
+              {activeFeature.explanation}
+            </DialogDescription>
+            <div className="rounded-2xl border border-primary/18 bg-black/26 p-4">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+                Real-world example
+              </p>
+              <p className="mt-3 text-sm leading-6 text-foreground/84">
+                {activeFeature.example}
+              </p>
             </div>
-          )}
-        </DialogContent>
+          </DialogContent>
+        )}
       </Dialog>
 
       <MarketingSection className="py-16 sm:py-20 lg:py-24">
@@ -844,6 +892,7 @@ export function VoiceAgentSolutionPage() {
           <SectionHeader
             eyebrow="Call Flow"
             title="From first ring to booked customer."
+            subtitle="Every call moves through a clear AI workflow, from answering to booking, follow-up, and dashboard visibility."
           />
         </FadeUp>
         <FadeUp delay={0.1}>
@@ -856,11 +905,24 @@ export function VoiceAgentSolutionPage() {
           <SectionHeader
             eyebrow="Business Impact"
             title="Built to improve the calls that drive revenue."
+            subtitle="Answer faster. Book more appointments. Recover missed callers. See every call outcome in one dashboard."
           />
         </FadeUp>
-        <FadeUp delay={0.1}>
-          <ImpactStrip />
-        </FadeUp>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {outcomeCards.map((outcome) => (
+            <Card key={outcome.title} className="h-full p-6">
+              <p className="text-4xl font-semibold tracking-tight text-primary">
+                {outcome.metric}
+              </p>
+              <h2 className="mt-5 text-lg font-semibold leading-tight text-foreground">
+                {outcome.title}
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                {outcome.text}
+              </p>
+            </Card>
+          ))}
+        </div>
       </MarketingSection>
 
       <MarketingSection
@@ -899,43 +961,30 @@ export function VoiceAgentSolutionPage() {
         </FadeUp>
       </MarketingSection>
 
-      <section className="relative w-full overflow-hidden py-20 sm:py-28 lg:py-32">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            backgroundImage:
-              "linear-gradient(135deg, rgba(201,160,61,0.18), rgba(255,255,255,0.045), rgba(201,160,61,0.1)), radial-gradient(70% 65% at 50% 0%, rgba(201,160,61,0.2), rgba(10,9,7,0) 70%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="from-transparent via-primary/30 to-transparent pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r"
-        />
-        <Container className="text-center">
-          <FadeUp>
-            <Badge>AI Voice Agent</Badge>
-            <h2 className="mx-auto mt-5 max-w-4xl text-h2 font-medium text-foreground">
-              Stop letting missed calls become lost revenue.
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lead text-muted-foreground">
-              See how a bespoke AI voice agent can answer, follow up, and
-              convert customers around the clock.
-            </p>
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Button asChild size="xl">
-                <Link href="/demo">
-                  Speak to Our AI Agent
-                  <ArrowRight aria-hidden />
-                </Link>
-              </Button>
-              <Button asChild size="xl" variant="outline">
-                <Link href="/book-demo">Book Strategy Call</Link>
-              </Button>
-            </div>
-          </FadeUp>
-        </Container>
-      </section>
+      <MarketingSection className="py-16 sm:py-20 lg:py-24">
+        <Card className="gold-card overflow-hidden p-8 text-center sm:p-10 lg:p-12">
+          <Badge>Next step</Badge>
+          <h2 className="mx-auto mt-5 max-w-3xl text-h2 font-medium text-foreground">
+            Ready to stop missing calls?
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lead text-muted-foreground">
+            Book a strategy call and see how a custom AI voice agent can answer
+            enquiries, book appointments, recover missed leads, and update your
+            team automatically.
+          </p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <Button asChild size="xl">
+              <Link href="/book-demo">
+                Book Strategy Call
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+            <Button asChild size="xl" variant="outline">
+              <Link href="/pricing?type=voice">View Pricing</Link>
+            </Button>
+          </div>
+        </Card>
+      </MarketingSection>
 
       <style>{`
         @keyframes voiceOrbIdle {
@@ -989,16 +1038,6 @@ export function VoiceAgentSolutionPage() {
             opacity: 0;
           }
         }
-        @keyframes modalWaveActive {
-          0%, 100% {
-            transform: scaleY(0.46);
-            opacity: 0.48;
-          }
-          50% {
-            transform: scaleY(1);
-            opacity: 1;
-          }
-        }
         .voiceOrbIdle {
           animation: voiceOrbIdle 4.6s ease-in-out infinite;
         }
@@ -1010,10 +1049,6 @@ export function VoiceAgentSolutionPage() {
         }
         .voiceOrbRingSpeaking {
           animation: voiceOrbRingSpeaking 1.05s ease-out infinite;
-        }
-        .modalWaveActive {
-          transform-origin: center;
-          animation: modalWaveActive 1.05s ease-in-out infinite;
         }
       `}</style>
     </main>
