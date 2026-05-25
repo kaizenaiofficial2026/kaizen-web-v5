@@ -629,12 +629,12 @@ function ChatHero() {
         <h1 className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl">
           Chat Agent Pricing
         </h1>
-        <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+        <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
           A complete AI sales chat agent for Instagram, Facebook Messenger,
           WhatsApp Business, and website enquiries. Choose the commitment that
           fits your growth plan.
         </p>
-        <p className="mt-3 text-sm font-semibold text-primary">
+        <p className="mt-4 text-sm font-semibold text-primary">
           Same complete feature set in every package.
         </p>
       </section>
@@ -722,7 +722,7 @@ function ChatPricingPlansSection() {
   return (
     <FadeUp delay={0.08}>
       <section
-        className="mt-9 scroll-mt-28 lg:mt-10"
+        className="mt-12 scroll-mt-28 sm:mt-14 lg:mt-16"
         aria-label="Chat agent packages"
       >
         <div className="grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -1024,12 +1024,12 @@ function VoiceHero() {
         <h1 className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl">
           Voice Agent Pricing
         </h1>
-        <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+        <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
           A complete AI voice agent that answers calls, books appointments,
           sends WhatsApp confirmations, and follows up on missed enquiries
           24/7. Choose the call volume that fits your business.
         </p>
-        <p className="mt-3 text-sm font-semibold text-primary">
+        <p className="mt-4 text-sm font-semibold text-primary">
           Same complete feature set in every package.
         </p>
       </section>
@@ -1118,19 +1118,12 @@ function CountUpPrice({ value }: { value: number }) {
 }
 
 function VoicePricingCard({ plan }: { plan: VoicePricingPlan }) {
-  const details = [
-    ["Monthly retainer", plan.monthlyRetainer],
-    ["Setup fee", plan.setupFee],
-    ["Included usage", plan.includedUsage],
-    ["Additional usage", plan.additionalUsageRate],
-  ];
-
   return (
     <motion.article
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className={cn(
-        "relative flex h-full flex-col overflow-hidden rounded-2xl border p-4 backdrop-blur-md transition-colors sm:p-5",
+        "relative flex h-full flex-col overflow-hidden rounded-2xl border p-5 backdrop-blur-md transition-colors sm:p-6",
         plan.popular
           ? "border-primary/70 gold-card-bright shadow-[0_0_90px_-38px_color-mix(in_oklab,var(--primary)_85%,transparent)]"
           : plan.premium
@@ -1158,13 +1151,13 @@ function VoicePricingCard({ plan }: { plan: VoicePricingPlan }) {
         </Badge>
       </div>
 
-      <div className="mt-5 min-w-0">
+      <div className="mt-6 min-w-0">
         <h3 className="text-2xl font-semibold leading-tight text-foreground">
           {plan.name}
         </h3>
         <div
           className={cn(
-            "mt-3 max-w-full text-4xl font-semibold leading-tight sm:text-[2.65rem]",
+            "mt-5 max-w-full text-4xl font-semibold leading-tight sm:text-[2.65rem]",
             plan.popular ? "text-primary" : "text-foreground",
           )}
         >
@@ -1176,25 +1169,36 @@ function VoicePricingCard({ plan }: { plan: VoicePricingPlan }) {
         </div>
       </div>
 
-      <dl className="mt-5 flex-1 space-y-2.5 border-y border-border py-3 text-sm leading-5">
-        {details.map(([label, value]) => (
-          <div key={label}>
-            <dt className="sr-only">{label}</dt>
-            <dd className="text-foreground">
-              <span className="font-medium text-muted-foreground">
-                {label}:{" "}
-              </span>
-              <span className="font-semibold">{value}</span>
-            </dd>
-          </div>
-        ))}
+      <dl className="mt-7 flex-1 space-y-4 border-y border-border py-5 text-sm leading-6">
+        <div>
+          <dt className="text-muted-foreground">Monthly retainer</dt>
+          <dd className="font-semibold text-foreground">
+            {plan.monthlyRetainer}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-muted-foreground">Setup fee</dt>
+          <dd className="font-semibold text-foreground">{plan.setupFee}</dd>
+        </div>
+        <div>
+          <dt className="text-muted-foreground">Included usage</dt>
+          <dd className="font-semibold text-foreground">
+            {plan.includedUsage}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-muted-foreground">Additional usage rate</dt>
+          <dd className="font-semibold text-foreground">
+            {plan.additionalUsageRate}
+          </dd>
+        </div>
       </dl>
 
       <Button
         asChild
         size="lg"
         variant={plan.popular ? "default" : "outline"}
-        className="mt-5 w-full rounded-xl"
+        className="mt-6 w-full rounded-xl"
       >
         <Link href="/book-demo">
           {plan.cta}
@@ -1209,7 +1213,7 @@ function VoicePricingPlansSection() {
   return (
     <FadeUp delay={0.08}>
       <section
-        className="mt-8 scroll-mt-28 lg:mt-8"
+        className="mt-12 scroll-mt-28 sm:mt-14 lg:mt-16"
         aria-label="Voice agent packages"
       >
         <div className="grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -1476,7 +1480,7 @@ export function Pricing({
   return (
     <section
       id="pricing"
-      className="relative w-full overflow-hidden pb-24 pt-20 sm:pb-32 sm:pt-24 lg:pb-40 lg:pt-20"
+      className="relative w-full overflow-hidden pb-24 pt-20 sm:pb-32 sm:pt-24 lg:pb-40 lg:pt-28"
     >
       <div
         aria-hidden
