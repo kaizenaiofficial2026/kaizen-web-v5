@@ -11,20 +11,25 @@ const BACKEND_WS = (process.env.NEXT_PUBLIC_BACKEND_URL ?? 'https://api.kaizenai
 const SAMPLE_RATE = 24000;
 const WORKLET_PATH = '/pcm-processor.js';
 
-type CallState = 'idle' | 'connecting' | 'active' | 'ended' | 'error';
+export type CallState = 'idle' | 'connecting' | 'active' | 'ended' | 'error';
 
-export function BrowserVoiceCall() {
+export type TranscriptItem = {
+  role: string;
+  text: string;
+};
+
+export function useBrowserVoiceCall() {
   const [state, setState] = useState<CallState>('idle');
   const [error, setError] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isUserSpeaking, setIsUserSpeaking] = useState(false);
-  const [transcript, setTranscript] = useState<{ role: string; text: string }[]>([]);
+  const [transcript, setTranscript] = useState<TranscriptItem[]>([]);
 
-  const wsRef            = useRef<WebSocket | null>(null);
-  const audioCtxRef      = useRef<AudioContext | null>(null);
-  const nextPlayRef      = useRef(0);
-  const streamRef        = useRef<MediaStream | null>(null);
-  const workletNodeRef   = useRef<AudioWorkletNode | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const nextPlayRef = useRef(0);
+  const streamRef = useRef<MediaStream | null>(null);
+  const workletNodeRef = useRef<AudioWorkletNode | null>(null);
   const activeSourcesRef = useRef<AudioBufferSourceNode[]>([]);
 
   const cleanup = useCallback(() => {
@@ -32,7 +37,13 @@ export function BrowserVoiceCall() {
     workletNodeRef.current = null;
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
-    activeSourcesRef.current.forEach((s) => { try { s.stop(); } catch { /* ended */ } });
+    activeSourcesRef.current.forEach((s) => {
+      try {
+        s.stop();
+      } catch {
+        /* ended */
+      }
+    });
     activeSourcesRef.current = [];
     nextPlayRef.current = 0;
     audioCtxRef.current?.close();
@@ -40,7 +51,13 @@ export function BrowserVoiceCall() {
   }, []);
 
   const stopAudioPlayback = useCallback(() => {
-    activeSourcesRef.current.forEach((s) => { try { s.stop(); } catch { /* ended */ } });
+    activeSourcesRef.current.forEach((s) => {
+      try {
+        s.stop();
+      } catch {
+        /* ended */
+      }
+    });
     activeSourcesRef.current = [];
     nextPlayRef.current = 0;
   }, []);
@@ -62,9 +79,9 @@ export function BrowserVoiceCall() {
     const ctx = audioCtxRef.current;
     if (!ctx) return;
     const binary = atob(base64);
-    const bytes  = new Uint8Array(binary.length);
+    const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    const int16   = new Int16Array(bytes.buffer);
+    const int16 = new Int16Array(bytes.buffer);
     const float32 = new Float32Array(int16.length);
     for (let i = 0; i < int16.length; i++) float32[i] = int16[i] / 32768;
     const buffer = ctx.createBuffer(1, float32.length, SAMPLE_RATE);
@@ -98,7 +115,7 @@ export function BrowserVoiceCall() {
 
       await ctx.audioWorklet.addModule(WORKLET_PATH);
 
-      const source    = ctx.createMediaStreamSource(stream);
+      const source = ctx.createMediaStreamSource(stream);
       const processor = new AudioWorkletNode(ctx, 'pcm-processor');
       workletNodeRef.current = processor;
 
@@ -121,13 +138,19 @@ export function BrowserVoiceCall() {
           const msg = JSON.parse(e.data);
           switch (msg.type) {
             case 'response.output_audio.delta':
-              if (msg.delta) { setIsSpeaking(true); setIsUserSpeaking(false); playPCM16(msg.delta); }
+              if (msg.delta) {
+                setIsSpeaking(true);
+                setIsUserSpeaking(false);
+                playPCM16(msg.delta);
+              }
               break;
             case 'response.output_audio.done':
               setIsSpeaking(false);
               break;
             case 'input_audio_buffer.speech_started':
-              setIsSpeaking(false); setIsUserSpeaking(true); stopAudioPlayback();
+              setIsSpeaking(false);
+              setIsUserSpeaking(true);
+              stopAudioPlayback();
               break;
             case 'response.created':
               setIsUserSpeaking(false);
@@ -152,10 +175,15 @@ export function BrowserVoiceCall() {
               stop();
               break;
           }
-        } catch { /* ignore parse errors */ }
+        } catch {
+          /* ignore parse errors */
+        }
       };
 
-      ws.onerror = () => { setError('Connection failed — is the backend running?'); setState('error'); };
+      ws.onerror = () => {
+        setError('Connection failed — is the backend running?');
+        setState('error');
+      };
       ws.onclose = () => {
         if (wsRef.current) {
           wsRef.current = null;
@@ -174,19 +202,42 @@ export function BrowserVoiceCall() {
 
   useEffect(() => () => { stop(); }, [stop]);
 
-  const barActive = isSpeaking || isUserSpeaking;
-
-  const statusLabel = () => {
+  const statusLabel = (() => {
     if (state === 'connecting') return 'Connecting…';
     if (isUserSpeaking) return "You're speaking…";
     if (isSpeaking) return 'AI is speaking…';
     if (state === 'active') return 'Listening…';
     return null;
+  })();
+
+  return {
+    state,
+    error,
+    isSpeaking,
+    isUserSpeaking,
+    transcript,
+    start,
+    stop,
+    statusLabel,
   };
+}
+
+export function BrowserVoiceCall() {
+  const {
+    state,
+    error,
+    isSpeaking,
+    isUserSpeaking,
+    transcript,
+    start,
+    stop,
+    statusLabel,
+  } = useBrowserVoiceCall();
+
+  const barActive = isSpeaking || isUserSpeaking;
 
   return (
     <Card className="overflow-hidden">
-      {/* Header */}
       <div className="flex items-center gap-3 border-b border-border px-5 py-4">
         <div className="grid h-9 w-9 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
           <Phone className="h-4 w-4" aria-hidden />
@@ -204,7 +255,6 @@ export function BrowserVoiceCall() {
       </div>
 
       <div className="space-y-4 p-5">
-        {/* Controls */}
         {state === 'idle' || state === 'ended' || state === 'error' ? (
           <button
             onClick={start}
@@ -223,10 +273,9 @@ export function BrowserVoiceCall() {
           </div>
         ) : (
           <div className="space-y-3">
-            {/* Activity bar */}
             <div className={cn(
               'flex items-center gap-3 rounded-xl border px-4 py-3 transition-colors',
-              isUserSpeaking ? 'border-blue-500/20 bg-blue-500/10' : barActive ? 'border-primary/25 bg-primary/10' : 'border-border bg-card/50'
+              isUserSpeaking ? 'border-blue-500/20 bg-blue-500/10' : barActive ? 'border-primary/25 bg-primary/10' : 'border-border bg-card/50',
             )}>
               <div className="flex items-center gap-1">
                 {[0, 1, 2, 3].map((i) => (
@@ -238,7 +287,7 @@ export function BrowserVoiceCall() {
                 ))}
               </div>
               <span className={cn('text-sm', isUserSpeaking ? 'text-blue-300' : 'text-muted-foreground')}>
-                {statusLabel()}
+                {statusLabel}
               </span>
             </div>
 
@@ -254,7 +303,6 @@ export function BrowserVoiceCall() {
 
         {error && <p className="px-1 text-xs text-destructive">{error}</p>}
 
-        {/* Live transcript */}
         {transcript.length > 0 && (
           <div className="max-h-48 space-y-2 overflow-y-auto">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/60">Transcript</p>

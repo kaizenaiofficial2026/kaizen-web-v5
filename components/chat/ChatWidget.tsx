@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OPEN_CHAT_WIDGET_EVENT } from "@/lib/chat-events";
 import { cn } from "@/lib/utils";
 
 const BACKEND_URL =
@@ -102,6 +103,17 @@ export function ChatWidget() {
 
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
+
+  useEffect(() => {
+    const openChatWidget = () => {
+      setOpen(true);
+      window.setTimeout(() => inputRef.current?.focus(), 0);
+    };
+
+    window.addEventListener(OPEN_CHAT_WIDGET_EVENT, openChatWidget);
+
+    return () => window.removeEventListener(OPEN_CHAT_WIDGET_EVENT, openChatWidget);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
