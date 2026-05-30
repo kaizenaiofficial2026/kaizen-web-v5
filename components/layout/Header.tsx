@@ -140,8 +140,8 @@ export function Header() {
             : "border-border/50 bg-background/72 backdrop-blur-xl",
         )}
       >
-        <div className="mx-auto w-full px-6 sm:px-10 lg:px-[72px]">
-          <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center gap-6">
+        <div className="mx-auto w-full px-4 sm:px-6 lg:px-[72px]">
+          <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-3 lg:h-20 lg:gap-6">
             <BrandMark className="text-xl tracking-tight" />
 
             <nav
@@ -291,14 +291,14 @@ export function Header() {
                 type="button"
                 size="sm"
                 onClick={() => setLoginOpen(true)}
-                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex"
+                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] lg:inline-flex"
               >
                 Login
               </Button>
               <Button
                 asChild
                 size="sm"
-                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] sm:inline-flex"
+                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] lg:inline-flex"
               >
                 <Link href="/book-demo">Book a Call</Link>
               </Button>

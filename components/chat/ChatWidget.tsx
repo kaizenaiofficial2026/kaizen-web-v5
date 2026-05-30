@@ -218,7 +218,7 @@ export function ChatWidget() {
             initial={reducedMotion ? false : "hidden"}
             animate={reducedMotion ? undefined : "show"}
             exit={reducedMotion ? undefined : "exit"}
-            className="pointer-events-auto fixed inset-x-3 bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-[72] flex max-h-[min(78dvh,640px)] flex-col overflow-hidden rounded-2xl border border-primary/25 bg-background/95 shadow-[0_28px_90px_-34px_rgba(201,160,61,0.85)] backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:w-[400px]"
+            className="pointer-events-auto fixed inset-x-2 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-[72] flex max-h-[min(74dvh,640px)] flex-col overflow-hidden rounded-2xl border border-primary/25 bg-background/95 shadow-[0_28px_90px_-34px_rgba(201,160,61,0.85)] backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:w-[400px] sm:max-h-[min(78dvh,640px)]"
           >
             <div
               aria-hidden
@@ -276,7 +276,7 @@ export function ChatWidget() {
                 >
                   <div
                     className={cn(
-                      "max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-6",
+                      "max-w-[88%] overflow-hidden rounded-2xl px-3.5 py-3 text-sm leading-6 break-words sm:max-w-[82%] sm:px-4",
                       message.role === "user"
                         ? "rounded-br-md bg-primary text-primary-foreground"
                         : "rounded-bl-md border border-border/70 bg-card/70 text-foreground/85",
@@ -347,7 +347,7 @@ export function ChatWidget() {
                 asChild
                 variant="outline"
                 size="sm"
-                className="mt-3 w-full rounded-xl"
+                className="mt-3 w-full rounded-xl whitespace-normal"
               >
                 <Link href="/book-demo" onClick={() => setOpen(false)}>
                   <CalendarCheck className="h-4 w-4" aria-hidden />
@@ -364,7 +364,7 @@ export function ChatWidget() {
         onClick={() => setOpen((current) => !current)}
         aria-label={open ? "Close Kaizen AI chat" : "Open Kaizen AI chat"}
         aria-expanded={open}
-        className="group pointer-events-auto fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[73] inline-flex h-16 w-16 items-center justify-start overflow-hidden rounded-full border border-primary/30 bg-primary p-3 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-[width,background-color,border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[13.75rem] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent hover:shadow-[0_28px_76px_-26px_color-mix(in_oklab,var(--primary)_95%,transparent)] focus-visible:w-[13.75rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6"
+        className="group pointer-events-auto fixed bottom-[calc(0.875rem+env(safe-area-inset-bottom))] right-3 z-[73] inline-flex h-14 w-14 items-center justify-start overflow-hidden rounded-full border border-primary/30 bg-primary p-2 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-[width,background-color,border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent hover:shadow-[0_28px_76px_-26px_color-mix(in_oklab,var(--primary)_95%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6 sm:h-16 sm:w-16 sm:p-3 sm:hover:w-[13.75rem] sm:focus-visible:w-[13.75rem]"
       >
         <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-foreground/15 transition-colors duration-500 group-hover:bg-primary-foreground/20 group-focus-visible:bg-primary-foreground/20">
           {open ? (
@@ -376,11 +376,11 @@ export function ChatWidget() {
             <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-primary bg-emerald-400" />
           )}
         </span>
-        <span className="ml-1.5 max-w-0 translate-x-0.5 whitespace-nowrap text-base font-bold opacity-0 transition-[max-width,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-w-32 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+        <span className="ml-1.5 max-w-0 translate-x-0.5 whitespace-nowrap text-base font-bold opacity-0 transition-[max-width,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:max-w-32 sm:group-hover:translate-x-0 sm:group-hover:opacity-100 sm:group-focus-visible:max-w-32 sm:group-focus-visible:translate-x-0 sm:group-focus-visible:opacity-100">
           Ask Kaizen
         </span>
         <Sparkles
-          className="ml-auto h-5 w-5 shrink-0 translate-x-2 opacity-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+          className="ml-auto h-5 w-5 shrink-0 translate-x-2 opacity-0 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:translate-x-0 sm:group-hover:opacity-100 sm:group-focus-visible:translate-x-0 sm:group-focus-visible:opacity-100"
           aria-hidden
         />
       </button>

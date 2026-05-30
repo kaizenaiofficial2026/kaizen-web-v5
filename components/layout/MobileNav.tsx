@@ -137,7 +137,7 @@ export function MobileNav({
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="flex flex-col gap-8 border-border bg-background pt-10 text-foreground"
+        className="flex h-dvh max-h-dvh flex-col gap-6 overflow-y-auto overscroll-contain border-border bg-background px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-[calc(2.5rem+env(safe-area-inset-top))] text-foreground sm:gap-8 sm:px-6 lg:px-6"
       >
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <div className="flex items-center justify-between gap-4">
@@ -162,7 +162,7 @@ export function MobileNav({
                       }))
                     }
                     className={cn(
-                      "-mx-3 flex w-[calc(100%+1.5rem)] items-center justify-between gap-3 rounded-lg px-3 py-3 text-left text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
+                      "-mx-3 flex w-[calc(100%+1.5rem)] items-center justify-between gap-3 rounded-lg px-3 py-3 text-left text-xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary sm:text-2xl",
                       isActive && "bg-primary/15 text-primary",
                     )}
                   >
@@ -226,7 +226,7 @@ export function MobileNav({
                       onClick={notifyLocationChange}
                       aria-current={isActive ? "page" : undefined}
                       className={cn(
-                        "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary",
+                        "-mx-3 block rounded-lg px-3 py-3 text-xl font-semibold tracking-tight text-foreground/72 transition-colors hover:bg-primary/10 hover:text-primary sm:text-2xl",
                         isActive && "bg-primary/15 text-primary",
                       )}
                     >
@@ -237,7 +237,7 @@ export function MobileNav({
                   <div
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "-mx-3 block rounded-lg px-3 py-3 text-2xl font-semibold tracking-tight text-foreground/72",
+                      "-mx-3 block rounded-lg px-3 py-3 text-xl font-semibold tracking-tight text-foreground/72 sm:text-2xl",
                       isActive && "bg-primary/15 text-primary",
                     )}
                   >

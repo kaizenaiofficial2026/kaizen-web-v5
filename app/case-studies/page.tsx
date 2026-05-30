@@ -34,7 +34,7 @@ export default function CaseStudiesPage() {
         ]}
       >
         <Card className="p-6 shadow-card">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             {[
               { value: "+23", label: "extra bookings / month" },
               { value: "< 5s", label: "average pickup" },
@@ -106,7 +106,7 @@ export default function CaseStudiesPage() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-7 grid grid-cols-2 gap-3">
+                <div className="mt-7 grid grid-cols-1 gap-3 min-[430px]:grid-cols-2">
                   {study.metrics.map((metric) => (
                     <div
                       key={metric.label}
@@ -147,7 +147,7 @@ export default function CaseStudiesPage() {
               A demo is the fastest way to see which Kaizen pattern maps to
               your team&apos;s current customer response gap.
             </p>
-            <Button asChild size="xl" className="mt-8">
+            <Button asChild size="xl" className="mt-8 w-full sm:w-auto">
               <Link href="/book-demo">Request a demo</Link>
             </Button>
           </FadeUp>

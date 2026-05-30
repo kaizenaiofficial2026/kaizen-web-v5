@@ -295,3 +295,20 @@
     scroll-behavior: auto !important;
   }
 }
+
+@media (max-width: 1023.98px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  main,
+  section,
+  article,
+  header,
+  footer,
+  nav,
+  div {
+    min-width: 0;
+  }
+}

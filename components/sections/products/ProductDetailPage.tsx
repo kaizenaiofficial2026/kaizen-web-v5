@@ -42,7 +42,7 @@ export function ProductDetailPage({ product }: { product: ProductPageContent }) 
                 return (
                   <div
                     key={step.label}
-                    className="flex items-center gap-4 rounded-xl border border-border bg-background/45 p-4"
+                    className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-background/45 p-4 sm:flex-nowrap sm:gap-4"
                   >
                     <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/15 text-primary">
                       <Icon className="h-5 w-5" aria-hidden />
@@ -50,7 +50,7 @@ export function ProductDetailPage({ product }: { product: ProductPageContent }) 
                     <span className="font-medium text-foreground">
                       {step.label}
                     </span>
-                    <span className="ml-auto text-sm font-semibold text-primary">
+                    <span className="ml-0 text-sm font-semibold text-primary sm:ml-auto">
                       {step.value}
                     </span>
                   </div>
@@ -110,7 +110,7 @@ export function ProductDetailPage({ product }: { product: ProductPageContent }) 
               }
               subtitle="Start with one channel, prove the workflow, then expand across the rest of your customer front desk."
             />
-            <Button asChild size="xl" className="mt-8">
+            <Button asChild size="xl" className="mt-8 w-full sm:w-auto">
               <Link href="/book-demo">Plan my first agent</Link>
             </Button>
           </FadeUp>

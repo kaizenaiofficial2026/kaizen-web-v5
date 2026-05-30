@@ -278,15 +278,15 @@ function ClinicHero() {
             automatically.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button asChild size="xl">
+            <Button asChild size="xl" className="w-full sm:w-auto">
               <Link href="/demo">
                 See Clinic Demo <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="xl" variant="outline">
+            <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
               <Link href="/book-demo">Book a Call</Link>
             </Button>
-            <Button asChild size="xl" variant="secondary">
+            <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
               <Link href="/pricing?type=voice">View Voice Agent Pricing</Link>
             </Button>
           </div>
@@ -677,7 +677,7 @@ function ClinicDashboardPreview() {
                   title="Appointment Pipeline"
                   description="Track appointment enquiries from first contact to follow-up."
                 >
-                  <div className="grid gap-2 sm:grid-cols-5">
+                  <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
                     {appointmentStages.map((stage, index) => (
                       <div
                         key={stage}
@@ -901,13 +901,13 @@ function ClinicCta() {
                 follow-ups automatically while your team focuses on patient care.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-                <Button asChild size="xl">
+                <Button asChild size="xl" className="w-full sm:w-auto">
                   <Link href="/book-demo">Book a Call</Link>
                 </Button>
-                <Button asChild size="xl" variant="outline">
+                <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                   <Link href="/demo">See Live Demo</Link>
                 </Button>
-                <Button asChild size="xl" variant="secondary">
+                <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/pricing?type=voice">View Voice Agent Pricing</Link>
                 </Button>
               </div>

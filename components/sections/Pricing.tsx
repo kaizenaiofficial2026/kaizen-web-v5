@@ -840,7 +840,48 @@ function ChatComparisonSection() {
           </p>
         </div>
 
-        <div className="mt-10 overflow-x-auto rounded-2xl border border-border bg-card/58 backdrop-blur-md">
+        <div className="mt-10 grid gap-3 md:hidden">
+          {chatComparisonRows.map((row) => (
+            <article
+              key={row.label}
+              className="rounded-2xl border border-border bg-card/58 p-4 backdrop-blur-md"
+            >
+              <h3 className="text-sm font-semibold text-foreground">
+                {row.label}
+              </h3>
+              <dl className="mt-3 grid gap-2 text-sm">
+                {[
+                  ["Essential", row.essential],
+                  ["Growth", row.growth],
+                  ["Elite", row.elite],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className={cn(
+                      "rounded-xl border border-border bg-background/42 px-3 py-2",
+                      label === "Growth" &&
+                        "border-primary/24 bg-primary/8",
+                    )}
+                  >
+                    <dt
+                      className={cn(
+                        "text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground",
+                        label === "Growth" && "text-primary",
+                      )}
+                    >
+                      {label}
+                    </dt>
+                    <dd className="mt-1 leading-6 text-muted-foreground">
+                      <IncludedValue value={value} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-10 hidden overflow-x-auto rounded-2xl border border-border bg-card/58 backdrop-blur-md md:block">
           <table className="min-w-[860px] w-full border-collapse text-left text-sm">
             <caption className="sr-only">
               Chat agent pricing comparison for Essential, Growth, and Elite
@@ -983,13 +1024,13 @@ function ChatFinalCta() {
           </p>
         </div>
         <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
-          <Button asChild size="xl" className="rounded-xl">
+          <Button asChild size="xl" className="w-full rounded-xl sm:w-auto">
             <Link href="/book-demo">
               Book a free demo
               <ArrowUpRight aria-hidden />
             </Link>
           </Button>
-          <Button asChild size="xl" variant="outline" className="rounded-xl">
+          <Button asChild size="xl" variant="outline" className="w-full rounded-xl sm:w-auto">
             <a href={`mailto:${siteConfig.salesEmail}?subject=Kaizen%20AI%20chat%20agent%20pricing`}>
               Talk to Kaizen AI
             </a>
@@ -1286,7 +1327,49 @@ function VoiceComparisonSection() {
           </p>
         </div>
 
-        <div className="mt-10 overflow-x-auto rounded-2xl border border-border bg-card/58 backdrop-blur-md">
+        <div className="mt-10 grid gap-3 md:hidden">
+          {voiceComparisonRows.map((row) => (
+            <article
+              key={row.label}
+              className="rounded-2xl border border-border bg-card/58 p-4 backdrop-blur-md"
+            >
+              <h3 className="text-sm font-semibold text-foreground">
+                {row.label}
+              </h3>
+              <dl className="mt-3 grid gap-2 text-sm">
+                {[
+                  ["VA Starter", row.starter],
+                  ["VA Growth", row.growth],
+                  ["VA Scale", row.scale],
+                  ["Enterprise Voice", row.enterprise],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className={cn(
+                      "rounded-xl border border-border bg-background/42 px-3 py-2",
+                      label === "VA Growth" &&
+                        "border-primary/24 bg-primary/8",
+                    )}
+                  >
+                    <dt
+                      className={cn(
+                        "text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground",
+                        label === "VA Growth" && "text-primary",
+                      )}
+                    >
+                      {label}
+                    </dt>
+                    <dd className="mt-1 leading-6 text-muted-foreground">
+                      <IncludedValue value={value} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-10 hidden overflow-x-auto rounded-2xl border border-border bg-card/58 backdrop-blur-md md:block">
           <table className="min-w-[1040px] w-full border-collapse text-left text-sm">
             <caption className="sr-only">
               Voice agent pricing comparison for VA Starter, VA Growth, VA
@@ -1439,13 +1522,13 @@ function VoiceFinalCta() {
           </p>
         </div>
         <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
-          <Button asChild size="xl" className="rounded-xl">
+          <Button asChild size="xl" className="w-full rounded-xl sm:w-auto">
             <Link href="/book-demo">
               Book a free demo
               <ArrowUpRight aria-hidden />
             </Link>
           </Button>
-          <Button asChild size="xl" variant="outline" className="rounded-xl">
+          <Button asChild size="xl" variant="outline" className="w-full rounded-xl sm:w-auto">
             <a href={`mailto:${siteConfig.salesEmail}?subject=Kaizen%20AI%20voice%20agent%20pricing`}>
               Talk to Kaizen AI
             </a>

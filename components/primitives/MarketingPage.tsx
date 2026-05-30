@@ -44,7 +44,7 @@ export function MarketingHero({
   return (
     <section
       className={cn(
-        "relative w-full overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40",
+        "relative w-full overflow-hidden pb-14 pt-28 sm:pb-20 sm:pt-32 lg:pb-28 lg:pt-40",
         className,
       )}
     >
@@ -84,8 +84,8 @@ export function MarketingHero({
           {actions && actions.length > 0 && (
             <div
               className={cn(
-                "mt-10 flex flex-wrap gap-3",
-                hasVisual ? "justify-start" : "justify-center",
+                "mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap",
+                hasVisual ? "sm:justify-start" : "sm:justify-center",
               )}
             >
               {actions.map((action, index) => (
@@ -94,6 +94,7 @@ export function MarketingHero({
                   key={action.href}
                   size="xl"
                   variant={action.variant ?? (index === 0 ? "default" : "outline")}
+                  className="w-full sm:w-auto"
                 >
                   <Link href={action.href}>
                     {action.label}
@@ -126,7 +127,7 @@ export function MarketingSection({
     <section
       id={id}
       className={cn(
-        "relative w-full overflow-hidden py-20 sm:py-28 lg:py-32",
+        "relative w-full overflow-hidden py-16 sm:py-20 lg:py-32",
         className,
       )}
     >

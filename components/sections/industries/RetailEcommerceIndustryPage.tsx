@@ -251,15 +251,15 @@ function RetailHero() {
             buying across your website, WhatsApp, Instagram, and Facebook.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button asChild size="xl">
+            <Button asChild size="xl" className="w-full sm:w-auto">
               <Link href="/demo">
                 See Retail Demo <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="xl" variant="outline">
+            <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
               <Link href="/book-demo">Book a Call</Link>
             </Button>
-            <Button asChild size="xl" variant="secondary">
+            <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
               <Link href="/pricing?type=chat">View Chat Agent Pricing</Link>
             </Button>
           </div>
@@ -610,7 +610,7 @@ function DashboardPreview() {
                   title="Sales Pipeline"
                   description="Track where each product enquiry sits in the sales process."
                 >
-                  <div className="grid gap-2 sm:grid-cols-5">
+                  <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
                     {pipelineStages.map((stage, index) => (
                       <div
                         key={stage}
@@ -779,13 +779,13 @@ function RetailCta() {
                 while your team focuses on closing orders.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-                <Button asChild size="xl">
+                <Button asChild size="xl" className="w-full sm:w-auto">
                   <Link href="/book-demo">Book a Call</Link>
                 </Button>
-                <Button asChild size="xl" variant="outline">
+                <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                   <Link href="/demo">See Live Demo</Link>
                 </Button>
-                <Button asChild size="xl" variant="secondary">
+                <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/pricing?type=chat">View Chat Agent Pricing</Link>
                 </Button>
               </div>

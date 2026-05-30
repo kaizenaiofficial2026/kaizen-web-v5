@@ -23,7 +23,7 @@ export function SectionShell({
     <section
       id={id}
       className={cn(
-        "relative w-full overflow-hidden py-24 sm:py-32 lg:py-40",
+        "relative w-full overflow-hidden py-16 sm:py-20 lg:py-40",
         className,
       )}
     >

@@ -194,7 +194,7 @@ export function InteractiveDemoPage() {
 
   return (
     <main id="main" className="relative overflow-hidden">
-      <section id="voice-agent-demo" className="relative overflow-hidden pb-18 pt-30 sm:pb-24 sm:pt-34 lg:pb-28 lg:pt-38">
+      <section id="voice-agent-demo" className="relative overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-28 lg:pt-38">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10"
@@ -218,11 +218,11 @@ export function InteractiveDemoPage() {
                 appointments, and responds like a trained business assistant.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button size="xl" onClick={openVoiceFlow} aria-label="Call the Voice Agent live demo">
+                <Button size="xl" onClick={openVoiceFlow} aria-label="Call the Voice Agent live demo" className="w-full sm:w-auto">
                   Call the Voice Agent
                   <ArrowRight aria-hidden />
                 </Button>
-                <Button size="xl" variant="outline" onClick={scrollToChatSection}>
+                <Button size="xl" variant="outline" onClick={scrollToChatSection} className="w-full sm:w-auto">
                   Try Chat Agent
                   <MessageCircle aria-hidden />
                 </Button>
@@ -239,9 +239,9 @@ export function InteractiveDemoPage() {
           </FadeUp>
 
           <FadeUp delay={0.1}>
-            <div ref={phoneRef} className="mx-auto w-full max-w-[370px]">
-              <div className="rounded-[2.6rem] border border-primary/25 bg-black/80 p-3 shadow-[0_34px_120px_-46px_color-mix(in_oklab,var(--primary)_75%,transparent)]">
-                <div className="relative overflow-hidden rounded-[2.15rem] border border-white/10 bg-[linear-gradient(160deg,rgba(22,18,11,0.98),rgba(8,8,7,0.98)_46%,rgba(31,23,10,0.94))] px-5 pb-6 pt-4">
+            <div ref={phoneRef} className="mx-auto w-full max-w-[340px] sm:max-w-[370px]">
+              <div className="rounded-[2.2rem] border border-primary/25 bg-black/80 p-2 shadow-[0_34px_120px_-46px_color-mix(in_oklab,var(--primary)_75%,transparent)] sm:rounded-[2.6rem] sm:p-3">
+                <div className="relative overflow-hidden rounded-[1.85rem] border border-white/10 bg-[linear-gradient(160deg,rgba(22,18,11,0.98),rgba(8,8,7,0.98)_46%,rgba(31,23,10,0.94))] px-4 pb-5 pt-4 sm:rounded-[2.15rem] sm:px-5 sm:pb-6">
                   <div aria-hidden className="absolute left-1/2 top-2 h-6 w-28 -translate-x-1/2 rounded-full bg-black/75" />
                   <div className="relative z-10 flex items-center justify-between text-[11px] font-medium text-foreground/75">
                     <span>9:41</span>
@@ -338,11 +338,11 @@ export function InteractiveDemoPage() {
                     customer conversations.
                   </p>
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <Button size="xl" onClick={openChatBubble}>
+                    <Button size="xl" onClick={openChatBubble} className="w-full sm:w-auto">
                       Use the website chat
                       <ArrowRight aria-hidden />
                     </Button>
-                    <Button asChild size="xl" variant="outline">
+                    <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                       <a href={whatsappHref} target="_blank" rel="noreferrer">
                         Message us on WhatsApp
                       </a>
@@ -501,7 +501,7 @@ export function InteractiveDemoPage() {
             <Button variant="outline" onClick={() => setConsentOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={startVoiceDemo} disabled={!consentChecked}>
+            <Button onClick={startVoiceDemo} disabled={!consentChecked} className="whitespace-normal">
               Enable Microphone & Start Demo
             </Button>
           </div>

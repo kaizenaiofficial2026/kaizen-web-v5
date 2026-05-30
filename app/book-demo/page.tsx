@@ -43,7 +43,7 @@ export default function BookDemoPage() {
       />
       <Grain />
 
-      <section className="mx-auto grid min-h-dvh w-full max-w-7xl items-start gap-12 px-6 py-10 sm:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:py-14">
+      <section className="mx-auto grid min-h-dvh w-full max-w-7xl items-start gap-10 px-5 py-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-10 lg:py-14">
         <div className="relative z-10">
           <h1 className="max-w-3xl text-h1 font-medium text-foreground">
             Ready to build your{" "}
@@ -74,7 +74,7 @@ export default function BookDemoPage() {
               return (
                 <div
                   key={item.label}
-                  className="flex items-center gap-4 rounded-2xl border border-primary/16 bg-card/45 px-4 py-4 backdrop-blur-md"
+                  className="flex items-start gap-3 rounded-2xl border border-primary/16 bg-card/45 px-4 py-4 backdrop-blur-md sm:items-center sm:gap-4"
                 >
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-primary/24 bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" aria-hidden />

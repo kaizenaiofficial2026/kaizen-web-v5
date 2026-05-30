@@ -651,7 +651,7 @@ function IndustryDashboardPreview() {
                           </p>
                         </div>
                       </div>
-                      <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                      <div className="mt-4 grid grid-cols-1 gap-2 text-xs min-[430px]:grid-cols-2">
                         {[
                           ["Type", "Initial consult"],
                           ["Team", "Corporate"],
@@ -783,7 +783,7 @@ function IndustryDashboardPreview() {
                   description="Track every enquiry from first message to consultation booking and follow-up."
                   className="xl:col-span-2"
                 >
-                  <div className="grid gap-2 md:grid-cols-3 xl:grid-cols-6">
+                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
                     {consultationStages.map((stage, index) => (
                       <div
                         key={stage}
@@ -1064,13 +1064,13 @@ function IndustryCTA() {
                 hand serious matters to your team with full context.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-                <Button asChild size="xl">
+                <Button asChild size="xl" className="w-full sm:w-auto">
                   <Link href="/book-demo">Book a Call</Link>
                 </Button>
-                <Button asChild size="xl" variant="outline">
+                <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                   <Link href="/demo">See Live Demo</Link>
                 </Button>
-                <Button asChild size="xl" variant="secondary">
+                <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/pricing?type=chat">View Chat Agent Pricing</Link>
                 </Button>
               </div>

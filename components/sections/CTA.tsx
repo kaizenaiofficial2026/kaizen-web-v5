@@ -37,14 +37,14 @@ export function CTA() {
           </p>
         </FadeUp>
         <FadeUp delay={0.16}>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="xl">
+          <div className="mt-7 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+            <Button asChild size="xl" className="w-full sm:w-auto">
               <Link href="/book-demo">
                 Book a Free Call
                 <ArrowUpRight />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="xl">
+            <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
               <Link href="/demo">See Live Demo</Link>
             </Button>
           </div>

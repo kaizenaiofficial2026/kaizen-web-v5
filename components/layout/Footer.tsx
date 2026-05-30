@@ -8,8 +8,8 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-card/40">
       <Container className="py-16 sm:py-20">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-1 gap-9 min-[420px]:grid-cols-2 md:grid-cols-4 lg:gap-10">
+          <div className="min-[420px]:col-span-2 md:col-span-1">
             <BrandMark />
             <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-6">
               AI chatbots and voice agents that never miss a customer.

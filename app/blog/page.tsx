@@ -254,13 +254,13 @@ export default function BlogPage() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.08} className="flex flex-wrap gap-3">
-                <Button asChild size="xl">
+                <Button asChild size="xl" className="w-full sm:w-auto">
                   <Link href="/book-demo">
                     Book a Call
                     <ArrowRight className="h-4 w-4" aria-hidden />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="xl">
+                <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                   <Link href="/solutions/voice-agents">
                     Explore AI Voice Agents
                   </Link>

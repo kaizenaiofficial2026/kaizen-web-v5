@@ -380,7 +380,7 @@ export function BookDemoForm() {
 
   if (submitted) {
     return (
-      <Card className="gold-card relative overflow-hidden rounded-[1.5rem] border-primary/28 p-8 text-center shadow-[0_32px_110px_-64px_rgba(201,160,61,0.95)] sm:p-10">
+      <Card className="gold-card relative overflow-hidden rounded-[1.5rem] border-primary/28 p-5 text-center shadow-[0_32px_110px_-64px_rgba(201,160,61,0.95)] sm:p-8 lg:p-10">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-80"
@@ -963,7 +963,7 @@ function InterestSelector({
         What are you interested in?
         <span className="text-primary"> *</span>
       </legend>
-      <div className="mt-3 grid gap-3 sm:grid-cols-4">
+      <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {interests.map((interest) => {
           const selected = interest === value;
           const isNotSure = interest === "Not sure yet";

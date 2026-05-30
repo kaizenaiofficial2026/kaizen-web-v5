@@ -26,13 +26,13 @@ export function FAQ() {
       <Container>
         <FadeUp>
           <div className="border-border bg-card/60 rounded-2xl border px-6 py-8 backdrop-blur-md sm:px-10 sm:py-10">
-            <div className="flex items-start justify-between gap-8 pb-8">
+            <div className="flex flex-col-reverse items-start justify-between gap-6 pb-8 sm:flex-row sm:gap-8">
               <p className="text-muted-foreground max-w-sm text-sm leading-6 sm:text-base">
                 Can&apos;t find the answer?
                 <br />
                 Book a call and we&apos;ll walk you through it.
               </p>
-              <h2 className="text-foreground flex items-start gap-3 font-serif text-5xl italic leading-none tracking-tight sm:text-6xl">
+              <h2 className="text-foreground flex items-start gap-3 font-serif text-4xl italic leading-none tracking-tight sm:text-6xl">
                 FAQ
                 <ArrowUpRight
                   aria-hidden

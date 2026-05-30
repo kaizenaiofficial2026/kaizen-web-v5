@@ -863,12 +863,12 @@ function AutomationDashboardPreview() {
                     ].map(([label, value]) => (
                       <div
                         key={label}
-                        className="grid grid-cols-[0.8fr_1.2fr] border-b border-border bg-background/45 px-3 py-2 last:border-b-0"
+                        className="grid gap-1 border-b border-border bg-background/45 px-3 py-2 last:border-b-0 sm:grid-cols-[0.8fr_1.2fr]"
                       >
                         <span className="text-xs text-muted-foreground">
                           {label}
                         </span>
-                        <span className="text-right text-xs font-semibold text-foreground">
+                        <span className="text-xs font-semibold text-foreground sm:text-right">
                           {value}
                         </span>
                       </div>
@@ -910,7 +910,7 @@ function AutomationDashboardPreview() {
                     ].map(([item, status, time]) => (
                       <div
                         key={item}
-                        className="grid grid-cols-[1.2fr_0.8fr_auto] items-center gap-2 rounded-xl border border-border bg-background/45 px-3 py-2"
+                        className="grid gap-1 rounded-xl border border-border bg-background/45 px-3 py-2 sm:grid-cols-[1.2fr_0.8fr_auto] sm:items-center sm:gap-2"
                       >
                         <span className="text-xs font-medium text-foreground">
                           {item}
@@ -929,7 +929,7 @@ function AutomationDashboardPreview() {
                   title="Task / Pipeline Tracking"
                   description="Track tasks and workflow progress clearly."
                 >
-                  <div className="grid gap-2 sm:grid-cols-5">
+                  <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
                     {workflowStages.map((stage, index) => (
                       <div
                         key={stage}
@@ -1242,13 +1242,13 @@ function IndustryCTA() {
                 around your business process.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-                <Button asChild size="xl">
+                <Button asChild size="xl" className="w-full sm:w-auto">
                   <Link href="/book-demo">Book a Call</Link>
                 </Button>
-                <Button asChild size="xl" variant="outline">
+                <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                   <Link href="/book-demo">Discuss Automation</Link>
                 </Button>
-                <Button asChild size="xl" variant="secondary">
+                <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/demo">See Demo</Link>
                 </Button>
               </div>

@@ -51,7 +51,7 @@ export default function SolutionsPage() {
                 return (
                   <div
                     key={step.label}
-                    className="border-border bg-background/45 flex items-center gap-4 rounded-xl border p-4"
+                    className="border-border bg-background/45 flex flex-wrap items-center gap-3 rounded-xl border p-4 sm:flex-nowrap sm:gap-4"
                   >
                     <span className="bg-primary/15 text-primary grid h-10 w-10 place-items-center rounded-lg">
                       <Icon className="h-5 w-5" aria-hidden />
@@ -59,7 +59,7 @@ export default function SolutionsPage() {
                     <span className="text-foreground font-medium">
                       {step.label}
                     </span>
-                    <span className="text-muted-foreground ml-auto text-sm">
+                    <span className="text-muted-foreground ml-0 text-sm sm:ml-auto">
                       0{index + 1}
                     </span>
                   </div>
@@ -194,7 +194,7 @@ export default function SolutionsPage() {
                 We handle the setup, training, integrations, test calls, and
                 ongoing tuning. Your team approves the final flow before launch.
               </p>
-              <Button asChild size="xl" className="mt-8">
+              <Button asChild size="xl" className="mt-8 w-full sm:w-auto">
                 <Link href="/book-demo">Request a demo</Link>
               </Button>
             </FadeUp>

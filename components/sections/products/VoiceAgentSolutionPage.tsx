@@ -748,7 +748,7 @@ export function VoiceAgentSolutionPage() {
 
   return (
     <main id="main" className="relative">
-      <section className="relative w-full overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40">
+      <section className="relative w-full overflow-hidden pb-16 pt-28 sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_58%_at_50%_0%,rgba(201,160,61,0.22),rgba(201,160,61,0.06)_38%,rgba(10,9,7,0)_72%)]"
@@ -765,16 +765,16 @@ export function VoiceAgentSolutionPage() {
               leads, and help your business close more sales 24/7.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Button asChild size="xl">
+              <Button asChild size="xl" className="w-full sm:w-auto">
                 <Link href="/demo#voice-agent-demo">
                   Speak to Our AI Agent
                   <ArrowRight aria-hidden />
                 </Link>
               </Button>
-              <Button asChild size="xl" variant="outline">
+              <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                 <Link href="/book-demo">Book Strategy Call</Link>
               </Button>
-              <Button asChild size="xl" variant="outline">
+              <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
                 <Link href="/pricing?type=voice">View Pricing</Link>
               </Button>
             </div>
@@ -972,14 +972,14 @@ export function VoiceAgentSolutionPage() {
             enquiries, book appointments, recover missed leads, and update your
             team automatically.
           </p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Button asChild size="xl">
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
+            <Button asChild size="xl" className="w-full sm:w-auto">
               <Link href="/book-demo">
                 Book Strategy Call
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="xl" variant="outline">
+            <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
               <Link href="/pricing?type=voice">View Pricing</Link>
             </Button>
           </div>
