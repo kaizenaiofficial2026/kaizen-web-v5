@@ -38,7 +38,7 @@ export default function BookDemoPage() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(75% 60% at 18% 8%, rgba(201,160,61,0.18) 0%, rgba(201,160,61,0.05) 38%, rgba(10,9,7,0) 72%), radial-gradient(65% 52% at 92% 16%, rgba(236,212,121,0.13) 0%, rgba(10,9,7,0) 72%)",
+            "radial-gradient(75% 60% at 18% 8%, rgba(201,160,61,0.18) 0%, rgba(201,160,61,0.05) 38%, rgba(0,0,0,0) 72%), radial-gradient(65% 52% at 92% 16%, rgba(236,212,121,0.13) 0%, rgba(0,0,0,0) 72%)",
         }}
       />
       <Grain />

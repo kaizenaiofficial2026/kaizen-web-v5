@@ -652,7 +652,7 @@ export function ChatbotSolutionPage() {
       <section className="relative w-full overflow-hidden pb-16 pt-28 sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_58%_at_50%_0%,rgba(201,160,61,0.2),rgba(201,160,61,0.06)_38%,rgba(10,9,7,0)_72%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_58%_at_50%_0%,rgba(201,160,61,0.2),rgba(201,160,61,0.06)_38%,rgba(0,0,0,0)_72%)]"
         />
         <Container className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.82fr)]">
           <FadeUp>

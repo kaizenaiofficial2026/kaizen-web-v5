@@ -92,7 +92,7 @@ function VoiceOrb({
         animate={reduceMotion ? undefined : { scale: pulse, rotate: active ? [0, 4, -5, 0] : [0, 1, 0] }}
         transition={{ duration: active ? 1.25 : 3.2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_22%,rgba(255,255,255,0.95),rgba(255,255,255,0)_24%),radial-gradient(circle_at_70%_68%,rgba(10,9,7,0.9),rgba(10,9,7,0)_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_22%,rgba(255,255,255,0.95),rgba(255,255,255,0)_24%),radial-gradient(circle_at_70%_68%,rgba(0,0,0,0.9),rgba(0,0,0,0)_50%)]" />
         <motion.div
           className="absolute -left-8 top-8 h-16 w-44 rounded-full bg-white/30 blur-xl"
           animate={reduceMotion ? undefined : { x: active ? [0, 22, -12, 0] : [0, 10, 0], y: active ? [0, -8, 10, 0] : [0, 4, 0] }}
@@ -200,7 +200,7 @@ export function InteractiveDemoPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             backgroundImage:
-              "radial-gradient(70% 55% at 48% 0%, rgba(201,160,61,0.20) 0%, rgba(201,160,61,0.07) 36%, rgba(10,9,7,0) 72%), radial-gradient(42% 38% at 86% 32%, rgba(201,160,61,0.12) 0%, rgba(10,9,7,0) 72%)",
+              "radial-gradient(70% 55% at 48% 0%, rgba(201,160,61,0.20) 0%, rgba(201,160,61,0.07) 36%, rgba(0,0,0,0) 72%), radial-gradient(42% 38% at 86% 32%, rgba(201,160,61,0.12) 0%, rgba(0,0,0,0) 72%)",
           }}
         />
         <Grain />

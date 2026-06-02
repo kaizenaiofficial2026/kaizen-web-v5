@@ -15,7 +15,7 @@ export function CTA() {
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(70% 55% at 50% 30%, rgba(201,160,61,0.28) 0%, rgba(201,160,61,0.08) 35%, rgba(10,9,7,0) 70%)",
+            "radial-gradient(70% 55% at 50% 30%, rgba(201,160,61,0.28) 0%, rgba(201,160,61,0.08) 35%, rgba(0,0,0,0) 70%)",
         }}
       />
       <div

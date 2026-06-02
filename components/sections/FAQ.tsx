@@ -20,7 +20,7 @@ export function FAQ() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.06) 0%, rgba(10,9,7,0) 70%)",
+            "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.06) 0%, rgba(0,0,0,0) 70%)",
         }}
       />
       <Container>

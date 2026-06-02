@@ -114,7 +114,7 @@ export default function BlogPage() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(70% 45% at 50% 0%, rgba(201,160,61,0.16) 0%, rgba(201,160,61,0.04) 42%, rgba(10,9,7,0) 74%)",
+            "radial-gradient(70% 45% at 50% 0%, rgba(201,160,61,0.16) 0%, rgba(201,160,61,0.04) 42%, rgba(0,0,0,0) 74%)",
         }}
       />
       <Grain />

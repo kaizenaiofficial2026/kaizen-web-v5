@@ -103,7 +103,7 @@ export function HeroBackground() {
       queueMicrotask(() => setRenderFallback(true));
       return;
     }
-    renderer.setClearColor("#0a0907");
+    renderer.setClearColor("#000000");
     const desktopMotionQuery = window.matchMedia("(min-width: 1024px)");
     const getPixelRatioCap = () => (desktopMotionQuery.matches ? 1.5 : 2);
 

@@ -51,7 +51,7 @@ export function SimpleProcess() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(54% 44% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(10,9,7,0) 72%)",
+            "radial-gradient(54% 44% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(0,0,0,0) 72%)",
         }}
       />
       <Container size="wide">
@@ -78,7 +78,7 @@ export function SimpleProcess() {
               const Icon = step.Icon;
               return (
                 <StaggerItem key={step.title} className="relative">
-                  <div className="relative z-10 mx-auto grid h-14 w-14 place-items-center rounded-full border border-primary/32 bg-background shadow-[0_0_0_7px_rgba(10,9,7,0.92),0_18px_45px_-34px_rgba(201,160,61,0.78)]">
+                  <div className="relative z-10 mx-auto grid h-14 w-14 place-items-center rounded-full border border-primary/32 bg-background shadow-[0_0_0_7px_rgba(0,0,0,0.92),0_18px_45px_-34px_rgba(201,160,61,0.78)]">
                     <Icon className="h-5 w-5 text-primary" />
                   </div>
 

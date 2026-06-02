@@ -3,8 +3,8 @@
 
 :root {
   /* Brand palette */
-  --primary-black: #0a0907;
-  --dark-surface: #1a160c;
+  --primary-black: #000000;
+  --dark-surface: #0f0f0f;
   --gold-main: #c9a03d;
   --gold-light: #ecd479;
   --gold-deep: #8d6f24;

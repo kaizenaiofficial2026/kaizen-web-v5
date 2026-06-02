@@ -48,11 +48,11 @@ export function LogoCloud() {
   return (
     <section
       aria-labelledby="logos-heading"
-      className="relative w-full overflow-hidden border-t border-border/25 bg-[linear-gradient(180deg,rgba(16,14,9,0.8),rgba(12,10,7,0.72)_56%,rgba(10,9,7,0))] py-11 sm:py-14"
+      className="relative w-full overflow-hidden border-t border-border/25 bg-[linear-gradient(180deg,rgba(12,12,12,0.8),rgba(8,8,8,0.72)_56%,rgba(0,0,0,0))] py-11 sm:py-14"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(64%_70%_at_50%_6%,rgba(201,160,61,0.18),rgba(201,160,61,0.06)_44%,rgba(10,9,7,0)_76%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(64%_70%_at_50%_6%,rgba(201,160,61,0.18),rgba(201,160,61,0.06)_44%,rgba(0,0,0,0)_76%)]"
       />
       <div
         aria-hidden

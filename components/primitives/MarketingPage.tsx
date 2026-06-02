@@ -53,7 +53,7 @@ export function MarketingHero({
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(70% 55% at 50% 0%, rgba(201,160,61,0.20) 0%, rgba(201,160,61,0.06) 38%, rgba(10,9,7,0) 72%)",
+            "radial-gradient(70% 55% at 50% 0%, rgba(201,160,61,0.20) 0%, rgba(201,160,61,0.06) 38%, rgba(0,0,0,0) 72%)",
         }}
       />
       <Grain />
@@ -137,7 +137,7 @@ export function MarketingSection({
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             backgroundImage:
-              "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(10,9,7,0) 70%), radial-gradient(80% 60% at 50% 100%, rgba(201,160,61,0.05) 0%, rgba(10,9,7,0) 70%)",
+              "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(0,0,0,0) 70%), radial-gradient(80% 60% at 50% 100%, rgba(201,160,61,0.05) 0%, rgba(0,0,0,0) 70%)",
           }}
         />
       )}
