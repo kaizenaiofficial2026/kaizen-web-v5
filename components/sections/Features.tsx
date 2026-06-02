@@ -1,27 +1,16 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
   ArrowRight,
-  Bot,
-  CalendarCheck,
-  Check,
-  FileImage,
-  Globe2,
-  Headphones,
-  LayoutDashboard,
   MessageCircle,
   Mic,
   PhoneCall,
   Play,
-  Radio,
-  Sparkles,
-  UserCheck,
   Zap,
-  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,24 +32,12 @@ type Offer = {
   cardTitle: string;
   cardImageSrc: string;
   cardImageAlt: string;
-  title: string;
   modalTitle: string;
-  summary: string;
   description: string;
-  Icon: LucideIcon;
   accent: string;
-  chips: {
-    label: string;
-    Icon: LucideIcon;
-  }[];
-  capabilities: {
-    label: string;
-    Icon: LucideIcon;
-  }[];
   exploreLabel: string;
   exploreHref: string;
   demoHref: string;
-  pricingHref: string;
 };
 
 const offers: Offer[] = [
@@ -71,33 +48,13 @@ const offers: Offer[] = [
     cardImageSrc: "/images/ai-chat-agent-card.png",
     cardImageAlt:
       "KaizenAI AI Chat Agent connected to WhatsApp, Instagram, Facebook and website",
-    title: "Turn every message into a sales opportunity.",
     modalTitle: "Turn every message into a sales opportunity.",
-    summary:
-      "Instant replies across your website, WhatsApp, Instagram, and Facebook.",
     description:
       "Instantly reply to website, WhatsApp, Instagram, and Facebook enquiries with an AI agent trained on your products, services, pricing, FAQs, and sales flow.",
-    Icon: Bot,
     accent: "from-[#ecd479]/24 via-[#c9a03d]/12 to-transparent",
-    chips: [
-      { label: "Website + WhatsApp replies", Icon: MessageCircle },
-      { label: "Instagram + Facebook DMs", Icon: Sparkles },
-      { label: "Product and service answers", Icon: Bot },
-      { label: "Order capture", Icon: Check },
-      { label: "Lead dashboard", Icon: LayoutDashboard },
-      { label: "Human handoff", Icon: UserCheck },
-    ],
-    capabilities: [
-      { label: "Sends brochures, menus, visuals, and prices", Icon: FileImage },
-      { label: "Tracks conversations, leads, and bookings", Icon: LayoutDashboard },
-      { label: "Escalates to staff when needed", Icon: UserCheck },
-      { label: "Supports multilingual/local slang where configured", Icon: Globe2 },
-      { label: "Built for retail, clinics, hospitality, real estate, and service businesses", Icon: Check },
-    ],
     exploreLabel: "Explore Chat Agents",
     exploreHref: "/solutions/chatbots",
     demoHref: "/demo#chat-agent-demo",
-    pricingHref: "/pricing?type=chat",
   },
   {
     id: "voice",
@@ -106,67 +63,70 @@ const offers: Offer[] = [
     cardImageSrc: "/images/ai-receptionist-card.png",
     cardImageAlt:
       "KaizenAI AI Receptionist answering calls with AI brain automation",
-    title: "Answer calls, recover missed leads, and book appointments.",
     modalTitle: "Answer calls, follow up, and book appointments 24/7.",
-    summary:
-      "Natural call handling for enquiries, bookings, missed calls, and follow-ups.",
     description:
-      "A natural AI calling agent that answers inbound calls, follows up with missed leads, handles enquiries, books appointments, and transfers urgent conversations to your team.",
-    Icon: Mic,
+      "A natural AI receptionist that answers inbound calls, recovers missed leads, books appointments, and hands urgent conversations to your team.",
     accent: "from-[#f1ece0]/16 via-[#c9a03d]/14 to-transparent",
-    chips: [
-      { label: "Inbound calls", Icon: PhoneCall },
-      { label: "Missed-call recovery", Icon: Radio },
-      { label: "Appointment booking", Icon: CalendarCheck },
-      { label: "Google Calendar sync", Icon: CalendarCheck },
-      { label: "WhatsApp confirmations", Icon: MessageCircle },
-      { label: "Human call transfer", Icon: Headphones },
-    ],
-    capabilities: [
-      { label: "Qualifies enquiries before booking", Icon: Check },
-      { label: "Sends call summaries and lead details", Icon: LayoutDashboard },
-      { label: "Recovers missed calls automatically", Icon: PhoneCall },
-      { label: "Speaks naturally across configured languages", Icon: Globe2 },
-      { label: "Stores transcript, outcome, and caller history", Icon: FileImage },
-    ],
     exploreLabel: "Explore Voice Agents",
     exploreHref: "/solutions/voice-agents",
     demoHref: "/demo#voice-agent-demo",
-    pricingHref: "/pricing?type=voice",
   },
 ];
 
+const voicePrompts = [
+  {
+    id: "appointment",
+    label: "Book an appointment",
+    line:
+      "Sure, I can help you book an appointment. What day and time would you prefer?",
+    audioSrc: "/audio/voice-demo-book-appointment.m4a",
+  },
+  {
+    id: "hours",
+    label: "Ask about opening hours",
+    line:
+      "We're open from 9 AM to 6 PM, Monday to Saturday. Would you like me to help you book a visit?",
+    audioSrc: "/audio/voice-demo-opening-hours.m4a",
+  },
+  {
+    id: "missed-call",
+    label: "Recover missed call",
+    line:
+      "Hi, we noticed you missed our call. I can help you continue your enquiry or book a time that works for you.",
+    audioSrc: "/audio/voice-demo-missed-call.m4a",
+  },
+  {
+    id: "availability",
+    label: "Check availability",
+    line:
+      "Yes, I can check the next available slot and confirm it for you instantly.",
+    audioSrc: "/audio/voice-demo-check-availability.m4a",
+  },
+] as const;
+
 function PhoneFrame({
   children,
-  mode,
 }: {
   children: ReactNode;
-  mode: "chat" | "voice";
 }) {
   return (
-    <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[320px]">
+    <div className="relative mx-auto w-full max-w-[330px]">
       <div
         aria-hidden
-        className="absolute -inset-8 rounded-full bg-primary/18 blur-3xl"
+        className="absolute -inset-10 rounded-full bg-primary/18 blur-3xl"
       />
-      <div className="relative rounded-[2.55rem] border border-white/12 bg-[#050504] p-2.5 shadow-[0_34px_100px_-48px_rgba(201,160,61,0.84),inset_0_1px_0_rgba(255,255,255,0.16)]">
-        <div className="relative h-[560px] max-h-[calc(100dvh-11rem)] overflow-hidden rounded-[2.05rem] border border-white/10 bg-[linear-gradient(180deg,rgba(26,22,12,0.98),rgba(7,7,5,0.98))]">
+      <div className="relative rounded-[2.6rem] border border-white/12 bg-[#050504] p-2.5 shadow-[0_40px_120px_-54px_rgba(201,160,61,0.9),inset_0_1px_0_rgba(255,255,255,0.16)]">
+        <div className="relative h-[610px] max-h-[calc(100dvh-7rem)] overflow-hidden rounded-[2.1rem] border border-white/10 bg-[linear-gradient(180deg,rgba(18,18,18,0.98),rgba(3,3,3,0.99))]">
           <div className="absolute left-1/2 top-2 z-20 h-7 w-24 -translate-x-1/2 rounded-full bg-black shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" />
-          <div className="relative z-10 flex h-9 items-end justify-between px-7 pb-1.5 text-[11px] font-semibold text-foreground/84">
+          <div className="relative z-10 flex h-10 items-end justify-between px-7 pb-1.5 text-[11px] font-semibold text-foreground/84">
             <span>9:41</span>
             <span className="flex items-center gap-1">
               <span className="h-1.5 w-4 rounded-full bg-foreground/70" />
               <span className="h-2.5 w-4 rounded-sm border border-foreground/70" />
             </span>
           </div>
-          <div className="h-[calc(100%-2.25rem)]">{children}</div>
+          <div className="h-[calc(100%-2.5rem)]">{children}</div>
         </div>
-      </div>
-      <div className="mt-3 flex justify-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-primary/16 bg-black/28 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary/84">
-          <Play className="h-3 w-3" />
-          {mode === "chat" ? "Chat demo ready" : "Voice demo ready"}
-        </span>
       </div>
     </div>
   );
@@ -174,18 +134,20 @@ function PhoneFrame({
 
 function ChatPhoneMockup() {
   return (
-    <PhoneFrame mode="chat">
+    <PhoneFrame>
       <div className="flex h-full flex-col">
-        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3.5">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/28 bg-primary/12 text-primary">
-              <Bot className="h-5 w-5" />
+            <span className="grid h-9 w-9 place-items-center rounded-full border border-[#25d366]/28 bg-[#25d366]/10 text-[#25d366]">
+              <MessageCircle className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-foreground">
-                Kaizen Agent
+              <p className="text-sm font-semibold text-foreground leading-none">
+                KaizenAI Chat
               </p>
-              <p className="text-xs text-[#25d366]">WhatsApp Business</p>
+              <p className="mt-1 text-[11px] text-[#25d366]">
+                WhatsApp Business
+              </p>
             </div>
           </div>
           <span className="rounded-full bg-[#25d366]/12 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#25d366]">
@@ -193,39 +155,58 @@ function ChatPhoneMockup() {
           </span>
         </div>
 
-        <div className="flex-1 space-y-3 px-4 py-4">
-          <div className="max-w-[82%] rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.06] px-4 py-3 text-sm leading-5 text-foreground/82">
-            Hi, is this available?
+        <div className="scrollbar-thin flex-1 space-y-2.5 overflow-y-auto px-3.5 py-4">
+          <div className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md border border-white/8 bg-white/[0.06] px-3.5 py-2.5 text-[13px] leading-5 text-foreground/84">
+            Hi, is the black chronograph watch available?
           </div>
-          <div className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md border border-primary/28 bg-primary/14 px-4 py-3 text-sm leading-5 text-foreground">
-            Yes, it&apos;s available. I can also help with delivery or pickup.
+          <div className="max-w-[88%] rounded-2xl rounded-tl-md border border-[#25d366]/18 bg-[#25d366]/12 px-3.5 py-2.5 text-[13px] leading-5 text-foreground">
+            Yes, it&apos;s available. The black chronograph model is in stock
+            and ready for delivery.
           </div>
-          <div className="ml-auto max-w-[84%] rounded-2xl rounded-tr-md border border-primary/28 bg-primary/14 px-4 py-3 text-sm leading-5 text-foreground">
-            Please send your name and contact number to reserve it.
+          <div className="ml-auto max-w-[72%] rounded-2xl rounded-tr-md border border-white/8 bg-white/[0.06] px-3.5 py-2.5 text-[13px] leading-5 text-foreground/84">
+            What&apos;s the price?
           </div>
-
-          <div className="rounded-2xl border border-primary/24 bg-black/28 p-3">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-                  Lead captured
-                </p>
-                <p className="mt-1 text-sm text-foreground">
-                  Product enquiry
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Customer details saved
-                </p>
-              </div>
-              <LayoutDashboard className="h-5 w-5 text-primary" />
-            </div>
+          <div className="max-w-[90%] rounded-2xl rounded-tl-md border border-[#25d366]/18 bg-[#25d366]/12 px-3.5 py-2.5 text-[13px] leading-5 text-foreground">
+            It&apos;s LKR 18,500. It includes a stainless steel strap, 1-year
+            warranty, and free delivery within Colombo.
+          </div>
+          <div className="ml-auto max-w-[78%] rounded-2xl rounded-tr-md border border-white/8 bg-white/[0.06] px-3.5 py-2.5 text-[13px] leading-5 text-foreground/84">
+            Can I reserve one?
+          </div>
+          <div className="max-w-[90%] rounded-2xl rounded-tl-md border border-[#25d366]/18 bg-[#25d366]/12 px-3.5 py-2.5 text-[13px] leading-5 text-foreground">
+            Of course. I can reserve it for you now. Please send your name,
+            contact number, and delivery location.
+          </div>
+          <div className="ml-auto max-w-[88%] rounded-2xl rounded-tr-md border border-white/8 bg-white/[0.06] px-3.5 py-2.5 text-[13px] leading-5 text-foreground/84">
+            Reserve it under Nimal. Delivery to Colombo 5.
+          </div>
+          <div className="max-w-[90%] rounded-2xl rounded-tl-md border border-[#25d366]/18 bg-[#25d366]/12 px-3.5 py-2.5 text-[13px] leading-5 text-foreground">
+            Perfect. Your watch has been reserved. Our team will confirm the
+            order and delivery time shortly.
           </div>
         </div>
 
-        <div className="border-t border-white/8 p-4">
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-xs text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-primary" />
-            Chat demo ready
+        <div className="border-t border-white/8 p-3.5">
+          <div className="rounded-2xl border border-primary/18 bg-black/36 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+              ORDER CAPTURED
+            </p>
+            <div className="mt-2 space-y-1 text-xs text-foreground/78">
+              <p>
+                <span className="text-foreground">Product:</span> Black
+                chronograph watch
+              </p>
+              <p>
+                <span className="text-foreground">Price:</span> LKR 18,500
+              </p>
+              <p>
+                <span className="text-foreground">Customer:</span> Nimal
+              </p>
+              <p>
+                <span className="text-foreground">Status:</span> Ready for
+                confirmation
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -234,71 +215,141 @@ function ChatPhoneMockup() {
 }
 
 function VoicePhoneMockup() {
+  const [activePromptId, setActivePromptId] =
+    useState<(typeof voicePrompts)[number]["id"]>("appointment");
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const playbackToken = useRef(0);
+
+  useEffect(() => {
+    return () => {
+      if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
+      audioRef.current?.pause();
+    };
+  }, []);
+
+  const activePrompt =
+    voicePrompts.find((prompt) => prompt.id === activePromptId) ??
+    voicePrompts[0];
+
+  const playPrompt = async (prompt: (typeof voicePrompts)[number]) => {
+    const token = playbackToken.current + 1;
+    playbackToken.current = token;
+
+    if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
+    audioRef.current?.pause();
+
+    setActivePromptId(prompt.id);
+    setIsSpeaking(true);
+
+    const finishFallback = () => {
+      fallbackTimer.current = setTimeout(() => {
+        if (playbackToken.current === token) setIsSpeaking(false);
+      }, 2600);
+    };
+
+    // Replace these local preview files in public/audio when final voice clips are ready.
+    const response = await fetch(prompt.audioSrc, { method: "HEAD" }).catch(
+      () => null,
+    );
+    if (!response?.ok || playbackToken.current !== token) {
+      finishFallback();
+      return;
+    }
+
+    const audio = new Audio(prompt.audioSrc);
+    audioRef.current = audio;
+    audio.onended = () => {
+      if (playbackToken.current === token) setIsSpeaking(false);
+    };
+    audio.onerror = () => {
+      if (playbackToken.current === token) finishFallback();
+    };
+    audio.play().catch(() => {
+      if (playbackToken.current === token) finishFallback();
+    });
+  };
+
   return (
-    <PhoneFrame mode="voice">
-      <div className="flex h-full flex-col">
-        <div className="px-5 py-5 text-center">
-          <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-primary/30 bg-primary/14 text-primary shadow-[0_0_34px_rgba(201,160,61,0.2)]">
-            <PhoneCall className="h-7 w-7" />
-          </span>
-          <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-            AI call active
-          </p>
-          <h3 className="mt-2 text-xl font-semibold text-foreground">
-            New booking enquiry
-          </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Qualified and booking now
-          </p>
+    <PhoneFrame>
+      <div className="flex h-full flex-col px-4 py-4 text-center">
+        <div className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.035] px-3 py-2 text-left">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary/82">
+              AI Receptionist active
+            </p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {isSpeaking ? "Playing response..." : "Ready for next prompt"}
+            </p>
+          </div>
+          <PhoneCall className="h-4 w-4 text-primary/82" />
         </div>
 
-        <div className="flex h-14 items-center justify-center gap-1.5 px-6">
-          {[24, 42, 30, 52, 28, 46, 34, 56, 38, 26].map((height, index) => (
-            <span
-              key={`${height}-${index}`}
-              className="w-1.5 rounded-full bg-primary/70 animate-pulse"
-              style={{
-                height,
-                animationDelay: `${index * 90}ms`,
+        <div className="relative grid flex-1 place-items-center py-4">
+          <motion.div
+            aria-hidden
+            className="absolute h-40 w-40 rounded-full bg-primary/10 blur-3xl"
+            animate={{
+              scale: isSpeaking
+                ? [1, 1.18, 0.98, 1.12, 1]
+                : [1, 1.05, 1],
+            }}
+            transition={{ duration: isSpeaking ? 1.2 : 4, repeat: Infinity }}
+          />
+          <motion.button
+            type="button"
+            aria-label="Play selected AI receptionist prompt"
+            onClick={() => playPrompt(activePrompt)}
+            className="relative grid h-32 w-32 place-items-center rounded-full border border-primary/28 bg-[radial-gradient(circle_at_35%_28%,rgba(236,212,121,0.35),rgba(201,160,61,0.12)_38%,rgba(0,0,0,0.88)_72%)] text-primary shadow-[0_0_48px_-18px_rgba(201,160,61,0.82),inset_0_1px_0_rgba(255,255,255,0.22)]"
+            animate={{
+              scale: isSpeaking
+                ? [1, 1.05, 0.98, 1.08, 1]
+                : [1, 1.02, 1],
+            }}
+            transition={{ duration: isSpeaking ? 0.9 : 3.4, repeat: Infinity }}
+          >
+            <motion.span
+              aria-hidden
+              className="absolute inset-2 rounded-full border border-primary/20"
+              animate={{
+                scale: isSpeaking ? [1, 1.28, 1] : [1, 1.12, 1],
+                opacity: isSpeaking
+                  ? [0.8, 0.2, 0.7]
+                  : [0.5, 0.18, 0.5],
               }}
+              transition={{ duration: isSpeaking ? 0.9 : 3.6, repeat: Infinity }}
             />
+            <Mic className="relative h-10 w-10" />
+          </motion.button>
+        </div>
+
+        <div className="rounded-2xl border border-white/8 bg-black/26 p-3 text-left">
+          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-primary/82">
+            <Play className="h-3 w-3" />
+            Preview line
+          </div>
+          <p className="mt-2 min-h-[3.75rem] text-xs leading-5 text-foreground/78">
+            {activePrompt.line}
+          </p>
+        </div>
+
+        <div className="mt-3 grid gap-2">
+          {voicePrompts.map((prompt) => (
+            <button
+              key={prompt.id}
+              type="button"
+              onClick={() => playPrompt(prompt)}
+              className={cn(
+                "rounded-xl border px-3 py-2 text-left text-xs font-semibold transition",
+                activePromptId === prompt.id
+                  ? "border-primary/32 bg-primary/10 text-foreground"
+                  : "border-white/8 bg-white/[0.035] text-foreground/70 hover:border-primary/20 hover:text-foreground",
+              )}
+            >
+              {prompt.label}
+            </button>
           ))}
-        </div>
-
-        <div className="flex-1 space-y-3 px-4 py-4">
-          <div className="rounded-2xl border border-white/8 bg-white/[0.05] px-4 py-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-              Live transcript
-            </p>
-            <p className="mt-2 text-sm leading-5 text-foreground/86">
-              Customer wants Saturday. Agent confirms service, location, and
-              preferred time.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-primary/24 bg-primary/12 px-4 py-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-              Booking confirmed
-            </p>
-            <p className="mt-2 text-sm leading-5 text-foreground">
-              Saturday 10:00 AM sent to dashboard.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/8 bg-black/24 px-4 py-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-              Summary
-            </p>
-            <p className="mt-2 text-sm leading-5 text-foreground/82">
-              Lead is ready for staff follow-up with notes and contact details.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2 border-t border-white/8 p-4 text-center text-[11px] font-semibold text-foreground/72">
-          <span className="rounded-full bg-white/[0.05] py-2">Summary</span>
-          <span className="rounded-full bg-primary/14 py-2 text-primary">
-            Transfer
-          </span>
-          <span className="rounded-full bg-white/[0.05] py-2">Lead</span>
         </div>
       </div>
     </PhoneFrame>
@@ -311,81 +362,48 @@ function OfferMockup({ id }: { id: OfferId }) {
 
 function OfferModal({ offer }: { offer: Offer }) {
   return (
-    <DialogContent className="max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-6xl overflow-y-auto rounded-[1.75rem] border-primary/24 bg-[linear-gradient(145deg,rgba(26,22,12,0.96),rgba(9,8,6,0.98))] p-4 shadow-[0_38px_140px_-62px_rgba(201,160,61,0.86)] sm:p-5 lg:overflow-hidden [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/24 [&>button.absolute]:bg-black/40 [&>button.absolute]:text-foreground">
+    <DialogContent className="max-h-[calc(100dvh-1.25rem)] w-[calc(100vw-1.25rem)] max-w-5xl overflow-y-auto rounded-[1.5rem] border-white/10 bg-[linear-gradient(145deg,rgba(15,15,15,0.98),rgba(0,0,0,0.98))] p-5 shadow-[0_34px_120px_-72px_rgba(201,160,61,0.62)] sm:p-6 lg:overflow-hidden [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-white/12 [&>button.absolute]:bg-black/55 [&>button.absolute]:text-foreground">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(58%_48%_at_78%_22%,rgba(201,160,61,0.11),transparent_68%),radial-gradient(44%_42%_at_18%_90%,rgba(201,160,61,0.06),transparent_70%)]"
+      />
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80",
+          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-20",
           offer.accent,
         )}
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_82%_28%,rgba(201,160,61,0.18),transparent_68%)]"
-      />
 
-      <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
-        <div className="px-1 py-2 sm:px-3 lg:py-4">
+      <div className="relative grid gap-7 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
+        <div className="px-0 py-1 sm:px-1 lg:py-3">
           <p className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
             {offer.label}
           </p>
-          <DialogTitle className="mt-3 max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          <DialogTitle className="mt-3 max-w-2xl text-[2rem] font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             {offer.modalTitle}
           </DialogTitle>
-          <DialogDescription className="mt-4 max-w-2xl text-base leading-7 text-foreground/72">
+          <DialogDescription className="mt-4 max-w-2xl text-base leading-7 text-foreground/70">
             {offer.description}
           </DialogDescription>
 
-          <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {offer.chips.map((chip) => {
-              const ChipIcon = chip.Icon;
-              return (
-                <div
-                  key={chip.label}
-                  className="flex items-center gap-3 rounded-2xl border border-primary/18 bg-black/24 px-4 py-3 text-sm font-semibold text-foreground/84"
-                >
-                  <ChipIcon className="h-4 w-4 shrink-0 text-primary" />
-                  {chip.label}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 grid gap-2 sm:grid-cols-2">
-            {offer.capabilities.map((capability) => {
-              const CapabilityIcon = capability.Icon;
-              return (
-                <div
-                  key={capability.label}
-                  className="flex items-start gap-2.5 rounded-xl border border-white/8 bg-white/[0.035] px-3.5 py-2.5 text-sm leading-5 text-foreground/72"
-                >
-                  <CapabilityIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                  {capability.label}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild size="lg">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href={offer.demoHref}>
                 See Live Demo
                 <Zap className="h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
               <Link href={offer.exploreHref}>
                 {offer.exploreLabel}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="link" size="lg" className="px-1 text-primary">
-              <Link href={offer.pricingHref}>View Pricing</Link>
-            </Button>
           </div>
         </div>
 
-        <div className="rounded-[1.5rem] border border-primary/14 bg-black/18 px-3 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:px-5">
+        <div className="min-w-0">
           <OfferMockup id={offer.id} />
         </div>
       </div>
