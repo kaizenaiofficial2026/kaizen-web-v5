@@ -20,7 +20,7 @@ const Row = ({
       <motion.div
         className="flex w-max items-center gap-14 whitespace-nowrap py-2.5 group-hover:[animation-play-state:paused] sm:gap-16 sm:py-3"
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration: 76, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
       >
         {doubled.map((logo, i) => (
           <span

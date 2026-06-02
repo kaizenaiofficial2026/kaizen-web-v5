@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
@@ -39,6 +40,9 @@ type OfferId = "chat" | "voice";
 type Offer = {
   id: OfferId;
   label: string;
+  cardTitle: string;
+  cardImageSrc: string;
+  cardImageAlt: string;
   title: string;
   modalTitle: string;
   summary: string;
@@ -63,6 +67,10 @@ const offers: Offer[] = [
   {
     id: "chat",
     label: "AI CHAT AGENT",
+    cardTitle: "AI Chat Agent",
+    cardImageSrc: "/images/ai-chat-agent-card.png",
+    cardImageAlt:
+      "KaizenAI AI Chat Agent connected to WhatsApp, Instagram, Facebook and website",
     title: "Turn every message into a sales opportunity.",
     modalTitle: "Turn every message into a sales opportunity.",
     summary:
@@ -93,7 +101,11 @@ const offers: Offer[] = [
   },
   {
     id: "voice",
-    label: "AI VOICE AGENT",
+    label: "AI RECEPTIONIST",
+    cardTitle: "AI Receptionist",
+    cardImageSrc: "/images/ai-receptionist-card.png",
+    cardImageAlt:
+      "KaizenAI AI Receptionist answering calls with AI brain automation",
     title: "Answer calls, recover missed leads, and book appointments.",
     modalTitle: "Answer calls, follow up, and book appointments 24/7.",
     summary:
@@ -423,18 +435,17 @@ export function Features() {
         >
           <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
             {offers.map((offer) => {
-              const Icon = offer.Icon;
-
               return (
                 <motion.button
                   type="button"
                   key={offer.id}
+                  aria-label={`Open ${offer.cardTitle} details`}
                   aria-haspopup="dialog"
                   onClick={() => setActiveOffer(offer.id)}
                   whileHover={{ y: -4 }}
                   whileTap={{ scale: 0.99 }}
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative min-h-[250px] overflow-hidden rounded-[1.65rem] border border-primary/20 bg-card/58 p-7 text-left shadow-[0_28px_90px_-64px_rgba(201,160,61,0.72)] backdrop-blur-xl transition-colors hover:border-primary/42 sm:p-8"
+                  className="group relative overflow-hidden rounded-[1.65rem] border border-primary/20 bg-card/58 p-3 text-left shadow-[0_28px_90px_-64px_rgba(201,160,61,0.72)] backdrop-blur-xl transition-colors hover:border-primary/42 sm:p-4"
                 >
                   <div
                     aria-hidden
@@ -448,25 +459,15 @@ export function Features() {
                     className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100 group-hover:animate-[kaizen-sheen_5.5s_ease-in-out_infinite]"
                   />
 
-                  <span className="relative flex items-start justify-between gap-6">
-                    <span className="grid h-14 w-14 place-items-center rounded-2xl border border-primary/32 bg-primary/12 text-primary shadow-[0_18px_44px_-28px_rgba(201,160,61,0.8)]">
-                      <Icon className="h-7 w-7" />
-                    </span>
-                    <span className="rounded-full border border-white/10 bg-black/18 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-foreground/64">
-                      Open Details
-                    </span>
-                  </span>
-
-                  <span className="relative mt-9 block">
-                    <span className="text-primary text-xs font-bold uppercase tracking-[0.18em]">
-                      {offer.label}
-                    </span>
-                    <span className="mt-4 block max-w-xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
-                      {offer.title}
-                    </span>
-                    <span className="mt-4 block max-w-lg text-sm leading-6 text-muted-foreground sm:text-base">
-                      {offer.summary}
-                    </span>
+                  <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-black shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                    <Image
+                      src={offer.cardImageSrc}
+                      alt={offer.cardImageAlt}
+                      fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      className="object-cover transition duration-500 group-hover:scale-[1.025]"
+                      priority={offer.id === "chat"}
+                    />
                   </span>
                 </motion.button>
               );

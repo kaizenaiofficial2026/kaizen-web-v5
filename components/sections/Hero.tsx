@@ -9,18 +9,6 @@ import { Container } from "@/components/primitives/Container";
 import { Grain } from "@/components/primitives/Grain";
 import { HeroBackgroundFallback } from "@/components/backgrounds/HeroBackgroundFallback";
 
-const trustItems = [
-  "Inbound Calls",
-  "Outbound Calls",
-  "WhatsApp Chats",
-  "Instagram DMs",
-  "Messenger",
-  "Lead Conversion",
-  "Bookings",
-];
-
-const trustRows = [trustItems.slice(0, 4), trustItems.slice(4)];
-
 const proofItems = [
   "Trained on your business",
   "Human-like conversations",
@@ -122,33 +110,6 @@ export function Hero() {
           >
             <Link href="/demo">See live demo</Link>
           </Button>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.32,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="mt-8 flex w-full max-w-6xl flex-col items-center justify-center gap-3 overflow-hidden text-[10px] font-bold uppercase text-foreground/68 sm:text-[11px] lg:text-xs"
-        >
-          {trustRows.map((row) => (
-            <div
-              key={row.join("-")}
-              className="flex max-w-full flex-wrap items-center justify-center gap-2 sm:flex-nowrap sm:gap-4"
-            >
-              {row.map((item) => (
-                <span
-                  key={item}
-                  className="whitespace-nowrap rounded-full border border-primary/22 bg-card/35 px-2.5 py-1.5 shadow-[0_8px_26px_-22px_rgba(255,255,255,0.35)] backdrop-blur-md sm:px-3"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          ))}
         </motion.div>
       </Container>
 
