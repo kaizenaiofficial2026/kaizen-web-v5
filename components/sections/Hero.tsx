@@ -1,128 +1,71 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/primitives/Container";
-import { Grain } from "@/components/primitives/Grain";
-import { HeroBackgroundFallback } from "@/components/backgrounds/HeroBackgroundFallback";
-
-const proofItems = [
-  "Trained on your business",
-  "Human-like conversations",
-  "Built to convert",
-];
-
-const HeroBackground = dynamic(
-  () =>
-    import("@/components/backgrounds/HeroBackground").then(
-      (m) => m.HeroBackground,
-    ),
-  { ssr: false, loading: () => <HeroBackgroundFallback /> },
-);
 
 export function Hero() {
-  const reduced = useReducedMotion();
-
   return (
-    <section className="relative flex min-h-[88vh] w-full flex-col overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-32 lg:min-h-[100dvh] lg:pb-20 lg:pt-28 2xl:pb-24 2xl:pt-32">
-      {reduced ? <HeroBackgroundFallback /> : <HeroBackground />}
-      <div className="bg-background/34 pointer-events-none absolute inset-0 z-0" />
-      <Grain />
+    <section
+      className="relative h-screen w-full overflow-hidden bg-black bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/herobg.png')" }}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_right,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.34)_38%,rgba(0,0,0,0.10)_100%)] md:block"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-black/45 md:hidden"
+      />
 
-      <Container className="relative z-10 flex flex-1 flex-col items-center justify-start pt-8 text-center sm:pt-10 lg:pt-14 2xl:pt-16">
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.08,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="[font-family:var(--font-syne)] max-w-5xl text-[clamp(2.65rem,12vw,6.35rem)] font-bold leading-[0.98] text-[#d8c58a] drop-shadow-[0_3px_22px_rgba(0,0,0,0.78)] [text-shadow:0_1px_0_rgba(255,255,255,0.08),0_0_34px_rgba(0,0,0,0.65)] sm:text-[clamp(3.35rem,6vw+0.8rem,6.35rem)] sm:leading-[0.96]"
-        >
-          Your AI Sales Team{" "}
-          <span className="block bg-gradient-to-r from-[#a07820] via-[#edd070] to-[#c49a30] bg-clip-text text-transparent">
-            Never Sleeps.
-          </span>
-        </motion.h1>
+      <div className="relative z-10 grid h-full grid-cols-1 items-center px-6 md:grid-cols-[minmax(0,560px)_minmax(0,1fr)] md:pl-20 md:pr-0">
+        <div className="max-w-[560px] text-left">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-card/60 px-4 py-1.5 text-xs text-foreground/85 backdrop-blur-md sm:text-sm">
+            <span className="block h-1.5 w-1.5 rounded-full bg-primary" />
+            Agentic AI Consultancy & Delivery
+          </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.16,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="[font-family:var(--font-dm-sans)] mt-6 max-w-3xl text-[1.08rem] leading-8 text-foreground sm:text-[1.24rem] sm:leading-9"
-        >
-          Custom-built AI voice and chat systems that answer calls, reply to
-          messages, follow up with leads, book appointments, and help your
-          business close more sales 24/7/365.
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.2,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="mt-7 flex max-w-4xl flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center text-sm font-semibold text-foreground sm:gap-x-4 sm:text-lg"
-        >
-          {proofItems.map((item, index) => (
-            <span key={item} className="inline-flex items-center gap-2 sm:gap-4">
-              {index > 0 && <span aria-hidden className="hidden min-[390px]:inline">•</span>}
-              {item}
+          <h1 className="mt-6 [font-family:var(--font-syne)] text-[clamp(44px,5vw,72px)] font-bold leading-[1.05] text-[#f1ece0]">
+            <span className="block">The Future of</span>
+            <span className="block font-serif italic text-[#C49A30]">
+              Agentic AI,
             </span>
-          ))}
-        </motion.p>
+            <span className="block">Delivered Today.</span>
+          </h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.24,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center"
-        >
-          <Button
-            asChild
-            size="xl"
-            className="w-full rounded-xl border border-[#8d6f24]/65 bg-[linear-gradient(135deg,rgba(141,111,36,0.34),rgba(72,55,18,0.24))] px-5 font-extrabold text-[#f0ead8] shadow-[0_18px_42px_-30px_rgba(141,111,36,0.72),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-[#a07820]/85 hover:bg-[linear-gradient(135deg,rgba(160,120,32,0.42),rgba(72,55,18,0.28))] hover:shadow-[0_0_30px_rgba(141,111,36,0.18),0_20px_50px_-32px_rgba(141,111,36,0.75),inset_0_1px_0_rgba(255,255,255,0.16)] sm:w-auto sm:px-7"
-          >
-            <Link href="/book-demo">
-              Book a free strategy call
-              <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="xl"
-            className="w-full rounded-xl border-white/18 bg-black/20 font-bold text-foreground/78 shadow-none backdrop-blur-md transition-[border-color,background-color,box-shadow,color,transform] hover:-translate-y-0.5 hover:border-white/34 hover:bg-white/[0.045] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.14)] sm:w-auto"
-          >
-            <Link href="/demo">See live demo</Link>
-          </Button>
-        </motion.div>
-      </Container>
+          <p className="mt-6 max-w-[460px] text-[15px] leading-7 text-[#A3A3A3]">
+            We help businesses identify opportunities for AI, design
+            intelligent automation systems, and deliver fully integrated
+            solutions that work 24/7 so your team can focus on what matters
+            most.
+          </p>
 
-      {!reduced && (
-        <motion.div
-          aria-hidden
-          className="text-muted-foreground/60 absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="h-5 w-5" />
-        </motion.div>
-      )}
+          <div className="mt-9 flex flex-col gap-3 md:flex-row">
+            <Button
+              asChild
+              size="xl"
+              className="w-full rounded-lg border border-[#d0a235]/65 bg-[linear-gradient(135deg,#d8a928,#b98918)] px-7 font-semibold text-black shadow-[0_0_36px_-12px_rgba(216,169,40,0.95),0_16px_42px_-28px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.28)] hover:bg-[linear-gradient(135deg,#e5b83d,#c99824)] md:w-auto"
+            >
+              <Link href="/contact#book">
+                Book Consultation
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="xl"
+              className="w-full rounded-lg border-[#b88b25]/75 bg-black/8 px-7 text-[#f1ece0] shadow-[0_0_24px_-18px_rgba(216,169,40,0.9)] hover:border-[#d0a235] hover:bg-[#c49a30]/10 hover:text-[#f1ece0] md:w-auto"
+            >
+              <Link href="/industries">
+                Explore Industries
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        <div aria-hidden />
+      </div>
     </section>
   );
 }

@@ -766,16 +766,16 @@ export function VoiceAgentSolutionPage() {
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button asChild size="xl" className="w-full sm:w-auto">
-                <Link href="/demo#voice-agent-demo">
+                <Link href="/contact">
                   Speak to Our AI Agent
                   <ArrowRight aria-hidden />
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
-                <Link href="/book-demo">Book Strategy Call</Link>
+                <Link href="/contact#book">Book Strategy Call</Link>
               </Button>
               <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
-                <Link href="/pricing?type=voice">View Pricing</Link>
+                <Link href="/contact">View Pricing</Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">
@@ -974,13 +974,13 @@ export function VoiceAgentSolutionPage() {
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="xl" className="w-full sm:w-auto">
-              <Link href="/book-demo">
+              <Link href="/contact#book">
                 Book Strategy Call
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
             <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
-              <Link href="/pricing?type=voice">View Pricing</Link>
+              <Link href="/contact">View Pricing</Link>
             </Button>
           </div>
         </Card>

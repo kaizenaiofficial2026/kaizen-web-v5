@@ -15,7 +15,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { BrandMark } from "./BrandMark";
 import type { NavItem } from "@/lib/types";
-import { siteConfig } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
 
 function getPathFromHref(href: string) {
@@ -76,14 +75,6 @@ function isHrefActive(pathname: string, currentSearch: string, href: string) {
     const normalizedCurrentSearch = normalizeSearch(currentSearch);
     const normalizedHrefSearch = normalizeSearch(hrefSearch);
 
-    if (
-      hrefPath === "/pricing" &&
-      !normalizedCurrentSearch &&
-      normalizedHrefSearch === "type=chat"
-    ) {
-      return true;
-    }
-
     return normalizedCurrentSearch === normalizedHrefSearch;
   }
 
@@ -107,10 +98,8 @@ function isNavItemActive(
 
 export function MobileNav({
   items,
-  onLoginClick,
 }: {
   items: NavItem[];
-  onLoginClick: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
@@ -201,11 +190,18 @@ export function MobileNav({
                                   isChildActive ? "page" : undefined
                                 }
                                 className={cn(
-                                  "block rounded-lg px-3 py-2 text-base font-semibold text-foreground/58 transition-colors hover:bg-primary/10 hover:text-primary",
+                                  "block rounded-lg px-3 py-2 transition-colors hover:bg-primary/10",
                                   isChildActive && "bg-primary/10 text-primary",
                                 )}
                               >
-                                {child.label}
+                                <span
+                                  className={cn(
+                                    "block text-base font-semibold text-foreground/68 hover:text-primary",
+                                    isChildActive && "text-primary",
+                                  )}
+                                >
+                                  {child.label}
+                                </span>
                               </Link>
                             </SheetClose>
                           );
@@ -251,40 +247,26 @@ export function MobileNav({
         <Separator />
         <div className="flex flex-col gap-3">
           <Button
-            type="button"
+            asChild
             size="lg"
-            className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent"
-            onClick={() => {
-              setOpen(false);
-              onLoginClick();
-            }}
+            variant="outline"
+            className="w-full rounded-xl border-primary/40 bg-background text-foreground hover:bg-primary/10 hover:text-primary"
           >
-            Login
+            <a href="#" onClick={() => setOpen(false)}>
+              Client Portal
+            </a>
           </Button>
           <SheetClose asChild>
             <Link
-              href="/book-demo"
+              href="/contact#book"
               className={buttonVariants({
                 size: "lg",
                 className:
                   "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
               })}
             >
-              Book a Call
+              Book Consultation
             </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <a
-              href={`mailto:${siteConfig.salesEmail}`}
-              className={buttonVariants({
-                variant: "outline",
-                size: "lg",
-                className:
-                  "w-full rounded-xl border-primary/40 bg-background text-foreground hover:bg-primary/10 hover:text-primary",
-              })}
-            >
-              Contact sales
-            </a>
           </SheetClose>
         </div>
       </SheetContent>

@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
-import { LoginModal } from "./LoginModal";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
 import { primaryNav } from "@/lib/content/nav";
@@ -71,14 +70,6 @@ function isHrefActive(pathname: string, currentSearch: string, href: string) {
     const normalizedCurrentSearch = normalizeSearch(currentSearch);
     const normalizedHrefSearch = normalizeSearch(hrefSearch);
 
-    if (
-      hrefPath === "/pricing" &&
-      !normalizedCurrentSearch &&
-      normalizedHrefSearch === "type=chat"
-    ) {
-      return true;
-    }
-
     return normalizedCurrentSearch === normalizedHrefSearch;
   }
 
@@ -102,10 +93,10 @@ function isNavItemActive(
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const currentSearch = useSyncExternalStore(
     subscribeToLocationChange,
     getSearchSnapshot,
@@ -137,7 +128,9 @@ export function Header() {
           "fixed inset-x-0 top-0 z-50 border-b transition-colors",
           scrolled
             ? "border-border bg-background/88 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.9)] backdrop-blur-xl"
-            : "border-border/50 bg-background/72 backdrop-blur-xl",
+            : isHomePage
+              ? "border-transparent bg-transparent shadow-none backdrop-blur-none"
+              : "border-border/50 bg-background/72 backdrop-blur-xl",
         )}
       >
         <div className="mx-auto w-full px-4 sm:px-6 lg:px-[72px]">
@@ -234,7 +227,7 @@ export function Header() {
                       <div
                         role="menu"
                         className={cn(
-                          "absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 rounded-2xl border border-primary/20 bg-background/95 p-2 shadow-[0_24px_70px_-38px_color-mix(in_oklab,var(--primary)_80%,transparent)] backdrop-blur-xl transition-all duration-200",
+                          "absolute left-1/2 top-full z-50 w-[32rem] -translate-x-1/2 rounded-2xl border border-primary/20 bg-background/95 p-2 shadow-[0_24px_70px_-38px_color-mix(in_oklab,var(--primary)_80%,transparent)] backdrop-blur-xl transition-all duration-200",
                           dropdownOpen
                             ? "visible translate-y-0 opacity-100"
                             : "invisible -translate-y-1 opacity-0",
@@ -257,11 +250,18 @@ export function Header() {
                               role="menuitem"
                               aria-current={isChildActive ? "page" : undefined}
                               className={cn(
-                                "block rounded-xl px-4 py-3 text-sm font-semibold text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary",
+                                "group block rounded-xl px-4 py-3 transition-colors hover:bg-primary/10",
                                 isChildActive && "text-primary",
                               )}
                             >
-                              {child.label}
+                              <span
+                                className={cn(
+                                  "block text-sm font-semibold text-foreground/82 transition-colors group-hover:text-primary",
+                                  isChildActive && "text-primary",
+                                )}
+                              >
+                                {child.label}
+                              </span>
                             </Link>
                           );
                         })}
@@ -288,30 +288,28 @@ export function Header() {
 
             <div className="col-start-3 flex items-center justify-end gap-5">
               <Button
-                type="button"
+                asChild
                 size="sm"
-                onClick={() => setLoginOpen(true)}
-                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] lg:inline-flex"
+                className="hidden h-10 rounded-lg border-0 bg-transparent px-2 text-sm font-medium text-foreground/86 shadow-none hover:bg-transparent hover:text-foreground lg:inline-flex"
               >
-                Login
+                <a href="#">Client Portal</a>
               </Button>
               <Button
                 asChild
                 size="sm"
-                className="hidden h-10 rounded-lg border border-primary/35 bg-transparent px-5 text-sm font-extrabold text-foreground/82 shadow-none transition-[border-color,background-color,box-shadow,color] hover:border-primary/55 hover:bg-white/[0.04] hover:text-foreground hover:shadow-[0_0_24px_rgba(255,255,255,0.20)] lg:inline-flex"
+                className="hidden h-12 rounded-lg border border-[#b88b25]/70 bg-black/10 px-6 text-sm font-semibold text-[#d6a738] shadow-[0_0_34px_-15px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-[#d0a235] hover:bg-[#c49a30]/10 hover:text-[#ecd479] lg:inline-flex"
               >
-                <Link href="/book-demo">Book a Call</Link>
+                <Link href="/contact#book">
+                  Book Consultation
+                  <ArrowRight aria-hidden />
+                </Link>
               </Button>
-              <MobileNav
-                items={primaryNav}
-                onLoginClick={() => setLoginOpen(true)}
-              />
+              <MobileNav items={primaryNav} />
             </div>
           </div>
         </div>
         <ScrollProgress />
       </motion.header>
-      <LoginModal open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );
 }

@@ -15,14 +15,6 @@ export function FAQ() {
       id="faq"
       className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage:
-            "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.06) 0%, rgba(0,0,0,0) 70%)",
-        }}
-      />
       <Container>
         <FadeUp>
           <div className="border-border bg-card/60 rounded-2xl border px-6 py-8 backdrop-blur-md sm:px-10 sm:py-10">

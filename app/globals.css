@@ -112,11 +112,14 @@
   }
 
   html {
+    background-color: #000000;
+    background-image: none;
     scroll-behavior: smooth;
   }
 
   body {
-    background: var(--background);
+    background-color: #000000;
+    background-image: none;
     color: var(--foreground);
     font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
     font-feature-settings: "ss01", "cv11";

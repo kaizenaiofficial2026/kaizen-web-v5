@@ -21,10 +21,10 @@ export function ProductDetailPage({ product }: { product: ProductPageContent }) 
         }
         subtitle={product.subtitle}
         actions={[
-          { label: product.primaryCta, href: "/book-demo" },
+          { label: product.primaryCta, href: "/contact#book" },
           {
             label: product.secondaryCta,
-            href: product.eyebrow.includes("Voice") ? "/demo" : "/pricing",
+            href: "/contact",
             variant: "outline",
           },
         ]}
@@ -111,7 +111,7 @@ export function ProductDetailPage({ product }: { product: ProductPageContent }) 
               subtitle="Start with one channel, prove the workflow, then expand across the rest of your customer front desk."
             />
             <Button asChild size="xl" className="mt-8 w-full sm:w-auto">
-              <Link href="/book-demo">Plan my first agent</Link>
+              <Link href="/contact#book">Plan my first agent</Link>
             </Button>
           </FadeUp>
           <Card className="p-7">

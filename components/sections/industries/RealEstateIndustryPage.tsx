@@ -310,12 +310,12 @@ function IndustryHero() {
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="xl" className="w-full sm:w-auto">
-              <Link href="/demo">
+              <Link href="/contact">
                 See Real Estate Demo <ArrowRight aria-hidden />
               </Link>
             </Button>
             <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
-              <Link href="/book-demo">Book a Call</Link>
+              <Link href="/contact#book">Book a Call</Link>
             </Button>
             <Button
               asChild
@@ -323,7 +323,7 @@ function IndustryHero() {
               variant="secondary"
               className="w-full sm:w-auto"
             >
-              <Link href="/pricing?type=voice">View Voice Agent Pricing</Link>
+              <Link href="/contact">View Voice Agent Pricing</Link>
             </Button>
           </div>
         </FadeUp>
@@ -545,7 +545,7 @@ function IndustryUseCaseDialog({
                   workflow is mapped.
                 </p>
                 <Button asChild>
-                  <Link href="/book-demo">Book a Call</Link>
+                  <Link href="/contact#book">Book a Call</Link>
                 </Button>
               </div>
             </div>
@@ -1064,13 +1064,13 @@ function IndustryCTA() {
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
                 <Button asChild size="xl" className="w-full sm:w-auto">
-                  <Link href="/book-demo">Book a Call</Link>
+                  <Link href="/contact#book">Book a Call</Link>
                 </Button>
                 <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">
-                  <Link href="/demo">See Live Demo</Link>
+                  <Link href="/contact">See Live Demo</Link>
                 </Button>
                 <Button asChild size="xl" variant="secondary" className="w-full sm:w-auto">
-                  <Link href="/pricing?type=voice">View Voice Agent Pricing</Link>
+                  <Link href="/contact">View Voice Agent Pricing</Link>
                 </Button>
               </div>
             </div>

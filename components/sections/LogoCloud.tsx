@@ -1,42 +1,36 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { Container } from "@/components/primitives/Container";
-import { partnerLogos } from "@/lib/content/logos";
 
-type PartnerLogo = (typeof partnerLogos)[number];
+const trustItems = [
+  "Healthcare",
+  "Real Estate",
+  "Ecommerce",
+  "Hospitality",
+  "Education",
+  "Legal",
+  "Finance",
+  "Recruitment",
+  "Professional Services",
+];
 
-const Row = ({
-  logos,
-  reverse = false,
-}: {
-  logos: PartnerLogo[];
-  reverse?: boolean;
-}) => {
-  const doubled = [...logos, ...logos];
+const Row = ({ items, reverse = false }: { items: string[]; reverse?: boolean }) => {
+  const doubled = [...items, ...items];
+
   return (
     <div className="mask-fade-x group relative overflow-hidden">
       <motion.div
-        className="flex w-max items-center gap-14 whitespace-nowrap py-2.5 group-hover:[animation-play-state:paused] sm:gap-16 sm:py-3"
+        className="flex w-max items-center gap-4 whitespace-nowrap py-2.5 group-hover:[animation-play-state:paused] sm:gap-5 sm:py-3"
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
         transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
       >
-        {doubled.map((logo, i) => (
+        {doubled.map((item, i) => (
           <span
-            key={`${logo.name}-${i}`}
-            className="grid h-[4.25rem] w-[8.5rem] shrink-0 place-items-center gap-1.5 transition-opacity sm:h-20 sm:w-40"
+            key={`${item}-${i}`}
+            className="inline-flex h-12 shrink-0 items-center rounded-full border border-primary/18 bg-card/45 px-5 text-sm font-semibold text-foreground/72 backdrop-blur-md transition-colors hover:border-primary/36 hover:text-primary sm:h-14 sm:px-6 sm:text-base"
           >
-            <Image
-              src={logo.src}
-              alt={`${logo.name} logo`}
-              width={116}
-              height={50}
-              className="max-h-8 w-auto max-w-24 select-none object-contain opacity-48 brightness-0 invert transition-opacity hover:opacity-85 sm:max-h-10 sm:max-w-[7.5rem]"
-            />
-            <span className="select-none text-center text-[10px] font-semibold leading-none text-foreground/46 transition-colors group-hover:text-foreground/62 sm:text-xs">
-              {logo.name}
-            </span>
+            {item}
           </span>
         ))}
       </motion.div>
@@ -48,26 +42,18 @@ export function LogoCloud() {
   return (
     <section
       aria-labelledby="logos-heading"
-      className="relative w-full overflow-hidden border-t border-border/25 bg-[linear-gradient(180deg,rgba(12,12,12,0.8),rgba(8,8,8,0.72)_56%,rgba(0,0,0,0))] py-11 sm:py-14"
+      className="relative w-full overflow-hidden border-t border-border/25 bg-black py-11 sm:py-14"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(64%_70%_at_50%_6%,rgba(201,160,61,0.18),rgba(201,160,61,0.06)_44%,rgba(0,0,0,0)_76%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-background"
-      />
       <Container>
         <p
           id="logos-heading"
           className="mb-7 text-center text-xs font-semibold uppercase tracking-[0.24em] text-foreground/62 sm:mb-8"
         >
-          Built on the world&apos;s best AI infrastructure
+          Trusted by businesses preparing for the future
         </p>
         <div className="relative flex flex-col gap-2 sm:gap-3">
-          <Row logos={partnerLogos} />
-          <Row logos={[...partnerLogos].reverse()} reverse />
+          <Row items={trustItems} />
+          <Row items={[...trustItems].reverse()} reverse />
         </div>
       </Container>
     </section>

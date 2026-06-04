@@ -402,7 +402,7 @@ export function InteractiveDemoPage() {
               moments. We will map the demo into a production-ready setup.
             </p>
             <Button asChild size="xl" className="mt-8">
-              <Link href="/book-demo">
+              <Link href="/contact#book">
                 Book a Free Demo
                 <ArrowRight aria-hidden />
               </Link>

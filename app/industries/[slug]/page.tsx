@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { MarketingHero, MarketingSection } from "@/components/primitives/MarketingPage";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
-import { ClinicsHealthcareIndustryPage } from "@/components/sections/industries/ClinicsHealthcareIndustryPage";
-import { CustomAIAutomationsPage } from "@/components/sections/industries/CustomAIAutomationsPage";
-import { HospitalityFoodIndustryPage } from "@/components/sections/industries/HospitalityFoodIndustryPage";
-import { LegalProfessionalServicesIndustryPage } from "@/components/sections/industries/LegalProfessionalServicesIndustryPage";
-import { RealEstateIndustryPage } from "@/components/sections/industries/RealEstateIndustryPage";
-import { RetailEcommerceIndustryPage } from "@/components/sections/industries/RetailEcommerceIndustryPage";
 import { getIndustry, industries } from "@/lib/content/industries";
 
 type IndustryPageProps = {
@@ -34,8 +29,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: industry.eyebrow,
-    description: industry.subtitle,
+    title: industry.metadataTitle,
+    description: industry.metadataDescription,
   };
 }
 
@@ -47,63 +42,47 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
     notFound();
   }
 
-  if (industry.slug === "retail-ecommerce") {
-    return <RetailEcommerceIndustryPage />;
-  }
-
-  if (industry.slug === "clinics-healthcare") {
-    return <ClinicsHealthcareIndustryPage />;
-  }
-
-  if (industry.slug === "real-estate") {
-    return <RealEstateIndustryPage />;
-  }
-
-  if (industry.slug === "legal-professional-service") {
-    return <LegalProfessionalServicesIndustryPage />;
-  }
-
-  if (industry.slug === "hospitality-food") {
-    return <HospitalityFoodIndustryPage />;
-  }
-
-  if (industry.slug === "custom-ai-automations") {
-    return <CustomAIAutomationsPage />;
-  }
+  const workflow = [
+    {
+      label: "Customer",
+      text: industry.workflow.customer,
+    },
+    {
+      label: "KaizenAI AI System",
+      text: industry.workflow.system,
+    },
+    {
+      label: "Business Outcome",
+      text: industry.workflow.outcome,
+    },
+  ];
 
   return (
-    <main id="main" className="relative">
+    <main id="main" className="relative overflow-hidden">
       <MarketingHero
-        eyebrow={industry.eyebrow}
-        title={
-          <>
-            {industry.title}{" "}
-            <span className="text-primary">{industry.accent}</span>
-          </>
-        }
+        eyebrow={industry.label}
+        title={industry.title}
         subtitle={industry.subtitle}
         actions={[
-          { label: "Book a Call", href: "/book-demo" },
-          { label: "See pricing", href: "/pricing", variant: "outline" },
+          { label: "Book Consultation", href: "/contact#book" },
+          { label: "All Industries", href: "/industries", variant: "outline" },
         ]}
       >
         <Card className="relative overflow-hidden p-6 shadow-card">
           <div
             aria-hidden
-            className="absolute inset-x-8 top-8 h-24 rounded-full bg-primary/10 blur-3xl"
+            className="absolute inset-x-8 top-8 h-24 rounded-full bg-primary/15 blur-3xl"
           />
           <div className="relative">
-            <Badge>{industry.eyebrow}</Badge>
-            <div className="mt-6 grid gap-3">
-              {industry.signals.map((signal) => (
-                <div
-                  key={signal}
-                  className="rounded-xl border border-border bg-background/45 p-4 text-sm font-semibold text-foreground/80"
-                >
-                  {signal}
-                </div>
-              ))}
-            </div>
+            <span className="text-5xl" aria-hidden>
+              {industry.emoji}
+            </span>
+            <h2 className="mt-6 text-2xl font-semibold tracking-tight text-foreground">
+              {industry.name}
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">
+              {industry.description}
+            </p>
           </div>
         </Card>
       </MarketingHero>
@@ -111,22 +90,24 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       <MarketingSection>
         <FadeUp>
           <SectionHeader
-            eyebrow="Workflows"
-            title={
-              <>
-                Built for the questions your team handles{" "}
-                <span className="text-primary">every day</span>
-              </>
-            }
-            subtitle="Each AI workflow is configured around your services, response rules, and handoff points."
+            eyebrow="Challenges"
+            title="The Problems We Solve"
+            subtitle="The first step is removing the repeat work, missed opportunities, and slow handoffs that quietly drain your team."
           />
         </FadeUp>
-        <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-3">
-          {industry.workflows.map((workflow) => (
-            <StaggerItem key={workflow}>
-              <Card className="h-full p-7 transition-colors hover:border-primary/40">
-                <CheckCircle2 className="h-6 w-6 text-primary" aria-hidden />
-                <p className="mt-5 leading-7 text-foreground/82">{workflow}</p>
+        <StaggerGrid className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {industry.painPoints.map((point) => (
+            <StaggerItem key={point.title}>
+              <Card className="h-full p-6 transition-colors hover:border-primary/40">
+                <span className="text-3xl" aria-hidden>
+                  {point.emoji}
+                </span>
+                <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
+                  {point.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {point.description}
+                </p>
               </Card>
             </StaggerItem>
           ))}
@@ -134,27 +115,79 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       </MarketingSection>
 
       <MarketingSection>
-        <Card className="gold-card p-8 sm:p-10">
+        <FadeUp>
           <SectionHeader
-            eyebrow="Outcomes"
-            title={
-              <>
-                Practical AI coverage without changing how{" "}
-                <span className="text-primary">your team works</span>
-              </>
-            }
-            subtitle="Start with the highest-volume enquiry path, then expand once the workflow is proven."
+            eyebrow="Solutions"
+            title="What We Build For You"
+            subtitle="Each system is designed around your workflow, tools, channels, and handoff rules."
           />
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {industry.outcomes.map((outcome) => (
-              <div
-                key={outcome}
-                className="rounded-xl border border-foreground/10 bg-background/35 p-5 text-sm leading-6 text-foreground/78"
-              >
-                {outcome}
-              </div>
+        </FadeUp>
+        <StaggerGrid className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {industry.solutions.map((solution) => (
+            <StaggerItem key={solution.title}>
+              <Card className="h-full p-5 transition-colors hover:border-primary/40">
+                <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
+                <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground">
+                  {solution.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {solution.description}
+                </p>
+              </Card>
+            </StaggerItem>
+          ))}
+        </StaggerGrid>
+      </MarketingSection>
+
+      <MarketingSection>
+        <FadeUp>
+          <SectionHeader
+            eyebrow="How It Works"
+            title="From First Contact To Outcome"
+            subtitle="A simple example of how the AI system turns an enquiry into a measurable business result."
+          />
+        </FadeUp>
+        <div className="relative mt-10">
+          <div
+            aria-hidden
+            className="absolute left-[12%] right-[12%] top-1/2 hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent lg:block"
+          />
+          <StaggerGrid className="grid gap-4 lg:grid-cols-3">
+            {workflow.map((step, index) => (
+              <StaggerItem key={step.label} className="relative">
+                <Card className="relative z-10 h-full p-6 text-center transition-colors hover:border-primary/40">
+                  <span className="mx-auto grid h-11 w-11 place-items-center rounded-full border border-primary/30 bg-background text-sm font-bold text-primary">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
+                    {step.label}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    {step.text}
+                  </p>
+                </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
+        </div>
+      </MarketingSection>
+
+      <MarketingSection>
+        <Card className="gold-card p-8 text-center sm:p-10">
+          <FadeUp>
+            <h2 className="mx-auto max-w-3xl text-h2 font-medium text-foreground">
+              {industry.ctaTitle}
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lead text-foreground/75">
+              {industry.ctaText}
+            </p>
+            <Button asChild size="xl" className="mt-8">
+              <Link href="/contact#book">
+                Book Consultation
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+          </FadeUp>
         </Card>
       </MarketingSection>
     </main>

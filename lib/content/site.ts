@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "Kaizen AI",
-  tagline: "AI Chatbots & Voice Agents",
+  name: "KaizenAI",
+  tagline: "The Future of Agentic AI, Delivered Today",
   description:
-    "AI chatbots and voice agents that answer calls, handle enquiries, and book appointments 24/7 in any language.",
+    "Agentic AI consultancy and delivery for custom AI receptionists, sales agents, workflow automation, and business operations.",
   url: "https://kaizenai.dev",
   ogImage: "/opengraph-image",
   email: "hello@kaizenai.dev",

@@ -15,30 +15,35 @@ export type SocialLink = {
 
 export const footerColumns: FooterColumn[] = [
   {
-    heading: "Product",
-    links: [
-      { label: "AI Chatbots", href: "/solutions/chatbots" },
-      { label: "AI Voice Agents", href: "/solutions/voice-agents" },
-      { label: "Missed-call Recovery", href: "/solutions" },
-      { label: "Live Demo", href: "/demo" },
-    ],
-  },
-  {
     heading: "Company",
     links: [
-      { label: "Case Studies", href: "/case-studies" },
-      { label: "Results", href: "/#testimonials" },
+      { label: "Industries", href: "/industries" },
       { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/book-demo" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+      { label: "Client Portal", href: "#" },
     ],
   },
   {
-    heading: "Resources",
+    heading: "Industries",
     links: [
-      { label: "Solutions", href: "/solutions" },
-      { label: "Blog", href: "/blog" },
-      { label: "FAQ", href: "/#faq" },
-      { label: "Book a Call", href: "/book-demo" },
+      { label: "Ecommerce & Retail", href: "/industries/ecommerce-retail" },
+      { label: "Healthcare & Clinics", href: "/industries/healthcare" },
+      { label: "Real Estate", href: "/industries/real-estate" },
+      { label: "Hospitality", href: "/industries/hospitality" },
+      { label: "Education", href: "/industries/education" },
+      { label: "Legal", href: "/industries/legal" },
+      { label: "Finance", href: "/industries/finance" },
+      { label: "Recruitment", href: "/industries/recruitment" },
+      { label: "Agencies", href: "/industries/agencies" },
+    ],
+  },
+  {
+    heading: "Contact",
+    links: [
+      { label: "kaizenai.dev", href: "https://kaizenai.dev" },
+      { label: "hello@kaizenai.dev", href: "mailto:hello@kaizenai.dev" },
+      { label: "+94 77 029 9569", href: "https://wa.me/94770299569" },
     ],
   },
 ];

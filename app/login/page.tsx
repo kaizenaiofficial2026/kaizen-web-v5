@@ -52,7 +52,7 @@ export default function LoginPage() {
           </form>
           <p className="mt-5 text-sm leading-6 text-muted-foreground">
             Need access? Ask your Kaizen project lead or{" "}
-            <Link href="/book-demo" className="text-primary hover:underline">
+            <Link href="/contact#book" className="text-primary hover:underline">
               contact the team
             </Link>
             .

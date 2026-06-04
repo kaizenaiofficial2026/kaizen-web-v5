@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/primitives/Container";
 import { BrandMark } from "./BrandMark";
-import { siteConfig } from "@/lib/content/site";
 import { footerColumns, legalLinks, socialLinks } from "@/lib/content/footer";
 
 export function Footer() {
@@ -12,7 +11,7 @@ export function Footer() {
           <div className="min-[420px]:col-span-2 md:col-span-1">
             <BrandMark />
             <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-6">
-              AI chatbots and voice agents that never miss a customer.
+              The Future of Agentic AI, Delivered Today.
             </p>
             <nav aria-label="Social" className="mt-6 flex items-center gap-3">
               {socialLinks.map((s) => {
@@ -56,7 +55,7 @@ export function Footer() {
         </div>
 
         <div className="border-border mt-16 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>© 2026 {siteConfig.name}. All rights reserved.</p>
+          <p>© 2026 KaizenAI. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {legalLinks.map((l) => (
               <Link

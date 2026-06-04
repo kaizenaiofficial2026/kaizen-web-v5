@@ -29,8 +29,8 @@ export default function CaseStudiesPage() {
         }
         subtitle="Examples inspired by the original Kaizen AI proof points: missed calls recovered, after-hours chats answered, and appointment demand captured."
         actions={[
-          { label: "Book a demo", href: "/book-demo" },
-          { label: "Explore solutions", href: "/solutions", variant: "outline" },
+          { label: "Book a demo", href: "/contact#book" },
+          { label: "Explore industries", href: "/industries", variant: "outline" },
         ]}
       >
         <Card className="p-6 shadow-card">
@@ -148,7 +148,7 @@ export default function CaseStudiesPage() {
               your team&apos;s current customer response gap.
             </p>
             <Button asChild size="xl" className="mt-8 w-full sm:w-auto">
-              <Link href="/book-demo">Request a demo</Link>
+                <Link href="/contact#book">Request a demo</Link>
             </Button>
           </FadeUp>
         </Card>

@@ -1,8 +1,9 @@
 import {
-  CalendarDays,
-  FileText,
+  DraftingCompass,
+  Map,
   Rocket,
-  Wrench,
+  SearchCheck,
+  Settings2,
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/primitives/Container";
@@ -19,23 +20,28 @@ type ProcessStep = {
 
 const steps: ProcessStep[] = [
   {
-    title: "Fill the form",
-    copy: "Share your offer and lead channels.",
-    Icon: FileText,
+    title: "Discover",
+    copy: "We map your operations and identify the highest-impact AI opportunities.",
+    Icon: SearchCheck,
   },
   {
-    title: "Strategy meeting",
-    copy: "Choose the fastest AI agent to launch.",
-    Icon: CalendarDays,
+    title: "Map",
+    copy: "We design the full AI system architecture tailored to your business.",
+    Icon: Map,
   },
   {
-    title: "We build and train your AI",
-    copy: "Services, FAQs, tone, bookings, and handoff rules.",
-    Icon: Wrench,
+    title: "Design",
+    copy: "Workflows, logic, and integrations are blueprinted before a line is built.",
+    Icon: DraftingCompass,
   },
   {
-    title: "Launch in 7–10 days",
-    copy: "Go live, track leads, and improve from real conversations.",
+    title: "Build",
+    copy: "We build, test, and refine your production-ready AI system end to end.",
+    Icon: Settings2,
+  },
+  {
+    title: "Launch",
+    copy: "Your AI goes live, integrated, and working. We stay on for support.",
     Icon: Rocket,
   },
 ];
@@ -46,25 +52,17 @@ export function SimpleProcess() {
       id="process"
       className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage:
-            "radial-gradient(54% 44% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(0,0,0,0) 72%)",
-        }}
-      />
       <Container size="wide">
         <FadeUp>
           <SectionHeader
-            eyebrow="Simple process"
+            eyebrow="Our Process"
             title={
               <>
-                Easy setup.{" "}
-                <span className="text-primary">Launch in 7–10 days.</span>
+                From Challenge To{" "}
+                <span className="text-primary">Working AI System</span>
               </>
             }
-            subtitle="A low-effort launch path for teams that want speed without chaos."
+            subtitle="A structured delivery process that takes you from problem to production in 30 days."
           />
         </FadeUp>
 
@@ -73,7 +71,7 @@ export function SimpleProcess() {
             aria-hidden
             className="absolute left-[10%] right-[10%] top-7 hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent md:block"
           />
-          <StaggerGrid className="grid gap-3 md:grid-cols-4">
+          <StaggerGrid className="grid gap-3 md:grid-cols-5">
             {steps.map((step, index) => {
               const Icon = step.Icon;
               return (
@@ -84,7 +82,7 @@ export function SimpleProcess() {
 
                   <Card className="mt-4 h-full p-4 text-center transition-colors hover:border-primary/34">
                     <span className="text-primary text-[11px] font-bold uppercase tracking-[0.16em]">
-                      Step {index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
                     <h3 className="mt-2 text-base font-semibold tracking-tight text-foreground">
                       {step.title}

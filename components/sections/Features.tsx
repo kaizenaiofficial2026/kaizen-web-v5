@@ -53,8 +53,8 @@ const offers: Offer[] = [
       "Instantly reply to website, WhatsApp, Instagram, and Facebook enquiries with an AI agent trained on your products, services, pricing, FAQs, and sales flow.",
     accent: "from-[#ecd479]/24 via-[#c9a03d]/12 to-transparent",
     exploreLabel: "Explore Chat Agents",
-    exploreHref: "/solutions/chatbots",
-    demoHref: "/demo#chat-agent-demo",
+    exploreHref: "/industries",
+    demoHref: "/contact",
   },
   {
     id: "voice",
@@ -68,8 +68,8 @@ const offers: Offer[] = [
       "A natural AI receptionist that answers inbound calls, recovers missed leads, books appointments, and hands urgent conversations to your team.",
     accent: "from-[#f1ece0]/16 via-[#c9a03d]/14 to-transparent",
     exploreLabel: "Explore Voice Agents",
-    exploreHref: "/solutions/voice-agents",
-    demoHref: "/demo#voice-agent-demo",
+    exploreHref: "/industries",
+    demoHref: "/contact",
   },
 ];
 

@@ -2,27 +2,35 @@ import type { FAQItem } from "@/lib/types";
 
 export const faqs: FAQItem[] = [
   {
-    q: "What is Kaizen AI?",
-    a: "Kaizen AI builds AI chatbots and voice agents that answer enquiries, handle calls, qualify leads, and book appointments around the clock.",
+    q: "What exactly does KaizenAI build?",
+    a: "We design and build custom AI systems for businesses including AI receptionists, sales agents, support agents, lead qualification systems, CRM automations, and full workflow automation. Every solution is custom-built around your specific operations.",
   },
   {
-    q: "How long does setup take?",
-    a: "Most chatbot launches take 3 to 5 days. Voice agents usually take 7 to 14 days because call flows, voice, integrations, and testing need more care.",
+    q: "Do you only build chatbots?",
+    a: "No. We solve business problems using AI. Chatbots are one small part of what is possible. We build AI voice agents, internal assistants, workflow automation systems, recruitment tools, reporting automation, and industry-specific AI applications.",
   },
   {
-    q: "What platforms do you integrate with?",
-    a: "We can connect websites, WhatsApp Business, Instagram DMs, Messenger, calendars, CRMs, and phone systems through tools like Twilio, HubSpot, Salesforce, Pipedrive, Zoho, Calendly, and Google Calendar.",
+    q: "What is Agentic AI?",
+    a: "Agentic AI refers to AI systems that can take actions, make decisions, and complete multi-step tasks autonomously, not just answer questions. An AI agent can qualify a lead, book an appointment, update your CRM, and send a confirmation, all without human involvement.",
   },
   {
-    q: "Do we need a technical team?",
-    a: "No. Kaizen handles design, build, deployment, testing, and ongoing optimisation. Your team reviews the final flow before launch.",
+    q: "How long does implementation take?",
+    a: "Our target delivery window is 30 days from consultation to launch. Complex enterprise systems may take longer. We confirm the timeline after the discovery session when we understand the full scope.",
   },
   {
-    q: "What if the AI cannot answer something?",
-    a: "It escalates to a human with context. The goal is to answer routine enquiries instantly while making handoff clear when a person should step in.",
+    q: "Can you integrate with our existing systems?",
+    a: "Yes. We integrate with Salesforce, HubSpot, Zoho, Google Workspace, WhatsApp Business, and most major business platforms. Integration capability is confirmed during the discovery phase.",
   },
   {
-    q: "What languages does it support?",
-    a: "Kaizen agents support 30+ languages across text and voice, so customers can be served in the language they are most comfortable using.",
+    q: "Do we need technical knowledge?",
+    a: "None at all. We handle everything from architecture and build to integration and launch. You describe the problem and the outcome you want. We deliver it.",
+  },
+  {
+    q: "Is every solution custom built?",
+    a: "Yes. We do not use templates or pre-built tools sold under a different name. Every system is designed and built specifically for your business, your workflows, and your goals.",
+  },
+  {
+    q: "What industries do you work with?",
+    a: "We work across Ecommerce & Retail, Healthcare, Real Estate, Hospitality, Education, Legal, Financial Services, Recruitment, and Professional Services, plus any industry that needs intelligent automation.",
   },
 ];

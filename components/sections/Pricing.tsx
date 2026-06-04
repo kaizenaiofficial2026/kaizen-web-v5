@@ -709,7 +709,7 @@ function ChatPricingCard({ plan }: { plan: ChatPricingPlan }) {
         variant={plan.popular ? "default" : "outline"}
         className="mt-5 w-full rounded-xl"
       >
-        <Link href="/book-demo">
+        <Link href="/contact#book">
           {plan.cta}
           <ArrowRight aria-hidden />
         </Link>
@@ -1025,7 +1025,7 @@ function ChatFinalCta() {
         </div>
         <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
           <Button asChild size="xl" className="w-full rounded-xl sm:w-auto">
-            <Link href="/book-demo">
+            <Link href="/contact#book">
               Book a free demo
               <ArrowUpRight aria-hidden />
             </Link>
@@ -1241,7 +1241,7 @@ function VoicePricingCard({ plan }: { plan: VoicePricingPlan }) {
         variant={plan.popular ? "default" : "outline"}
         className="mt-6 w-full rounded-xl"
       >
-        <Link href="/book-demo">
+        <Link href="/contact#book">
           {plan.cta}
           <ArrowRight aria-hidden />
         </Link>
@@ -1523,7 +1523,7 @@ function VoiceFinalCta() {
         </div>
         <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:shrink-0">
           <Button asChild size="xl" className="w-full rounded-xl sm:w-auto">
-            <Link href="/book-demo">
+            <Link href="/contact#book">
               Book a free demo
               <ArrowUpRight aria-hidden />
             </Link>

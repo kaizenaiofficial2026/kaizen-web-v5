@@ -120,10 +120,10 @@ export default function RootLayout({
         instrumentSerif.variable,
         syne.variable,
         dmSans.variable,
-        "h-full antialiased",
+        "h-full bg-[#000000] antialiased",
       )}
     >
-      <body className="bg-background text-foreground min-h-dvh font-sans">
+      <body className="min-h-dvh bg-[#000000] font-sans text-foreground">
         <MotionProvider>
           <SkipLink />
           <SiteChrome>{children}</SiteChrome>

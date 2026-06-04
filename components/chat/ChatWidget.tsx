@@ -349,9 +349,9 @@ export function ChatWidget() {
                 size="sm"
                 className="mt-3 w-full rounded-xl whitespace-normal"
               >
-                <Link href="/book-demo" onClick={() => setOpen(false)}>
+                <Link href="/contact#book" onClick={() => setOpen(false)}>
                   <CalendarCheck className="h-4 w-4" aria-hidden />
-                  Book demo
+                  Book consultation
                 </Link>
               </Button>
             </div>

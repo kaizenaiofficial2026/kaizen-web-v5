@@ -25,63 +25,39 @@ type Testimonial = {
   initials: string;
 };
 
-// Placeholder testimonials for layout. Replace with approved client stories
-// when real client quotes are ready to publish.
 const testimonials: Testimonial[] = [
   {
-    id: "brightsmile",
-    company: "BrightSmile Dental",
-    person: "Dr. Ayesha Fernando",
-    position: "Clinic Owner",
-    businessType: "Dental Clinic",
+    id: "clinic-director",
+    company: "Healthcare",
+    person: "Sarah R.",
+    position: "Clinic Director",
+    businessType: "Healthcare",
     quote:
-      "Kaizen helped us respond to patient enquiries faster and reduce the number of missed booking opportunities during busy hours.",
-    result: "Faster patient response and smoother appointment handling.",
-    initials: "AF",
+      "Within two weeks of going live, our AI receptionist was handling over 80% of inbound calls without any human involvement. Our team now focuses entirely on delivering the service, not answering the phone.",
+    result: "AI receptionist handling high-volume inbound calls.",
+    initials: "SR",
   },
   {
-    id: "metro-properties",
-    company: "MetroNest Properties",
-    person: "Ruwan Jayasinghe",
-    position: "Managing Partner",
+    id: "ecommerce-founder",
+    company: "Ecommerce Brand",
+    person: "Marcus A.",
+    position: "Founder",
+    businessType: "Ecommerce",
+    quote:
+      "The chat agent handles product inquiries, qualifies buyers, and closes sales at 2am, on weekends, on every channel. Revenue from after-hours alone has covered the entire cost many times over.",
+    result: "After-hours sales coverage across chat channels.",
+    initials: "MA",
+  },
+  {
+    id: "real-estate-ops",
+    company: "Real Estate",
+    person: "James L.",
+    position: "Operations Manager",
     businessType: "Real Estate",
     quote:
-      "The agent gives prospects a quick first response while our team is at viewings, so fewer enquiries sit unanswered.",
-    result: "Cleaner enquiry capture and faster viewing coordination.",
-    initials: "RJ",
-  },
-  {
-    id: "cinnamon-table",
-    company: "Cinnamon Table",
-    person: "Maya Perera",
-    position: "Operations Lead",
-    businessType: "Hospitality",
-    quote:
-      "During peak hours, the AI can handle common menu and booking questions so staff can stay focused on guests.",
-    result: "Quicker guest replies during busy service windows.",
-    initials: "MP",
-  },
-  {
-    id: "luxe-retail",
-    company: "LuxeLane Retail",
-    person: "Nadun Silva",
-    position: "Founder",
-    businessType: "Retail",
-    quote:
-      "We wanted a better way to answer product questions across WhatsApp and Instagram without adding more admin work.",
-    result: "More consistent product replies across chat channels.",
-    initials: "NS",
-  },
-  {
-    id: "clearpath",
-    company: "ClearPath Legal",
-    person: "Shalini De Alwis",
-    position: "Practice Manager",
-    businessType: "Professional Services",
-    quote:
-      "Kaizen gives new enquiries a professional first touch and helps us route urgent conversations to the right person.",
-    result: "More organized intake and handoff for new enquiries.",
-    initials: "SD",
+      "KaizenAI didn't sell us a tool. They understood our workflow, designed a solution around it, and delivered something that actually works in our environment. That's rare in this space.",
+    result: "Custom workflow design delivered for real operations.",
+    initials: "JL",
   },
 ];
 
@@ -143,25 +119,17 @@ export function Testimonials() {
       id="testimonials"
       className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage:
-            "radial-gradient(60% 50% at 50% 0%, rgba(201,160,61,0.08) 0%, rgba(0,0,0,0) 70%)",
-        }}
-      />
       <Container size="wide">
         <FadeUp>
           <SectionHeader
             eyebrow="Testimonials"
             title={
               <>
-                Compact proof from{" "}
-                <span className="text-primary">real-world workflows</span>
+                Built around{" "}
+                <span className="text-primary">real business outcomes</span>
               </>
             }
-            subtitle="Short, believable examples of how AI agents improve response speed, intake, and booking flow."
+            subtitle="A few examples of what changes when AI is designed around the workflow instead of dropped in as another tool."
           />
         </FadeUp>
 
