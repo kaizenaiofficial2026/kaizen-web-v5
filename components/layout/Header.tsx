@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { openConsultationModal } from "@/components/contact/ConsultationModal";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
 import { MobileNav } from "./MobileNav";
@@ -295,14 +296,12 @@ export function Header() {
                 <a href="#">Client Portal</a>
               </Button>
               <Button
-                asChild
                 size="sm"
                 className="hidden h-12 rounded-lg border border-[#b88b25]/70 bg-black/10 px-6 text-sm font-semibold text-[#d6a738] shadow-[0_0_34px_-15px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-[#d0a235] hover:bg-[#c49a30]/10 hover:text-[#ecd479] lg:inline-flex"
+                onClick={openConsultationModal}
               >
-                <Link href="/contact#book">
-                  Book Consultation
-                  <ArrowRight aria-hidden />
-                </Link>
+                Free Consultation
+                <ArrowRight aria-hidden />
               </Button>
               <MobileNav items={primaryNav} />
             </div>

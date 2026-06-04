@@ -19,24 +19,18 @@ export function Hero() {
 
       <div className="relative z-10 grid h-full grid-cols-1 items-center px-6 md:grid-cols-[minmax(0,560px)_minmax(0,1fr)] md:pl-20 md:pr-0">
         <div className="max-w-[560px] text-left">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-card/60 px-4 py-1.5 text-xs text-foreground/85 backdrop-blur-md sm:text-sm">
-            <span className="block h-1.5 w-1.5 rounded-full bg-primary" />
-            Agentic AI Consultancy & Delivery
-          </div>
-
-          <h1 className="mt-6 [font-family:var(--font-syne)] text-[clamp(44px,5vw,72px)] font-bold leading-[1.05] text-[#f1ece0]">
+          <h1 className="[font-family:var(--font-syne)] text-[clamp(44px,5vw,72px)] font-bold leading-[1.04] text-[#f1ece0]">
             <span className="block">The Future of</span>
-            <span className="block font-serif italic text-[#C49A30]">
+            <span className="block py-1 font-serif text-[1.04em] font-normal italic leading-[0.96] tracking-[0.01em] text-[#C49A30] [font-kerning:normal]">
               Agentic AI,
             </span>
             <span className="block">Delivered Today.</span>
           </h1>
 
           <p className="mt-6 max-w-[460px] text-[15px] leading-7 text-[#A3A3A3]">
-            We help businesses identify opportunities for AI, design
-            intelligent automation systems, and deliver fully integrated
-            solutions that work 24/7 so your team can focus on what matters
-            most.
+            We identify where your business is losing time, leads, or
+            efficiency, then design and deliver AI automation systems that work
+            across your tools 24/7.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 md:flex-row">

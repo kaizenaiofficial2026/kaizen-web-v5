@@ -55,7 +55,6 @@ export function SimpleProcess() {
       <Container size="wide">
         <FadeUp>
           <SectionHeader
-            eyebrow="Our Process"
             title={
               <>
                 From Challenge To{" "}
@@ -63,6 +62,7 @@ export function SimpleProcess() {
               </>
             }
             subtitle="A structured delivery process that takes you from problem to production in 30 days."
+            className="[&_h2]:mt-0"
           />
         </FadeUp>
 

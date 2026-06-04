@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { openConsultationModal } from "@/components/contact/ConsultationModal";
 import {
   Sheet,
   SheetClose,
@@ -257,16 +258,20 @@ export function MobileNav({
             </a>
           </Button>
           <SheetClose asChild>
-            <Link
-              href="/contact#book"
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                window.setTimeout(openConsultationModal, 120);
+              }}
               className={buttonVariants({
                 size: "lg",
                 className:
                   "w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent",
               })}
             >
-              Book Consultation
-            </Link>
+              Free Consultation
+            </button>
           </SheetClose>
         </div>
       </SheetContent>

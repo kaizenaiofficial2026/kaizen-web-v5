@@ -125,11 +125,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds ecommerce and retail AI agents for product enquiries, WhatsApp sales, order tracking, follow-ups, and CRM automation.",
   },
   {
-    slug: "healthcare",
+    slug: "healthcare-clinics",
     emoji: "🏥",
     name: "Healthcare & Clinics",
     label: "Healthcare & Clinics",
-    href: "/industries/healthcare",
+    href: "/industries/healthcare-clinics",
     description: "Automate bookings, reminders, and patient communication.",
     title: "Never Miss a Patient Booking Again.",
     subtitle:
@@ -299,11 +299,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds real estate AI agents for property enquiries, lead qualification, viewing bookings, WhatsApp follow-up, and CRM automation.",
   },
   {
-    slug: "hospitality",
+    slug: "hospitality-restaurants",
     emoji: "🍽️",
     name: "Hospitality & Restaurants",
     label: "Hospitality & Restaurants",
-    href: "/industries/hospitality",
+    href: "/industries/hospitality-restaurants",
     description: "Handle reservations, menus, and event enquiries automatically.",
     title: "Fill More Tables. Miss Zero Reservations.",
     subtitle:
@@ -473,11 +473,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds education AI agents for admissions, student support, application intake, course recommendations, scheduling, and onboarding.",
   },
   {
-    slug: "legal",
+    slug: "legal-professional-services",
     emoji: "⚖️",
     name: "Legal & Professional Services",
     label: "Legal & Professional Services",
-    href: "/industries/legal",
+    href: "/industries/legal-professional-services",
     description: "Streamline client intake, scheduling, and follow-ups.",
     title: "Win More Clients Before They Call Someone Else.",
     subtitle:
@@ -560,11 +560,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds legal and professional services AI systems for client intake, consultation booking, FAQ handling, document collection, and CRM updates.",
   },
   {
-    slug: "finance",
+    slug: "financial-services-insurance",
     emoji: "💰",
     name: "Financial Services & Insurance",
     label: "Financial Services & Insurance",
-    href: "/industries/finance",
+    href: "/industries/financial-services-insurance",
     description: "Automate quotes, onboarding, and client communication.",
     title: "Respond Faster. Convert More Clients.",
     subtitle:
@@ -647,11 +647,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds financial services and insurance AI systems for enquiries, quote intake, onboarding, appointments, follow-up, and CRM automation.",
   },
   {
-    slug: "recruitment",
+    slug: "recruitment-hr",
     emoji: "👥",
     name: "Recruitment & HR",
     label: "Recruitment & HR",
-    href: "/industries/recruitment",
+    href: "/industries/recruitment-hr",
     description: "Screen candidates and schedule interviews automatically.",
     title: "Screen Faster. Hire Smarter.",
     subtitle:
@@ -734,11 +734,11 @@ export const industries: IndustryPageContent[] = [
       "KaizenAI builds recruitment and HR AI systems for candidate screening, interview scheduling, candidate support, employee FAQs, and onboarding.",
   },
   {
-    slug: "agencies",
+    slug: "professional-services-agencies",
     emoji: "💼",
     name: "Professional Services & Agencies",
     label: "Professional Services & Agencies",
-    href: "/industries/agencies",
+    href: "/industries/professional-services-agencies",
     description: "Qualify leads, onboard clients, and automate operations.",
     title: "Scale Your Agency Without Scaling Your Headcount.",
     subtitle:

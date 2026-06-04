@@ -24,20 +24,20 @@ export const metadata: Metadata = {
 
 const stats = [
   {
-    value: "30",
-    label: "Days average delivery target from consultation to launch",
+    value: "30 Days",
+    label: "Target delivery timeline",
   },
   {
-    value: "24/7",
-    label: "Continuous operation. Your AI never sleeps, never stops",
+    value: "24/7/365",
+    label: "AI systems working beyond business hours",
+  },
+  {
+    value: "+35%",
+    label: "Potential uplift from faster lead response",
   },
   {
     value: "9+",
-    label: "Industries served with custom-built AI systems",
-  },
-  {
-    value: "100%",
-    label: "Custom workflow design. No templates, no generic tools",
+    label: "Industries mapped for AI automation",
   },
 ];
 
@@ -54,31 +54,24 @@ export default function Home() {
         ambient={false}
         containerClassName="max-w-7xl"
       >
-        <FadeUp className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <FadeUp>
           <SectionHeader
-            eyebrow="Industries"
             title="What Kind of Business Are You?"
-            subtitle="Choose your industry and see exactly how KaizenAI solves your specific problems."
-            align="start"
-            className="mx-0"
+            subtitle="Choose your industry and explore where AI can remove bottlenecks, recover lost opportunities, and automate daily work."
+            className="[&_h2]:mt-0"
           />
-          <Button asChild variant="outline" size="lg" className="rounded-xl">
-            <Link href="/industries">
-              View All Industries
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </Button>
         </FadeUp>
 
         <StaggerGrid className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {industriesOverview.map((industry) => (
             <StaggerItem key={industry.slug}>
               <Link href={industry.href} className="group block h-full">
-                <Card className="relative h-full overflow-hidden p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-glow">
-                  <div className="flex items-start justify-end gap-4">
-                    <ArrowRight className="h-5 w-5 text-primary transition-transform group-hover:translate-x-1" />
-                  </div>
-                  <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">
+                <Card className="relative grid min-h-[128px] place-items-center overflow-hidden p-6 text-center transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-glow sm:min-h-[144px]">
+                  <ArrowRight
+                    aria-hidden
+                    className="absolute right-5 top-5 h-4 w-4 text-primary/55 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-primary"
+                  />
+                  <h3 className="max-w-[13rem] text-xl font-semibold tracking-tight text-foreground">
                     {industry.name}
                   </h3>
                 </Card>
@@ -97,19 +90,19 @@ export default function Home() {
       >
         <FadeUp>
           <SectionHeader
-            eyebrow="Outcomes"
             title="Built Around Results"
-            subtitle="Every engagement is measured against operational outcomes your team can feel."
+            subtitle="Every engagement starts with one question: where is your business losing time, leads, or efficiency?"
+            className="[&_h2]:mt-0"
           />
         </FadeUp>
-        <StaggerGrid className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <StaggerGrid className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
             <StaggerItem key={stat.value}>
-              <Card className="h-full p-6 text-center transition-colors hover:border-primary/40">
-                <div className="text-5xl font-semibold tracking-tight text-primary">
+              <Card className="h-full overflow-hidden p-6 text-center transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_24px_80px_-58px_rgba(201,160,61,0.88)] sm:p-7">
+                <div className="text-[clamp(2.4rem,5vw,3.75rem)] font-semibold leading-none tracking-tight text-primary">
                   {stat.value}
                 </div>
-                <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                <p className="mx-auto mt-4 max-w-[12rem] text-sm leading-6 text-muted-foreground">
                   {stat.label}
                 </p>
               </Card>
@@ -125,10 +118,9 @@ export default function Home() {
       >
         <FadeUp className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeader
-            eyebrow="Insights"
             title="From The Front Lines of AI"
             align="start"
-            className="mx-0"
+            className="mx-0 [&_h2]:mt-0"
           />
           <Button asChild variant="outline" size="lg" className="rounded-xl">
             <Link href="/blog">

@@ -122,7 +122,6 @@ export function Testimonials() {
       <Container size="wide">
         <FadeUp>
           <SectionHeader
-            eyebrow="Testimonials"
             title={
               <>
                 Built around{" "}
@@ -130,6 +129,7 @@ export function Testimonials() {
               </>
             }
             subtitle="A few examples of what changes when AI is designed around the workflow instead of dropped in as another tool."
+            className="[&_h2]:mt-0"
           />
         </FadeUp>
 

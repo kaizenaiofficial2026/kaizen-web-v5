@@ -8,7 +8,7 @@ export const industryNavItems = [
   },
   {
     label: "Healthcare & Clinics",
-    href: "/industries/healthcare",
+    href: "/industries/healthcare-clinics",
     description: "Automate bookings, reminders, and patient communication.",
   },
   {
@@ -18,7 +18,7 @@ export const industryNavItems = [
   },
   {
     label: "Hospitality & Restaurants",
-    href: "/industries/hospitality",
+    href: "/industries/hospitality-restaurants",
     description: "Handle reservations, menus, and event enquiries automatically.",
   },
   {
@@ -28,22 +28,22 @@ export const industryNavItems = [
   },
   {
     label: "Legal & Professional Services",
-    href: "/industries/legal",
+    href: "/industries/legal-professional-services",
     description: "Streamline client intake, scheduling, and follow-ups.",
   },
   {
     label: "Financial Services & Insurance",
-    href: "/industries/finance",
+    href: "/industries/financial-services-insurance",
     description: "Automate quotes, onboarding, and client communication.",
   },
   {
     label: "Recruitment & HR",
-    href: "/industries/recruitment",
+    href: "/industries/recruitment-hr",
     description: "Screen candidates and schedule interviews automatically.",
   },
   {
     label: "Professional Services & Agencies",
-    href: "/industries/agencies",
+    href: "/industries/professional-services-agencies",
     description: "Qualify leads, onboard clients, and automate operations.",
   },
 ];
@@ -52,7 +52,6 @@ export const primaryNav: NavItem[] = [
   { label: "Home", href: "/" },
   {
     label: "Industries",
-    href: "/industries",
     children: industryNavItems,
   },
   { label: "Blog", href: "/blog" },
