@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const heroSubtext =
-  "We identify where your business is losing time, leads, or efficiency, then design and deliver AI automation systems that work across your tools 24/7.";
+  "We help your company identify the AI opportunities that will actually transform your business, then we build, deploy, and train your team to use the system.";
 
 function HeroActions({
   className,

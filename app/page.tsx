@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/sections/Hero";
+import { PositioningStory } from "@/components/sections/PositioningStory";
 import { LogoCloud } from "@/components/sections/LogoCloud";
 import { SimpleProcess } from "@/components/sections/SimpleProcess";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { CTA } from "@/components/sections/CTA";
 import { FAQ } from "@/components/sections/FAQ";
 import { MarketingSection } from "@/components/primitives/MarketingPage";
@@ -43,6 +43,7 @@ export default function Home() {
   return (
     <main id="main" className="relative">
       <Hero />
+      <PositioningStory />
       <LogoCloud />
 
       <MarketingSection
@@ -109,7 +110,6 @@ export default function Home() {
         </StaggerGrid>
       </MarketingSection>
 
-      <Testimonials />
       <CTA />
       <FAQ />
     </main>
