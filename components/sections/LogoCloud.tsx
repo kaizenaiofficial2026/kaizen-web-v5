@@ -1,135 +1,235 @@
 "use client";
 
-import { motion } from "motion/react";
-import {
-  Blocks,
-  CreditCard,
-  Mail,
-  MessageCircle,
-  MessagesSquare,
-  PlugZap,
-  ShoppingBag,
-  Workflow,
-  type LucideIcon,
-} from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 
-type ToolItem = {
+type Tool = {
   name: string;
-  mark?: string;
-  Icon?: LucideIcon;
+  src?: string;
+  wordmark?: boolean;
 };
 
-const toolRows: ToolItem[][] = [
-  [
-    { name: "WhatsApp", mark: "/brand-logos/whatsapp.svg" },
-    { name: "Instagram", mark: "/brand-logos/instagram.svg" },
-    { name: "Facebook", Icon: MessagesSquare },
-    { name: "Messenger", mark: "/brand-logos/messenger.svg" },
-    { name: "Gmail", Icon: Mail },
-    { name: "Salesforce", mark: "/brand-logos/salesforce.svg" },
-    { name: "HubSpot", mark: "/brand-logos/hubspot.svg" },
-    { name: "Zoho", mark: "/brand-logos/zoho.svg" },
-    { name: "Google Calendar", mark: "/brand-logos/googlecalendar.svg" },
-    { name: "Calendly", mark: "/brand-logos/calendly.svg" },
-  ],
-  [
-    { name: "Shopify", Icon: ShoppingBag },
-    { name: "Slack", Icon: MessageCircle },
-    { name: "Zapier", Icon: PlugZap },
-    { name: "Make", mark: "/brand-logos/make.svg" },
-    { name: "Stripe", Icon: CreditCard },
-    { name: "Twilio", mark: "/brand-logos/twilio.svg" },
-    { name: "Google Workspace", Icon: Blocks },
-    { name: "OpenAI", mark: "/brand-logos/openai.svg" },
-    { name: "Anthropic", mark: "/brand-logos/anthropic.svg" },
-    { name: "n8n", mark: "/brand-logos/n8n.svg" },
-  ],
+const rowOneTools: Tool[] = [
+  {
+    name: "WhatsApp",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg",
+  },
+  {
+    name: "Instagram",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg",
+  },
+  {
+    name: "Facebook",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/facebook.svg",
+  },
+  {
+    name: "Messenger",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/messenger.svg",
+  },
+  {
+    name: "Gmail",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/gmail.svg",
+  },
+  {
+    name: "Salesforce",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/salesforce.svg",
+  },
+  {
+    name: "HubSpot",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/hubspot.svg",
+  },
+  {
+    name: "Zoho",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zoho.svg",
+  },
+  {
+    name: "Google Calendar",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlecalendar.svg",
+  },
+  {
+    name: "Calendly",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/calendly.svg",
+  },
 ];
 
-const ToolMark = ({ item }: { item: ToolItem }) => {
-  if (item.mark) {
-    return (
-      <span
-        aria-hidden
-        className="h-10 w-10 shrink-0 bg-current opacity-70 transition-opacity group-hover/tool:opacity-100 sm:h-12 sm:w-12"
-        style={{
-          WebkitMaskImage: `url(${item.mark})`,
-          WebkitMaskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          WebkitMaskSize: "contain",
-          maskImage: `url(${item.mark})`,
-          maskRepeat: "no-repeat",
-          maskPosition: "center",
-          maskSize: "contain",
-        }}
-      />
-    );
-  }
+const rowTwoTools: Tool[] = [
+  {
+    name: "Shopify",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/shopify.svg",
+  },
+  {
+    name: "Slack",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/slack.svg",
+  },
+  {
+    name: "Zapier",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zapier.svg",
+  },
+  {
+    name: "Make",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/make.svg",
+  },
+  {
+    name: "Stripe",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/stripe.svg",
+  },
+  {
+    name: "Twilio",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/twilio.svg",
+  },
+  {
+    name: "Google Workspace",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/google.svg",
+  },
+  {
+    name: "OpenAI",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg",
+  },
+  {
+    name: "Anthropic",
+    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anthropic.svg",
+  },
+  {
+    name: "n8n",
+    wordmark: true,
+  },
+];
 
-  const Icon = item.Icon ?? Workflow;
-
+function LogoItem({ tool }: { tool: Tool }) {
   return (
-    <Icon
-      aria-hidden
-      className="h-10 w-10 shrink-0 opacity-70 transition-opacity group-hover/tool:opacity-100 sm:h-12 sm:w-12"
-      strokeWidth={1.45}
-    />
-  );
-};
-
-const Row = ({
-  items,
-  reverse = false,
-  duration = 96,
-}: {
-  items: ToolItem[];
-  reverse?: boolean;
-  duration?: number;
-}) => {
-  const doubled = [...items, ...items];
-
-  return (
-    <div className="mask-fade-x group relative overflow-hidden">
-      <motion.div
-        className="flex w-max items-center gap-9 whitespace-nowrap py-3 group-hover:[animation-play-state:paused] sm:gap-12 sm:py-4"
-        animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration, repeat: Infinity, ease: "linear" }}
-      >
-        {doubled.map((item, i) => (
-          <span
-            key={`${item.name}-${i}`}
-            className="group/tool inline-flex w-24 shrink-0 flex-col items-center justify-start gap-3 text-center text-foreground/55 transition-colors hover:text-primary sm:w-28"
+    <div className="group/tool flex w-28 shrink-0 flex-col items-center gap-2 px-1 py-2 text-[rgba(163,163,163,0.48)] transition-colors duration-300 hover:text-primary sm:w-32 lg:w-[140px]">
+      {tool.wordmark ? (
+        <svg
+          aria-hidden
+          viewBox="0 0 48 36"
+          className="h-9 w-12 text-current sm:h-10 sm:w-14"
+          fill="none"
+        >
+          <path
+            d="M7 18h10m14 0h10"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="2.4"
+          />
+          <circle cx="6" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
+          <circle cx="24" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
+          <circle cx="42" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
+          <text
+            x="24"
+            y="32"
+            fill="currentColor"
+            fontFamily="monospace"
+            fontSize="9"
+            fontWeight="700"
+            letterSpacing="-0.4"
+            textAnchor="middle"
           >
-            <ToolMark item={item} />
-            <span className="text-[11px] font-semibold leading-tight text-current opacity-80 transition-opacity group-hover/tool:opacity-100 sm:text-xs">
-              {item.name}
-            </span>
-          </span>
-        ))}
-      </motion.div>
+            n8n
+          </text>
+        </svg>
+      ) : (
+        <span
+          aria-hidden
+          className="block h-9 w-9 bg-current transition-colors duration-300 sm:h-10 sm:w-10"
+          style={{
+            WebkitMaskImage: `url(${tool.src})`,
+            WebkitMaskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            WebkitMaskSize: "contain",
+            maskImage: `url(${tool.src})`,
+            maskRepeat: "no-repeat",
+            maskPosition: "center",
+            maskSize: "contain",
+          }}
+        />
+      )}
+      <span className="whitespace-nowrap text-center text-[11px] font-normal text-[rgba(163,163,163,0.45)] transition-colors duration-300 group-hover/tool:text-primary">
+        {tool.name}
+      </span>
     </div>
   );
-};
+}
+
+function MarqueeRow({
+  tools,
+  direction,
+}: {
+  tools: Tool[];
+  direction: "left" | "right";
+}) {
+  const duplicatedTools = [...tools, ...tools, ...tools];
+
+  return (
+    <div
+      className="kaizen-tools-marquee-outer relative w-full overflow-hidden"
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+      }}
+    >
+      <div
+        className={`kaizen-tools-marquee-track flex w-max flex-row flex-nowrap items-center gap-10 sm:gap-14 ${
+          direction === "right" ? "kaizen-tools-marquee-right" : "kaizen-tools-marquee-left"
+        }`}
+      >
+        {duplicatedTools.map((tool, index) => (
+          <LogoItem key={`${tool.name}-${index}`} tool={tool} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function LogoCloud() {
   return (
     <section
       aria-labelledby="logos-heading"
-      className="relative w-full overflow-hidden border-t border-border/25 bg-black py-12 sm:py-16"
+      className="relative w-full overflow-hidden border-t border-border/25 bg-black py-12"
     >
       <Container>
         <p
           id="logos-heading"
-          className="mb-7 text-center text-xs font-semibold uppercase tracking-[0.24em] text-foreground/62 sm:mb-8"
+          className="mb-10 text-center text-[11px] font-semibold uppercase tracking-[0.15em] text-[rgba(163,163,163,0.4)]"
         >
-          BUILT TO CONNECT WITH THE TOOLS YOUR BUSINESS ALREADY USES
+          BUILT TO INTEGRATE WITH THE TOOLS YOUR BUSINESS ALREADY USES
         </p>
-        <div className="relative flex flex-col gap-4 sm:gap-5">
-          <Row items={toolRows[0]} duration={96} />
-          <Row items={toolRows[1]} reverse duration={108} />
-        </div>
       </Container>
+      <div className="flex w-full flex-col gap-6">
+        <MarqueeRow tools={rowOneTools} direction="left" />
+        <MarqueeRow tools={rowTwoTools} direction="right" />
+      </div>
+      <style jsx global>{`
+        .kaizen-tools-marquee-track {
+          will-change: transform;
+        }
+
+        .kaizen-tools-marquee-left {
+          animation: kaizen-tools-marquee-left 38s linear infinite;
+        }
+
+        .kaizen-tools-marquee-right {
+          animation: kaizen-tools-marquee-right 44s linear infinite;
+        }
+
+        @keyframes kaizen-tools-marquee-left {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-33.333%);
+          }
+        }
+
+        @keyframes kaizen-tools-marquee-right {
+          from {
+            transform: translateX(-33.333%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }
