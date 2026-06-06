@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -79,10 +80,13 @@ const panelVariants: Variants = {
 };
 
 export function ChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [hideLauncherOnMobileHero, setHideLauncherOnMobileHero] =
+    useState(pathname === "/");
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -106,6 +110,7 @@ export function ChatWidget() {
 
   useEffect(() => {
     const openChatWidget = () => {
+      setHideLauncherOnMobileHero(false);
       setOpen(true);
       window.setTimeout(() => inputRef.current?.focus(), 0);
     };
@@ -126,6 +131,41 @@ export function ChatWidget() {
   useEffect(() => {
     return () => { abortRef.current?.abort(); };
   }, []);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setHideLauncherOnMobileHero(false);
+      return;
+    }
+
+    let frameId = 0;
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+    const updateLauncherVisibility = () => {
+      const hero = document.getElementById("home-hero");
+      const shouldHide =
+        mobileQuery.matches && !open && !!hero && hero.getBoundingClientRect().bottom > 0;
+
+      setHideLauncherOnMobileHero(shouldHide);
+    };
+
+    const requestUpdate = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateLauncherVisibility);
+    };
+
+    updateLauncherVisibility();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    mobileQuery.addEventListener("change", requestUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      mobileQuery.removeEventListener("change", requestUpdate);
+    };
+  }, [open, pathname]);
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
@@ -364,7 +404,12 @@ export function ChatWidget() {
         onClick={() => setOpen((current) => !current)}
         aria-label={open ? "Close Kaizen AI chat" : "Open Kaizen AI chat"}
         aria-expanded={open}
-        className="group pointer-events-auto fixed bottom-[calc(0.875rem+env(safe-area-inset-bottom))] right-3 z-[73] inline-flex h-14 w-14 items-center justify-start overflow-hidden rounded-full border border-primary/30 bg-primary p-2 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-[width,background-color,border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent hover:shadow-[0_28px_76px_-26px_color-mix(in_oklab,var(--primary)_95%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6 sm:h-16 sm:w-16 sm:p-3 sm:hover:w-[13.75rem] sm:focus-visible:w-[13.75rem]"
+        tabIndex={hideLauncherOnMobileHero ? -1 : undefined}
+        className={cn(
+          "group pointer-events-auto fixed bottom-[calc(0.875rem+env(safe-area-inset-bottom))] right-3 z-[73] inline-flex h-14 w-14 items-center justify-start overflow-hidden rounded-full border border-primary/30 bg-primary p-2 text-primary-foreground shadow-[0_22px_60px_-24px_color-mix(in_oklab,var(--primary)_90%,transparent)] transition-[width,background-color,border-color,box-shadow,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent hover:shadow-[0_28px_76px_-26px_color-mix(in_oklab,var(--primary)_95%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:bottom-6 sm:right-6 sm:h-16 sm:w-16 sm:p-3 sm:hover:w-[13.75rem] sm:focus-visible:w-[13.75rem]",
+          hideLauncherOnMobileHero &&
+            "max-md:pointer-events-none max-md:translate-y-5 max-md:opacity-0",
+        )}
       >
         <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-foreground/15 transition-colors duration-500 group-hover:bg-primary-foreground/20 group-focus-visible:bg-primary-foreground/20">
           {open ? (
