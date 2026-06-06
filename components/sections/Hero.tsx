@@ -44,7 +44,7 @@ export function Hero() {
     <>
       <section
         id="home-hero"
-        className="relative h-[100svh] min-h-[780px] w-full overflow-hidden bg-black bg-cover bg-[position:82%_center] md:h-screen md:min-h-0 md:bg-[position:65%_center]"
+        className="relative h-[100svh] min-h-[780px] w-full overflow-hidden bg-black bg-cover bg-[position:84%_center] md:h-screen md:min-h-0 md:bg-[position:65%_center]"
         style={{ backgroundImage: "url('/herobg2.png')" }}
       >
         <div
@@ -57,7 +57,7 @@ export function Hero() {
         />
 
         <div className="relative z-10 flex h-full flex-col px-6 pb-0 pt-20 md:grid md:grid-cols-[minmax(0,560px)_minmax(0,1fr)] md:items-center md:p-0 md:pl-20">
-          <div className="max-w-[350px] text-left md:max-w-[560px]">
+          <div className="mx-auto max-w-[350px] text-center md:mx-0 md:max-w-[560px] md:text-left">
             <h1 className="[font-family:var(--font-syne)] text-[clamp(34px,9.7vw,40px)] font-bold leading-[1.01] text-[#f1ece0] [text-shadow:0_0_34px_rgba(0,0,0,0.9)] md:text-[clamp(44px,5vw,72px)] md:leading-[1.04] md:[text-shadow:none]">
               <span className="block">The Future of</span>
               <span className="block py-1 font-serif text-[1.04em] font-normal italic leading-[0.96] tracking-[0.01em] text-[#C49A30] [font-kerning:normal]">

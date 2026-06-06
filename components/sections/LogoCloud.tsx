@@ -4,8 +4,7 @@ import { Container } from "@/components/primitives/Container";
 
 type Tool = {
   name: string;
-  src?: string;
-  wordmark?: boolean;
+  src: string;
 };
 
 const rowOneTools: Tool[] = [
@@ -61,20 +60,8 @@ const rowTwoTools: Tool[] = [
     src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/slack.svg",
   },
   {
-    name: "Zapier",
-    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zapier.svg",
-  },
-  {
-    name: "Make",
-    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/make.svg",
-  },
-  {
     name: "Stripe",
     src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/stripe.svg",
-  },
-  {
-    name: "Twilio",
-    src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/twilio.svg",
   },
   {
     name: "Google Workspace",
@@ -88,60 +75,25 @@ const rowTwoTools: Tool[] = [
     name: "Anthropic",
     src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anthropic.svg",
   },
-  {
-    name: "n8n",
-    wordmark: true,
-  },
 ];
 
 function LogoItem({ tool }: { tool: Tool }) {
   return (
     <div className="group/tool flex w-28 shrink-0 flex-col items-center gap-2 px-1 py-2 text-[rgba(163,163,163,0.48)] transition-colors duration-300 hover:text-primary sm:w-32 lg:w-[140px]">
-      {tool.wordmark ? (
-        <svg
-          aria-hidden
-          viewBox="0 0 48 36"
-          className="h-9 w-12 text-current sm:h-10 sm:w-14"
-          fill="none"
-        >
-          <path
-            d="M7 18h10m14 0h10"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeWidth="2.4"
-          />
-          <circle cx="6" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
-          <circle cx="24" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
-          <circle cx="42" cy="18" r="4" stroke="currentColor" strokeWidth="2.4" />
-          <text
-            x="24"
-            y="32"
-            fill="currentColor"
-            fontFamily="monospace"
-            fontSize="9"
-            fontWeight="700"
-            letterSpacing="-0.4"
-            textAnchor="middle"
-          >
-            n8n
-          </text>
-        </svg>
-      ) : (
-        <span
-          aria-hidden
-          className="block h-9 w-9 bg-current transition-colors duration-300 sm:h-10 sm:w-10"
-          style={{
-            WebkitMaskImage: `url(${tool.src})`,
-            WebkitMaskRepeat: "no-repeat",
-            WebkitMaskPosition: "center",
-            WebkitMaskSize: "contain",
-            maskImage: `url(${tool.src})`,
-            maskRepeat: "no-repeat",
-            maskPosition: "center",
-            maskSize: "contain",
-          }}
-        />
-      )}
+      <span
+        aria-hidden
+        className="block h-9 w-9 bg-current transition-colors duration-300 sm:h-10 sm:w-10"
+        style={{
+          WebkitMaskImage: `url(${tool.src})`,
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          WebkitMaskSize: "contain",
+          maskImage: `url(${tool.src})`,
+          maskRepeat: "no-repeat",
+          maskPosition: "center",
+          maskSize: "contain",
+        }}
+      />
       <span className="whitespace-nowrap text-center text-[11px] font-normal text-[rgba(163,163,163,0.45)] transition-colors duration-300 group-hover/tool:text-primary">
         {tool.name}
       </span>
