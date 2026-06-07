@@ -8,6 +8,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { openConsultationModal } from "@/components/contact/ConsultationModal";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
+import { LoginModal } from "./LoginModal";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
 import { primaryNav } from "@/lib/content/nav";
@@ -95,6 +96,7 @@ function isNavItemActive(
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [loginOpen, setLoginOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
@@ -228,12 +230,16 @@ export function Header() {
                       <div
                         role="menu"
                         className={cn(
-                          "absolute left-1/2 top-full z-50 w-[32rem] -translate-x-1/2 rounded-2xl border border-primary/20 bg-background/95 p-2 shadow-[0_24px_70px_-38px_color-mix(in_oklab,var(--primary)_80%,transparent)] backdrop-blur-xl transition-all duration-200",
+                          "absolute left-1/2 top-full z-50 w-[22rem] -translate-x-1/2 overflow-hidden rounded-[1.1rem] border border-primary/25 bg-[linear-gradient(145deg,rgba(10,9,7,0.98),rgba(0,0,0,0.94))] p-2 shadow-[0_28px_90px_-44px_color-mix(in_oklab,var(--primary)_90%,transparent),inset_0_1px_0_rgba(240,234,216,0.06)] backdrop-blur-2xl transition-all duration-200",
                           dropdownOpen
                             ? "visible translate-y-0 opacity-100"
                             : "invisible -translate-y-1 opacity-0",
                         )}
                       >
+                        <div
+                          aria-hidden
+                          className="pointer-events-none absolute inset-x-6 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(196,154,48,0.55),transparent)]"
+                        />
                         {item.children?.map((child) => {
                           const isChildActive = isHrefActive(
                             pathname,
@@ -251,13 +257,13 @@ export function Header() {
                               role="menuitem"
                               aria-current={isChildActive ? "page" : undefined}
                               className={cn(
-                                "group block rounded-xl px-4 py-3 transition-colors hover:bg-primary/10",
+                                "group relative block rounded-xl px-4 py-3 transition-[background-color,transform,color] duration-200 hover:translate-x-0.5 hover:bg-primary/9",
                                 isChildActive && "text-primary",
                               )}
                             >
                               <span
                                 className={cn(
-                                  "block text-sm font-semibold text-foreground/82 transition-colors group-hover:text-primary",
+                                  "block text-sm font-semibold leading-5 text-foreground/78 transition-colors group-hover:text-primary",
                                   isChildActive && "text-primary",
                                 )}
                               >
@@ -289,11 +295,11 @@ export function Header() {
 
             <div className="col-start-3 flex items-center justify-end gap-5">
               <Button
-                asChild
                 size="sm"
                 className="hidden h-10 rounded-lg border-0 bg-transparent px-2 text-sm font-medium text-foreground/86 shadow-none hover:bg-transparent hover:text-foreground lg:inline-flex"
+                onClick={() => setLoginOpen(true)}
               >
-                <a href="#">Client Portal</a>
+                Login
               </Button>
               <Button
                 size="sm"
@@ -303,12 +309,16 @@ export function Header() {
                 Free Consultation
                 <ArrowRight aria-hidden />
               </Button>
-              <MobileNav items={primaryNav} />
+              <MobileNav
+                items={primaryNav}
+                onOpenLogin={() => setLoginOpen(true)}
+              />
             </div>
           </div>
         </div>
         <ScrollProgress />
       </motion.header>
+      <LoginModal open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );
 }

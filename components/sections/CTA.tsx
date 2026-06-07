@@ -50,7 +50,7 @@ export function CTA() {
               className="w-full rounded-xl border border-[#d0a235]/65 bg-[linear-gradient(135deg,#d8a928,#b98918)] px-7 font-semibold text-black shadow-[0_0_42px_-14px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.28)] hover:bg-[linear-gradient(135deg,#e5b83d,#c99824)] sm:w-auto"
               onClick={openConsultationModal}
             >
-              Free Consultation
+              Book Free Consultation
               <ArrowRight aria-hidden />
             </Button>
             <Button

@@ -20,6 +20,8 @@ type MarketingHeroProps = {
   actions?: HeroAction[];
   children?: React.ReactNode;
   className?: string;
+  containerSize?: "default" | "narrow" | "wide";
+  containerClassName?: string;
 };
 
 type MarketingSectionProps = {
@@ -38,6 +40,8 @@ export function MarketingHero({
   actions,
   children,
   className,
+  containerSize = "default",
+  containerClassName,
 }: MarketingHeroProps) {
   const hasVisual = Boolean(children);
 
@@ -58,11 +62,13 @@ export function MarketingHero({
       />
       <Grain />
       <Container
+        size={containerSize}
         className={cn(
           "relative z-10",
           hasVisual
             ? "grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.82fr)]"
             : "text-center",
+          containerClassName,
         )}
       >
         <FadeUp className={cn(!hasVisual && "mx-auto max-w-4xl")}>

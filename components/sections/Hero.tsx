@@ -20,7 +20,7 @@ function HeroActions({
         className={`w-full rounded-lg border border-[#d0a235]/65 bg-[linear-gradient(135deg,#d8a928,#b98918)] px-7 font-semibold text-black shadow-[0_0_36px_-12px_rgba(216,169,40,0.95),0_16px_42px_-28px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.28)] hover:bg-[linear-gradient(135deg,#e5b83d,#c99824)] md:w-auto ${buttonClassName}`}
       >
         <Link href="/contact#book">
-          Book Consultation
+          Book Free Consultation
           <ArrowRight aria-hidden />
         </Link>
       </Button>
@@ -30,8 +30,8 @@ function HeroActions({
         size="xl"
         className={`w-full rounded-lg border-[#b88b25]/75 bg-black/8 px-7 text-[#f1ece0] shadow-[0_0_24px_-18px_rgba(216,169,40,0.9)] hover:border-[#d0a235] hover:bg-[#c49a30]/10 hover:text-[#f1ece0] md:w-auto ${buttonClassName}`}
       >
-        <Link href="/industries">
-          Explore Industries
+        <Link href="/contact">
+          Talk to AI Representative
           <ArrowRight aria-hidden />
         </Link>
       </Button>
@@ -85,7 +85,7 @@ export function Hero() {
         </div>
       </section>
 
-      <div className="border-t border-[#C49A30]/20 bg-black px-6 pb-8 pt-5 md:hidden">
+      <div className="bg-black px-6 pb-8 pt-5 md:hidden">
         <HeroActions
           className="mx-auto flex max-w-[390px] flex-col gap-3"
           buttonClassName="h-12 text-sm"

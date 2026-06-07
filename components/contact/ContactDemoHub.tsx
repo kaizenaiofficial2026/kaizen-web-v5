@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useBrowserVoiceCall } from "@/components/demo/BrowserVoiceCall";
 import { FacebookIcon, LinkedinIcon } from "@/components/icons/social";
-import { openConsultationModal } from "@/components/contact/ConsultationModal";
 import { Container } from "@/components/primitives/Container";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -89,24 +88,16 @@ export function ContactDemoHub() {
     <main id="main" className="relative overflow-hidden bg-black">
       <section className="relative overflow-hidden bg-black">
         <Container size="wide" className="relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 px-6 sm:px-10 lg:px-16 py-16 lg:py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 px-6 sm:px-10 lg:px-16 pb-16 pt-28 sm:pt-32 lg:py-24">
             <div className="w-full lg:w-1/2 text-center lg:text-left flex flex-col lg:items-start items-center gap-6">
-              <h1 className="text-[clamp(3.5rem,8vw,7rem)] font-semibold leading-[0.94] tracking-tight text-[#F0EAD8]">
+              <h1 className="text-[clamp(2.75rem,13vw,4.25rem)] font-semibold leading-[0.96] tracking-tight text-[#F0EAD8] lg:text-[clamp(3.5rem,8vw,7rem)] lg:leading-[0.94]">
                 Let&apos;s Talk
               </h1>
-              <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-[#A3A3A3] sm:text-lg lg:mx-0">
-                Whether you want to automate customer conversations, internal
-                workflows, or industry-specific operations, we&apos;ll help you
-                identify what AI can handle for your business.
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-[#A3A3A3] sm:text-base sm:leading-7 lg:mx-0 lg:mt-7 lg:text-lg lg:leading-8">
+                Have questions about AI, your industry, or where automation
+                could help your business? Speak with our AI representative and
+                explore what&apos;s possible in real time.
               </p>
-              <Button
-                size="xl"
-                onClick={openConsultationModal}
-                className="mt-9 w-full rounded-xl bg-primary text-primary-foreground hover:bg-accent sm:w-auto"
-              >
-                Book a Free Consultation
-                <ArrowRight aria-hidden />
-              </Button>
             </div>
 
             <div className="w-full lg:w-1/2 flex flex-col items-center text-center gap-6">

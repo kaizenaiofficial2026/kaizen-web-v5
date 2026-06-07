@@ -99,8 +99,10 @@ function isNavItemActive(
 
 export function MobileNav({
   items,
+  onOpenLogin,
 }: {
   items: NavItem[];
+  onOpenLogin: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
@@ -248,14 +250,15 @@ export function MobileNav({
         <Separator />
         <div className="flex flex-col gap-3">
           <Button
-            asChild
             size="lg"
             variant="outline"
             className="w-full rounded-xl border-primary/40 bg-background text-foreground hover:bg-primary/10 hover:text-primary"
+            onClick={() => {
+              setOpen(false);
+              window.setTimeout(onOpenLogin, 120);
+            }}
           >
-            <a href="#" onClick={() => setOpen(false)}>
-              Client Portal
-            </a>
+            Login
           </Button>
           <SheetClose asChild>
             <button

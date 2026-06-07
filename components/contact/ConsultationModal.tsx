@@ -129,6 +129,56 @@ export function ConsultationModal() {
       window.removeEventListener(CONSULTATION_MODAL_EVENT, handleOpen);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const shouldOpenConsultation = (href: string) => {
+      try {
+        const url = new URL(href, window.location.href);
+        return url.pathname === "/contact" && url.hash === "#book";
+      } catch {
+        return false;
+      }
+    };
+
+    const handleConsultationLinkClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const target = event.target as Element | null;
+      const link = target?.closest<HTMLAnchorElement>("a[href]");
+
+      if (!link || !shouldOpenConsultation(link.href)) return;
+
+      event.preventDefault();
+      setSubmitted(false);
+      setOpen(true);
+    };
+
+    document.addEventListener("click", handleConsultationLinkClick, {
+      capture: true,
+    });
+
+    if (shouldOpenConsultation(window.location.href)) {
+      setSubmitted(false);
+      setOpen(true);
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
+    return () =>
+      document.removeEventListener("click", handleConsultationLinkClick, {
+        capture: true,
+      });
+  }, []);
+
   const updateField =
     (key: keyof ConsultationFormState) =>
     (
@@ -156,9 +206,9 @@ export function ConsultationModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-black p-0 shadow-none sm:w-screen sm:p-0 lg:overflow-hidden [&>button.absolute]:right-5 [&>button.absolute]:top-5 [&>button.absolute]:z-20 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/28 [&>button.absolute]:bg-black/70 [&>button.absolute]:text-[#F0EAD8]/82 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary">
-        <div className="mx-auto flex min-h-dvh w-full max-w-[1180px] items-center px-5 py-16 sm:px-6 lg:px-8 lg:py-12">
-          <div className="grid w-full gap-8 lg:h-[calc(100dvh-6rem)] lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-12">
+      <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-black p-0 shadow-none sm:w-screen sm:p-0 lg:overflow-hidden [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:z-30 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/28 [&>button.absolute]:bg-black/78 [&>button.absolute]:text-[#F0EAD8]/82 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary sm:[&>button.absolute]:right-5 sm:[&>button.absolute]:top-5">
+        <div className="mx-auto flex min-h-dvh w-full max-w-[1180px] items-start px-4 pb-8 pt-16 sm:px-6 sm:pb-12 lg:items-center lg:px-8 lg:py-12">
+          <div className="grid w-full gap-5 sm:gap-8 lg:h-[calc(100dvh-6rem)] lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-12">
             <div className="relative isolate overflow-visible bg-black">
               <div
                 aria-hidden
@@ -169,35 +219,35 @@ export function ConsultationModal() {
                 className="pointer-events-none absolute -bottom-12 right-4 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(212,168,83,0.1),transparent_70%)] blur-2xl"
               />
               <div className="relative z-10 flex h-full flex-col">
-                <span className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary sm:text-xs sm:tracking-[0.28em]">
                   FREE CONSULTATION
                 </span>
-                <DialogTitle className="mt-5 max-w-xl text-4xl font-semibold leading-[1.02] tracking-tight text-[#F0EAD8] sm:text-5xl lg:text-[3.45rem]">
+                <DialogTitle className="mt-4 max-w-xl pr-10 text-3xl font-semibold leading-[1.04] tracking-tight text-[#F0EAD8] sm:mt-5 sm:pr-0 sm:text-5xl lg:text-[3.45rem]">
                   Ready to discover what AI can automate in your business?
                 </DialogTitle>
-                <DialogDescription className="mt-5 max-w-md text-sm leading-7 text-[#A3A3A3] sm:text-base sm:leading-7">
+                <DialogDescription className="mt-4 max-w-md text-sm leading-6 text-[#A3A3A3] sm:mt-5 sm:text-base sm:leading-7">
                   We identify bottlenecks, map AI opportunities, and deliver
                   integrated automation systems end-to-end.
                 </DialogDescription>
 
-                <div className="mt-8 grid gap-3 lg:mt-10">
+                <div className="mt-5 grid gap-2 sm:mt-8 sm:gap-3 lg:mt-10">
                   {contactDetails.map(({ label, value, Icon }) => (
                     <div
                       key={label}
-                      className="group/detail relative isolate flex gap-3 overflow-hidden rounded-2xl border border-primary/16 bg-black/72 p-3 shadow-[0_16px_48px_-36px_rgba(196,154,48,0.8)] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/34 hover:shadow-[0_22px_64px_-38px_rgba(212,168,83,0.95)]"
+                      className="group/detail relative isolate flex gap-3 overflow-hidden rounded-2xl border border-primary/16 bg-black/72 p-2.5 shadow-[0_16px_48px_-36px_rgba(196,154,48,0.8)] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-primary/34 hover:shadow-[0_22px_64px_-38px_rgba(212,168,83,0.95)] sm:p-3"
                     >
                       <span
                         aria-hidden
                         className="pointer-events-none absolute -left-8 top-1/2 -z-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(196,154,48,0.12),transparent_72%)] blur-xl transition-opacity duration-300 group-hover/detail:opacity-100"
                       />
-                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-primary/26 bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(240,234,216,0.08)] transition-colors duration-300 group-hover/detail:border-primary/45 group-hover/detail:bg-primary/14">
-                        <Icon className="h-4 w-4" aria-hidden />
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-primary/26 bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(240,234,216,0.08)] transition-colors duration-300 group-hover/detail:border-primary/45 group-hover/detail:bg-primary/14 sm:h-10 sm:w-10">
+                        <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
                       </span>
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/80">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80 sm:text-xs">
                           {label}
                         </p>
-                        <p className="mt-1 text-sm leading-6 text-[#F0EAD8]/84">
+                        <p className="mt-0.5 text-xs leading-5 text-[#F0EAD8]/84 sm:mt-1 sm:text-sm sm:leading-6">
                           {value}
                         </p>
                       </div>
@@ -212,12 +262,12 @@ export function ConsultationModal() {
                 aria-hidden
                 className="pointer-events-none absolute inset-x-4 top-8 -z-10 h-72 rounded-full bg-[radial-gradient(circle,rgba(196,154,48,0.16),transparent_70%)] blur-3xl"
               />
-              <div className="rounded-[1.25rem] border border-primary/20 bg-black/72 p-4 shadow-[0_28px_90px_-58px_rgba(196,154,48,0.9),inset_0_1px_0_rgba(240,234,216,0.08),inset_0_0_48px_rgba(196,154,48,0.035)] backdrop-blur-md sm:p-5 lg:p-6">
-                <div className="mb-4">
-                  <h3 className="text-xl font-semibold tracking-tight text-[#F0EAD8]">
+              <div className="rounded-[1.1rem] border border-primary/20 bg-black/72 p-3.5 shadow-[0_28px_90px_-58px_rgba(196,154,48,0.9),inset_0_1px_0_rgba(240,234,216,0.08),inset_0_0_48px_rgba(196,154,48,0.035)] backdrop-blur-md sm:rounded-[1.25rem] sm:p-5 lg:p-6">
+                <div className="mb-3 sm:mb-4">
+                  <h3 className="text-lg font-semibold tracking-tight text-[#F0EAD8] sm:text-xl">
                     Book a Free Consultation
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-[#A3A3A3]">
+                  <p className="mt-1.5 text-xs leading-5 text-[#A3A3A3] sm:mt-2 sm:text-sm sm:leading-6">
                     Tell us about your business and we’ll identify where AI
                     automation can create the most impact.
                   </p>
@@ -228,7 +278,7 @@ export function ConsultationModal() {
                   Thank you. Our team will contact you shortly.
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="grid gap-4">
+                <form onSubmit={handleSubmit} className="grid gap-3 sm:gap-4">
                   <div className="grid gap-3 sm:grid-cols-2">
                     <Field label="First Name">
                       <input

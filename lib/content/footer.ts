@@ -27,15 +27,24 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Industries",
     links: [
-      { label: "Ecommerce & Retail", href: "/industries/ecommerce-retail" },
       { label: "Healthcare & Clinics", href: "/industries/healthcare-clinics" },
       { label: "Real Estate", href: "/industries/real-estate" },
-      { label: "Hospitality", href: "/industries/hospitality-restaurants" },
+      {
+        label: "Hospitality, Travel & Restaurants",
+        href: "/industries/hospitality-restaurants",
+      },
+      { label: "Ecommerce & Retail", href: "/industries/ecommerce-retail" },
       { label: "Education", href: "/industries/education" },
-      { label: "Legal", href: "/industries/legal-professional-services" },
-      { label: "Finance", href: "/industries/financial-services-insurance" },
-      { label: "Recruitment", href: "/industries/recruitment-hr" },
-      { label: "Agencies", href: "/industries/professional-services-agencies" },
+      { label: "Recruitment & HR", href: "/industries/recruitment-hr" },
+      { label: "Legal Services", href: "/industries/legal-professional-services" },
+      {
+        label: "Financial Services & Insurance",
+        href: "/industries/financial-services-insurance",
+      },
+      {
+        label: "Professional Services & Agencies",
+        href: "/industries/professional-services-agencies",
+      },
     ],
   },
   {

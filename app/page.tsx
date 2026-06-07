@@ -99,15 +99,15 @@ export default function Home() {
             className="[&_h2]:mt-0"
           />
         </FadeUp>
-        <StaggerGrid className="mt-10 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGrid className="mt-10 grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4">
           {stats.map((stat) => (
             <StaggerItem key={stat.value} className="h-full">
-              <Card className="grid min-h-[176px] h-full place-items-center overflow-hidden p-5 text-center transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/36 hover:shadow-[0_24px_84px_-56px_rgba(240,234,216,0.65)] sm:min-h-[188px] sm:p-6">
+              <Card className="grid min-h-[150px] h-full place-items-center overflow-hidden p-4 text-center transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/36 hover:shadow-[0_24px_84px_-56px_rgba(240,234,216,0.65)] sm:min-h-[188px] sm:p-6">
                 <div className="mx-auto flex w-full max-w-[15rem] flex-col items-center justify-center text-center">
-                  <div className="w-full whitespace-nowrap text-center text-[clamp(1.9rem,3vw,2.75rem)] font-semibold leading-none tracking-tight text-[#F0EAD8] drop-shadow-[0_0_18px_rgba(240,234,216,0.32)] [text-shadow:0_0_24px_rgba(240,234,216,0.26),0_0_42px_rgba(196,154,48,0.2)]">
+                  <div className="w-full whitespace-nowrap text-center text-[clamp(1.45rem,6vw,2.75rem)] font-semibold leading-none tracking-tight text-[#F0EAD8] drop-shadow-[0_0_18px_rgba(240,234,216,0.32)] [text-shadow:0_0_24px_rgba(240,234,216,0.26),0_0_42px_rgba(196,154,48,0.2)]">
                     {stat.value}
                   </div>
-                  <p className="mx-auto mt-4 max-w-[12rem] text-center text-sm leading-6 text-muted-foreground/85">
+                  <p className="mx-auto mt-3 max-w-[12rem] text-center text-xs leading-5 text-muted-foreground/85 sm:mt-4 sm:text-sm sm:leading-6">
                     {stat.label}
                   </p>
                 </div>

@@ -1,11 +1,3 @@
-import {
-  DraftingCompass,
-  Map,
-  Rocket,
-  SearchCheck,
-  Settings2,
-  type LucideIcon,
-} from "lucide-react";
 import { Container } from "@/components/primitives/Container";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Card } from "@/components/ui/card";
@@ -15,34 +7,28 @@ import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 type ProcessStep = {
   title: string;
   copy: string;
-  Icon: LucideIcon;
 };
 
 const steps: ProcessStep[] = [
   {
     title: "Discover",
     copy: "We map your operations and identify the highest-impact AI opportunities.",
-    Icon: SearchCheck,
   },
   {
     title: "Map",
     copy: "We design the full AI system architecture tailored to your business.",
-    Icon: Map,
   },
   {
     title: "Design",
     copy: "Workflows, logic, and integrations are blueprinted before a line is built.",
-    Icon: DraftingCompass,
   },
   {
     title: "Build",
     copy: "We build, test, and refine your production-ready AI system end to end.",
-    Icon: Settings2,
   },
   {
     title: "Launch",
     copy: "Your AI goes live, integrated, and working. We stay on for support.",
-    Icon: Rocket,
   },
 ];
 
@@ -71,27 +57,29 @@ export function SimpleProcess() {
             aria-hidden
             className="absolute left-[10%] right-[10%] top-7 hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent md:block"
           />
-          <StaggerGrid className="grid items-stretch gap-4 md:grid-cols-5">
+          <StaggerGrid className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-5">
             {steps.map((step, index) => {
-              const Icon = step.Icon;
               return (
-                <StaggerItem key={step.title} className="relative flex h-full flex-col">
-                  <div className="relative z-10 mx-auto grid h-14 w-14 place-items-center rounded-full border border-primary/32 bg-background shadow-[0_0_0_7px_rgba(0,0,0,0.92),0_18px_45px_-34px_rgba(201,160,61,0.78)]">
-                    <Icon className="h-5 w-5 text-primary" />
-                  </div>
-
-                  <Card className="relative mt-5 flex min-h-[188px] h-full flex-col items-center overflow-hidden border-primary/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(196,154,48,0.045)_48%,rgba(0,0,0,0.58)_100%)] p-5 text-center shadow-[0_24px_74px_-64px_rgba(196,154,48,0.9)] transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/42 hover:shadow-[0_28px_90px_-58px_rgba(196,154,48,0.95)]">
+                <StaggerItem
+                  key={step.title}
+                  className={`relative flex h-full flex-col ${
+                    index === steps.length - 1
+                      ? "col-span-2 mx-auto w-[calc((100%_-_0.75rem)_/_2)] sm:w-[calc((100%_-_1rem)_/_2)] md:col-span-1 md:w-full"
+                      : ""
+                  }`}
+                >
+                  <Card className="relative flex min-h-[174px] h-full flex-col items-center overflow-hidden border-primary/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(196,154,48,0.045)_48%,rgba(0,0,0,0.58)_100%)] p-4 text-center shadow-[0_24px_74px_-64px_rgba(196,154,48,0.9)] transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/42 hover:shadow-[0_28px_90px_-58px_rgba(196,154,48,0.95)] sm:min-h-[188px] sm:p-5">
                     <div
                       aria-hidden
                       className="pointer-events-none absolute inset-x-6 -top-10 h-20 rounded-full bg-primary/12 blur-2xl"
                     />
-                    <span className="relative text-primary text-[11px] font-bold uppercase tracking-[0.16em]">
+                    <span className="relative text-xs font-bold uppercase tracking-[0.16em] text-primary sm:text-sm">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="relative mt-4 text-base font-semibold leading-tight tracking-tight text-foreground">
+                    <h3 className="relative mt-3 text-lg font-semibold leading-tight tracking-tight text-foreground sm:text-xl md:text-lg lg:text-xl">
                       {step.title}
                     </h3>
-                    <p className="relative mt-3 text-sm leading-6 text-muted-foreground">
+                    <p className="relative mt-2 text-sm leading-6 text-muted-foreground sm:mt-3 sm:text-[15px] sm:leading-7 md:text-sm md:leading-6 lg:text-[15px] lg:leading-7">
                       {step.copy}
                     </p>
                   </Card>

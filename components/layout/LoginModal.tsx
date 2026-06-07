@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Mail } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/content/site";
-import { cn } from "@/lib/utils";
 
 type LoginModalProps = {
   open: boolean;
@@ -18,40 +17,39 @@ type LoginModalProps = {
 };
 
 const fieldClass =
-  "h-12 rounded-xl border border-primary/18 bg-black/35 px-4 text-sm font-normal text-foreground shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition placeholder:text-muted-foreground/65 focus:border-primary/60 focus:ring-2 focus:ring-primary/25";
+  "h-12 rounded-lg border border-primary/20 bg-[rgba(5,4,2,0.74)] px-4 text-sm font-normal text-foreground shadow-[inset_0_1px_0_rgba(240,234,216,0.05)] outline-none transition placeholder:text-muted-foreground/58 focus:border-primary/70 focus:ring-2 focus:ring-primary/25";
 
 export function LoginModal({ open, onOpenChange }: LoginModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-[30rem] overflow-y-auto rounded-[1.5rem] border-primary/28 bg-[linear-gradient(145deg,rgba(26,22,12,0.98),rgba(8,7,5,0.98))] p-0 shadow-[0_44px_150px_-68px_rgba(201,160,61,0.95)] sm:rounded-[1.75rem] [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/24 [&>button.absolute]:bg-black/45 [&>button.absolute]:text-foreground/80 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary">
+      <DialogContent className="max-h-[calc(100dvh-1.5rem)] w-[calc(100vw-1.5rem)] max-w-[27rem] overflow-y-auto rounded-xl border-primary/30 bg-[linear-gradient(145deg,rgba(36,29,13,0.94),rgba(12,10,6,0.97)_46%,rgba(0,0,0,0.98))] p-0 shadow-[0_34px_110px_-58px_rgba(201,160,61,0.96),inset_0_1px_0_rgba(240,234,216,0.09),inset_0_0_64px_rgba(196,154,48,0.055)] sm:rounded-[1.1rem] [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-lg [&>button.absolute]:border [&>button.absolute]:border-primary/24 [&>button.absolute]:bg-black/45 [&>button.absolute]:text-foreground/80 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-80"
           style={{
             backgroundImage:
-              "radial-gradient(75% 55% at 85% 0%, rgba(201,160,61,0.2) 0%, rgba(201,160,61,0) 70%)",
+              "radial-gradient(80% 58% at 85% 0%, rgba(212,168,83,0.24) 0%, rgba(196,154,48,0.08) 42%, rgba(201,160,61,0) 72%), radial-gradient(75% 55% at 10% 100%, rgba(240,234,216,0.08) 0%, rgba(201,160,61,0) 62%)",
           }}
         />
 
-        <div className="relative p-6 sm:p-8">
-          <div className="mb-6 flex items-center gap-3">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/28 bg-primary/15 text-primary shadow-[0_20px_55px_-28px_rgba(201,160,61,0.9)]">
-              <LockKeyhole className="h-5 w-5" aria-hidden />
-            </span>
-            <span className="rounded-full border border-primary/24 bg-primary/10 px-3 py-1 text-xs font-bold tracking-[0.08em] text-primary">
-              Client Portal
-            </span>
+        <div className="relative p-6 sm:p-7">
+          <div className="mb-7 pr-10">
+            <Image
+              src="/logo.png"
+              alt="KaizenAI"
+              width={176}
+              height={42}
+              priority
+              className="h-auto w-[156px] object-contain sm:w-[176px]"
+            />
           </div>
 
-          <DialogTitle className="max-w-sm text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
-            Sign in to your Kaizen AI workspace.
+          <DialogTitle className="sr-only">
+            Client portal login
           </DialogTitle>
-          <DialogDescription className="mt-4 text-sm leading-6 text-foreground/68 sm:text-base sm:leading-7">
-            Access your conversations, leads, bookings, and AI agent performance.
-          </DialogDescription>
 
           <form
-            className="mt-7 grid gap-4"
+            className="grid gap-4"
             onSubmit={(event) => {
               event.preventDefault();
             }}
@@ -97,7 +95,7 @@ export function LoginModal({ open, onOpenChange }: LoginModalProps) {
             </Button>
           </form>
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-5 text-sm">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-primary/14 pt-5 text-sm">
             <span className="text-muted-foreground">Need access?</span>
             <Link
               href={`mailto:${siteConfig.salesEmail}?subject=Kaizen%20AI%20client%20portal%20access`}
@@ -106,15 +104,6 @@ export function LoginModal({ open, onOpenChange }: LoginModalProps) {
               <Mail className="h-4 w-4" aria-hidden />
               Contact Kaizen AI
             </Link>
-          </div>
-
-          <div
-            className={cn(
-              "mt-5 flex items-start gap-3 rounded-2xl border border-primary/18 bg-primary/[0.07] px-4 py-3 text-sm leading-6 text-foreground/70",
-            )}
-          >
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-            Secure client access for approved Kaizen AI customers.
           </div>
         </div>
       </DialogContent>

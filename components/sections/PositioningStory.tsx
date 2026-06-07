@@ -151,11 +151,6 @@ export function PositioningStory() {
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/3 hidden h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-[#C49A30]/12 blur-[120px] md:block"
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(196,154,48,0.28),transparent)]"
-      />
-
       <div className="h-[360svh] md:h-[400vh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden px-6 py-20">
           <div className="mx-auto max-w-6xl">

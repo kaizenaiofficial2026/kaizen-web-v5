@@ -8,11 +8,64 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
-import { getIndustry, industries } from "@/lib/content/industries";
+import {
+  getIndustry,
+  industries,
+  type IndustryPainPoint,
+} from "@/lib/content/industries";
 
 type IndustryPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+const engagementSteps = [
+  {
+    title: "AI Opportunity Audit",
+    description:
+      "We map your operations and pinpoint the highest-ROI AI opportunities. Free to start.",
+    badge: "FREE",
+  },
+  {
+    title: "Build & Deploy",
+    description:
+      "We custom-build and integrate the AI system into the tools you already use.",
+  },
+  {
+    title: "Train & Enable",
+    description:
+      "We train your team to run the system with confidence, so it actually gets used.",
+  },
+  {
+    title: "Manage & Optimize",
+    description:
+      "We monitor, improve, and add new automations as your business grows.",
+  },
+];
+
+function HeroPainPointGrid({ painPoints }: { painPoints: IndustryPainPoint[] }) {
+  return (
+    <div className="grid w-full grid-cols-2 gap-3 sm:gap-4 lg:max-w-[44rem]">
+      {painPoints.map((point, index) => (
+        <Card
+          key={point.title}
+          className="h-full p-4 transition-colors hover:border-primary/40 sm:p-5"
+        >
+          <span
+            className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary sm:text-xs"
+          >
+            Pain point #{index + 1}
+          </span>
+          <h3 className="mt-3 text-base font-semibold leading-snug tracking-tight text-foreground sm:text-lg">
+            {point.title}
+          </h3>
+          <p className="mt-2 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+            {point.description}
+          </p>
+        </Card>
+      ))}
+    </div>
+  );
+}
 
 export function generateStaticParams() {
   return industries.map((industry) => ({ slug: industry.slug }));
@@ -42,95 +95,51 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
     notFound();
   }
 
-  const workflow = [
-    {
-      label: "Customer",
-      text: industry.workflow.customer,
-    },
-    {
-      label: "KaizenAI AI System",
-      text: industry.workflow.system,
-    },
-    {
-      label: "Business Outcome",
-      text: industry.workflow.outcome,
-    },
-  ];
-
   return (
     <main id="main" className="relative overflow-hidden">
       <MarketingHero
         eyebrow={industry.label}
-        title={industry.title}
-        subtitle={industry.subtitle}
+        containerSize="wide"
+        containerClassName="lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] xl:gap-14"
+        title={
+          <span className="block text-[clamp(2rem,4.2vw,3.75rem)] leading-[1.04]">
+            {industry.title}
+          </span>
+        }
+        subtitle={
+          <span className="block text-[clamp(0.95rem,1.05vw,1.125rem)] leading-7">
+            {industry.subtitle}
+          </span>
+        }
         actions={[
-          { label: "Book Consultation", href: "/contact#book" },
-          { label: "All Industries", href: "/industries", variant: "outline" },
+          { label: "Book Free Consultation", href: "/contact#book" },
+          {
+            label: "Talk to AI Representative",
+            href: "/contact",
+            variant: "outline",
+          },
         ]}
       >
-        <Card className="relative overflow-hidden p-6 shadow-card">
-          <div
-            aria-hidden
-            className="absolute inset-x-8 top-8 h-24 rounded-full bg-primary/15 blur-3xl"
-          />
-          <div className="relative">
-            <span className="text-5xl" aria-hidden>
-              {industry.emoji}
-            </span>
-            <h2 className="mt-6 text-2xl font-semibold tracking-tight text-foreground">
-              {industry.name}
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              {industry.description}
-            </p>
-          </div>
-        </Card>
+        <HeroPainPointGrid painPoints={industry.painPoints} />
       </MarketingHero>
 
       <MarketingSection>
         <FadeUp>
           <SectionHeader
-            eyebrow="Challenges"
-            title="The Problems We Solve"
-            subtitle="The first step is removing the repeat work, missed opportunities, and slow handoffs that quietly drain your team."
-          />
-        </FadeUp>
-        <StaggerGrid className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {industry.painPoints.map((point) => (
-            <StaggerItem key={point.title}>
-              <Card className="h-full p-6 transition-colors hover:border-primary/40">
-                <span className="text-3xl" aria-hidden>
-                  {point.emoji}
-                </span>
-                <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
-                  {point.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {point.description}
-                </p>
-              </Card>
-            </StaggerItem>
-          ))}
-        </StaggerGrid>
-      </MarketingSection>
-
-      <MarketingSection>
-        <FadeUp>
-          <SectionHeader
-            eyebrow="Solutions"
             title="What We Build For You"
             subtitle="Each system is designed around your workflow, tools, channels, and handoff rules."
+            className="[&_h2]:mt-0"
           />
         </FadeUp>
-        <StaggerGrid className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <StaggerGrid className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
           {industry.solutions.map((solution) => (
             <StaggerItem key={solution.title}>
-              <Card className="h-full p-5 transition-colors hover:border-primary/40">
-                <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
-                <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground">
+              <Card className="h-full p-3 transition-colors hover:border-primary/40 sm:p-5">
+                <CheckCircle2 className="h-4 w-4 text-primary sm:h-5 sm:w-5" aria-hidden />
+                <h3 className="mt-3 text-base font-semibold leading-snug tracking-tight text-foreground sm:mt-4 sm:text-lg">
                   {solution.title}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                <p className="mt-2 text-[13px] leading-5 text-muted-foreground sm:mt-3 sm:text-sm sm:leading-6">
                   {solution.description}
                 </p>
               </Card>
@@ -142,33 +151,42 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       <MarketingSection>
         <FadeUp>
           <SectionHeader
-            eyebrow="How It Works"
-            title="From First Contact To Outcome"
-            subtitle="A simple example of how the AI system turns an enquiry into a measurable business result."
+            title="How We Work With You"
+            subtitle="From a free AI Opportunity Audit to ongoing optimization — one simple, proven path."
+            className="[&_h2]:mt-0"
           />
         </FadeUp>
         <div className="relative mt-10">
-          <div
-            aria-hidden
-            className="absolute left-[12%] right-[12%] top-1/2 hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent lg:block"
-          />
-          <StaggerGrid className="grid gap-4 lg:grid-cols-3">
-            {workflow.map((step, index) => (
-              <StaggerItem key={step.label} className="relative">
-                <Card className="relative z-10 h-full p-6 text-center transition-colors hover:border-primary/40">
-                  <span className="mx-auto grid h-11 w-11 place-items-center rounded-full border border-primary/30 bg-background text-sm font-bold text-primary">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-stretch">
+            {engagementSteps.map((step, index) => (
+              <div key={step.title} className="contents">
+                <Card className="relative z-10 h-full p-3 text-center transition-colors hover:border-primary/40 sm:p-4 lg:p-5">
+                  <span className="mx-auto grid h-8 w-8 place-items-center rounded-full border border-primary/30 bg-background text-[11px] font-bold text-primary sm:h-9 sm:w-9 sm:text-xs">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
-                    {step.label}
+                  {step.badge && (
+                    <span className="mt-2 inline-flex rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.18em] text-primary sm:mt-3 sm:px-2.5 sm:py-1 sm:text-[9px]">
+                      {step.badge}
+                    </span>
+                  )}
+                  <h3 className="mt-3 text-sm font-semibold leading-snug tracking-tight text-foreground sm:mt-4 sm:text-base lg:text-lg">
+                    {step.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    {step.text}
+                  <p className="mt-2 text-[11px] leading-4 text-muted-foreground sm:text-xs sm:leading-5 lg:text-sm lg:leading-6">
+                    {step.description}
                   </p>
                 </Card>
-              </StaggerItem>
+                {index < engagementSteps.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="hidden items-center justify-center text-primary/55 lg:flex"
+                  >
+                    <span className="text-2xl leading-none">→</span>
+                  </div>
+                )}
+              </div>
             ))}
-          </StaggerGrid>
+          </div>
         </div>
       </MarketingSection>
 
@@ -183,7 +201,7 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
             </p>
             <Button asChild size="xl" className="mt-8">
               <Link href="/contact#book">
-                Book Consultation
+                Book Free Consultation
                 <ArrowRight aria-hidden />
               </Link>
             </Button>

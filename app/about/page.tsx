@@ -54,7 +54,7 @@ export default function AboutPage() {
         eyebrow="About KaizenAI"
         title="We Are KaizenAI."
         subtitle="A team of AI consultants, architects, and builders helping businesses identify opportunities for intelligent automation, design the right systems, and deliver them fully integrated in 30 days."
-        actions={[{ label: "Book Consultation", href: "/contact#book" }]}
+        actions={[{ label: "Book Free Consultation", href: "/contact#book" }]}
       />
 
       <MarketingSection>
@@ -115,7 +115,7 @@ export default function AboutPage() {
             </h2>
             <Button asChild size="xl" className="mt-8">
               <Link href="/contact#book">
-                Book Consultation
+                Book Free Consultation
                 <ArrowRight aria-hidden />
               </Link>
             </Button>

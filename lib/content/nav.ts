@@ -2,11 +2,6 @@ import type { NavItem } from "@/lib/types";
 
 export const industryNavItems = [
   {
-    label: "Ecommerce & Retail",
-    href: "/industries/ecommerce-retail",
-    description: "Answer product questions and recover lost sales 24/7.",
-  },
-  {
     label: "Healthcare & Clinics",
     href: "/industries/healthcare-clinics",
     description: "Automate bookings, reminders, and patient communication.",
@@ -17,9 +12,14 @@ export const industryNavItems = [
     description: "Qualify leads and book viewings without manual follow-up.",
   },
   {
-    label: "Hospitality & Restaurants",
+    label: "Hospitality, Travel & Restaurants",
     href: "/industries/hospitality-restaurants",
-    description: "Handle reservations, menus, and event enquiries automatically.",
+    description: "Handle reservations, travel enquiries, and guest follow-up automatically.",
+  },
+  {
+    label: "Ecommerce & Retail",
+    href: "/industries/ecommerce-retail",
+    description: "Answer product questions and recover lost sales 24/7.",
   },
   {
     label: "Education",
@@ -27,19 +27,19 @@ export const industryNavItems = [
     description: "Manage admissions enquiries and student support at scale.",
   },
   {
-    label: "Legal & Professional Services",
+    label: "Recruitment & HR",
+    href: "/industries/recruitment-hr",
+    description: "Screen candidates and schedule interviews automatically.",
+  },
+  {
+    label: "Legal Services",
     href: "/industries/legal-professional-services",
-    description: "Streamline client intake, scheduling, and follow-ups.",
+    description: "Streamline client intake, scheduling, and routine legal admin.",
   },
   {
     label: "Financial Services & Insurance",
     href: "/industries/financial-services-insurance",
     description: "Automate quotes, onboarding, and client communication.",
-  },
-  {
-    label: "Recruitment & HR",
-    href: "/industries/recruitment-hr",
-    description: "Screen candidates and schedule interviews automatically.",
   },
   {
     label: "Professional Services & Agencies",
