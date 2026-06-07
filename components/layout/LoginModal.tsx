@@ -33,14 +33,14 @@ export function LoginModal({ open, onOpenChange }: LoginModalProps) {
         />
 
         <div className="relative p-6 sm:p-7">
-          <div className="mb-7 pr-10">
+          <div className="mb-7 flex justify-center px-12 pt-2 sm:px-14">
             <Image
               src="/logo.png"
               alt="KaizenAI"
-              width={176}
-              height={42}
+              width={248}
+              height={60}
               priority
-              className="h-auto w-[156px] object-contain sm:w-[176px]"
+              className="h-auto w-[218px] object-contain sm:w-[248px]"
             />
           </div>
 

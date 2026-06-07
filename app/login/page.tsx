@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { LockKeyhole, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { MarketingHero, MarketingSection } from "@/components/primitives/MarketingPage";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,8 +27,15 @@ export default function LoginPage() {
 
       <MarketingSection>
         <Card className="mx-auto max-w-md p-6 sm:p-8">
-          <div className="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-primary text-primary-foreground">
-            <LockKeyhole className="h-6 w-6" aria-hidden />
+          <div className="mb-7 flex justify-center">
+            <Image
+              src="/logo.png"
+              alt="KaizenAI"
+              width={260}
+              height={62}
+              priority
+              className="h-auto w-[220px] object-contain sm:w-[260px]"
+            />
           </div>
           <form className="space-y-4">
             <label className="grid gap-2 text-sm font-semibold text-foreground">
