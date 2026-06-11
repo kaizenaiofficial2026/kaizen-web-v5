@@ -9,7 +9,11 @@ import {
   PhoneOff,
 } from "lucide-react";
 import { useBrowserVoiceCall } from "@/components/demo/BrowserVoiceCall";
-import { FacebookIcon, LinkedinIcon } from "@/components/icons/social";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "@/components/icons/social";
 import { Container } from "@/components/primitives/Container";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -28,17 +32,17 @@ const VoiceSphere = dynamic(() => import("@/components/VoiceSphere"), {
 const socials = [
   {
     label: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/company/kaizenai-dev/about/?viewAsMember=true",
     Icon: LinkedinIcon,
   },
   {
     label: "Instagram",
-    href: "#",
-    initials: "IG",
+    href: "https://www.instagram.com/kaizenai.dev/",
+    Icon: InstagramIcon,
   },
   {
     label: "Facebook",
-    href: "#",
+    href: "https://web.facebook.com/profile.php?id=61574344472130",
     Icon: FacebookIcon,
   },
 ];
@@ -48,21 +52,19 @@ function SocialMark({
 }: {
   social: (typeof socials)[number];
 }) {
-  const Icon = "Icon" in social ? social.Icon : null;
+  const Icon = social.Icon;
 
   return (
     <a
       href={social.href}
+      target="_blank"
+      rel="noreferrer"
       aria-label={social.label}
       className="group flex items-center justify-between rounded-2xl border border-primary/14 bg-black/28 px-4 py-3 text-sm font-semibold text-foreground/75 transition-colors hover:border-primary/40 hover:text-primary"
     >
       <span>{social.label}</span>
       <span className="grid h-9 w-9 place-items-center rounded-full border border-primary/18 bg-primary/8 text-xs text-primary/80 transition-colors group-hover:bg-primary/12 group-hover:text-primary">
-        {Icon ? (
-          <Icon className="h-4 w-4" aria-hidden />
-        ) : (
-          <span aria-hidden>{social.initials}</span>
-        )}
+        <Icon className="h-4 w-4" aria-hidden />
       </span>
     </a>
   );

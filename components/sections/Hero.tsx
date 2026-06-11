@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const heroSubtext =
@@ -83,6 +83,14 @@ export function Hero() {
 
           <div className="hidden md:block" aria-hidden />
         </div>
+
+        <a
+          href="#positioning-story"
+          aria-label="Scroll to the next section"
+          className="absolute bottom-6 left-1/2 z-20 grid h-10 w-10 -translate-x-1/2 place-items-center rounded-full border border-[#C49A30]/45 bg-black/35 text-[#F0EAD8]/80 shadow-[0_0_28px_-14px_rgba(196,154,48,0.9)] backdrop-blur-md transition-colors hover:border-[#C49A30]/75 hover:text-[#C49A30] md:bottom-8"
+        >
+          <ChevronDown className="h-5 w-5" aria-hidden />
+        </a>
       </section>
 
       <div className="bg-black px-6 pb-8 pt-5 md:hidden">

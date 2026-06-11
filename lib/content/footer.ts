@@ -1,8 +1,10 @@
 import {
-  TwitterIcon,
-  MediumIcon,
-  LinkedinIcon,
   FacebookIcon,
+  GmailIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  MediumIcon,
+  WhatsAppIcon,
 } from "@/components/icons/social";
 import type { ComponentType, SVGProps } from "react";
 import type { FooterColumn } from "@/lib/types";
@@ -58,12 +60,6 @@ export const footerColumns: FooterColumn[] = [
 ];
 
 export const socialLinks: SocialLink[] = [
-  { label: "Twitter", href: "https://x.com/kaizen_ai_dev", icon: TwitterIcon },
-  {
-    label: "Medium",
-    href: "https://medium.com/@kaizenaioffcial2026",
-    icon: MediumIcon,
-  },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/kaizenai-dev/about/?viewAsMember=true",
@@ -73,6 +69,26 @@ export const socialLinks: SocialLink[] = [
     label: "Facebook",
     href: "https://web.facebook.com/profile.php?id=61574344472130",
     icon: FacebookIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/kaizenai.dev/",
+    icon: InstagramIcon,
+  },
+  {
+    label: "Medium",
+    href: "https://medium.com/@kaizenaioffcial2026",
+    icon: MediumIcon,
+  },
+  {
+    label: "Gmail",
+    href: "mailto:hello@kaizenai.dev",
+    icon: GmailIcon,
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/94770299569",
+    icon: WhatsAppIcon,
   },
 ];
 

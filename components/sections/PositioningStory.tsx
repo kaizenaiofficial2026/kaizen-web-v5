@@ -106,7 +106,7 @@ function getActiveStory(progress: number) {
 
 export function PositioningStory() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0.08);
 
   useEffect(() => {
     let frameId = 0;
@@ -118,7 +118,7 @@ export function PositioningStory() {
       const rect = section.getBoundingClientRect();
       const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
       const rawProgress = -rect.top / scrollableDistance;
-      const progress = Math.max(0, Math.min(0.999, rawProgress));
+      const progress = Math.max(0.08, Math.min(0.999, rawProgress + 0.08));
 
       setScrollProgress(progress);
     };
@@ -143,6 +143,7 @@ export function PositioningStory() {
 
   return (
     <section
+      id="positioning-story"
       ref={sectionRef}
       aria-label="KaizenAI positioning"
       className="relative bg-black"
@@ -151,7 +152,7 @@ export function PositioningStory() {
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/3 hidden h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-[#C49A30]/12 blur-[120px] md:block"
       />
-      <div className="h-[360svh] md:h-[400vh]">
+      <div className="h-[320svh] md:h-[360vh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden px-6 py-20">
           <div className="mx-auto max-w-6xl">
             <StoryFrame
