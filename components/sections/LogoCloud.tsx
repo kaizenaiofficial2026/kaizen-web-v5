@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { Container } from "@/components/primitives/Container";
 
 type Tool = {
@@ -82,17 +83,8 @@ function LogoItem({ tool }: { tool: Tool }) {
     <div className="group/tool flex w-28 shrink-0 flex-col items-center gap-2 px-1 py-2 text-[rgba(163,163,163,0.48)] transition-colors duration-300 hover:text-primary sm:w-32 lg:w-[140px]">
       <span
         aria-hidden
-        className="block h-9 w-9 bg-current transition-colors duration-300 sm:h-10 sm:w-10"
-        style={{
-          WebkitMaskImage: `url(${tool.src})`,
-          WebkitMaskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          WebkitMaskSize: "contain",
-          maskImage: `url(${tool.src})`,
-          maskRepeat: "no-repeat",
-          maskPosition: "center",
-          maskSize: "contain",
-        }}
+        className="tool-mask block h-9 w-9 bg-current transition-colors duration-300 sm:h-10 sm:w-10"
+        style={{ "--tool-mask": `url(${tool.src})` } as CSSProperties}
       />
       <span className="whitespace-nowrap text-center text-[11px] font-normal text-[rgba(163,163,163,0.45)] transition-colors duration-300 group-hover/tool:text-primary">
         {tool.name}
@@ -151,37 +143,6 @@ export function LogoCloud() {
         <MarqueeRow tools={rowOneTools} direction="left" />
         <MarqueeRow tools={rowTwoTools} direction="right" />
       </div>
-      <style jsx global>{`
-        .kaizen-tools-marquee-track {
-          will-change: transform;
-        }
-
-        .kaizen-tools-marquee-left {
-          animation: kaizen-tools-marquee-left 38s linear infinite;
-        }
-
-        .kaizen-tools-marquee-right {
-          animation: kaizen-tools-marquee-right 44s linear infinite;
-        }
-
-        @keyframes kaizen-tools-marquee-left {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-33.333%);
-          }
-        }
-
-        @keyframes kaizen-tools-marquee-right {
-          from {
-            transform: translateX(-33.333%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </section>
   );
 }

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { m, useScroll, useMotionValueEvent } from "motion/react";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import { openConsultationModal } from "@/components/contact/ConsultationModal";
+import { openConsultationModal } from "@/components/contact/consultation-modal-events";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
 import { LoginModal } from "./LoginModal";
@@ -125,7 +125,7 @@ export function Header() {
 
   return (
     <>
-      <motion.header
+      <m.header
         role="banner"
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b transition-colors",
@@ -317,7 +317,7 @@ export function Header() {
           </div>
         </div>
         <ScrollProgress />
-      </motion.header>
+      </m.header>
       <LoginModal open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );

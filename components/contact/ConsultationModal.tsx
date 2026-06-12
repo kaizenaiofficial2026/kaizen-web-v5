@@ -5,7 +5,6 @@ import {
   type FormEvent,
   type ReactNode,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { Globe2, Mail, MessageCircle } from "lucide-react";
@@ -16,9 +15,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { CONSULTATION_MODAL_EVENT } from "@/components/contact/consultation-modal-events";
 import { cn } from "@/lib/utils";
-
-const CONSULTATION_MODAL_EVENT = "kaizen-open-consultation-modal";
 
 const companySizes = [
   "1–10 employees",
@@ -83,12 +81,6 @@ const contactDetails = [
   },
 ];
 
-export function openConsultationModal() {
-  if (typeof window === "undefined") return;
-
-  window.dispatchEvent(new Event(CONSULTATION_MODAL_EVENT));
-}
-
 function Field({
   label,
   children,
@@ -111,10 +103,7 @@ export function ConsultationModal() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState<ConsultationFormState>(initialFormState);
   const budgetIndex = budgetRanges.indexOf(form.budgetRange);
-  const budgetPercent = useMemo(
-    () => `${(Math.max(budgetIndex, 0) / (budgetRanges.length - 1)) * 100}%`,
-    [budgetIndex],
-  );
+  const budgetPercent = `${(Math.max(budgetIndex, 0) / (budgetRanges.length - 1)) * 100}%`;
 
   useEffect(() => {
     if (typeof window === "undefined") return;

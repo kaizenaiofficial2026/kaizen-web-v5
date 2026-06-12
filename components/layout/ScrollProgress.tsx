@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "motion/react";
+import { m, useScroll, useSpring } from "motion/react";
 
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -11,7 +11,7 @@ export function ScrollProgress() {
   });
 
   return (
-    <motion.div
+    <m.div
       aria-hidden
       className="bg-gradient-to-r from-primary/0 via-primary to-primary/0 absolute inset-x-0 bottom-0 h-px origin-left"
       style={{ scaleX }}

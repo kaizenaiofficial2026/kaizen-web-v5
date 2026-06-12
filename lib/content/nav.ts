@@ -1,6 +1,6 @@
 import type { NavItem } from "@/lib/types";
 
-export const industryNavItems = [
+const industryNavItems = [
   {
     label: "Healthcare & Clinics",
     href: "/industries/healthcare-clinics",

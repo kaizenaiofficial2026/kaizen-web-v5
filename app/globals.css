@@ -315,3 +315,47 @@
     min-width: 0;
   }
 }
+
+/* Logo mask — static mask props live here; the per-logo image URL comes in
+   through the --tool-mask custom property so the JSX style stays tiny. */
+.tool-mask {
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-image: var(--tool-mask);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-image: var(--tool-mask);
+}
+
+/* Tools marquee (moved out of LogoCloud styled-jsx into global CSS) */
+.kaizen-tools-marquee-track {
+  will-change: transform;
+}
+
+.kaizen-tools-marquee-left {
+  animation: kaizen-tools-marquee-left 38s linear infinite;
+}
+
+.kaizen-tools-marquee-right {
+  animation: kaizen-tools-marquee-right 44s linear infinite;
+}
+
+@keyframes kaizen-tools-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes kaizen-tools-marquee-right {
+  from {
+    transform: translateX(-33.333%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

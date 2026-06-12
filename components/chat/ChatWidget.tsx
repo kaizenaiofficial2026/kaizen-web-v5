@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
-  motion,
+  m,
   useReducedMotion,
   type Variants,
 } from "motion/react";
@@ -90,7 +90,8 @@ export function ChatWidget() {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const sessionIdRef = useRef<string>(makeSessionId());
+  const sessionIdRef = useRef<string | null>(null);
+  if (sessionIdRef.current === null) sessionIdRef.current = makeSessionId();
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -249,7 +250,7 @@ export function ChatWidget() {
     <div className="pointer-events-none fixed inset-0 z-[70]">
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             role="dialog"
             aria-modal="false"
             aria-labelledby="chat-widget-title"
@@ -369,6 +370,7 @@ export function ChatWidget() {
                   ref={inputRef}
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
+                  aria-label="Ask about Kaizen"
                   placeholder="Ask about Kaizen..."
                   className="h-11 min-w-0 flex-1 rounded-xl border border-border bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 />
@@ -395,7 +397,7 @@ export function ChatWidget() {
                 </Link>
               </Button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

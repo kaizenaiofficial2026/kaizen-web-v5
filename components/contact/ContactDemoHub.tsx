@@ -8,7 +8,7 @@ import {
   Mic,
   PhoneOff,
 } from "lucide-react";
-import { useBrowserVoiceCall } from "@/components/demo/BrowserVoiceCall";
+import { useVapiVoiceCall } from "@/components/demo/useVapiVoiceCall";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -80,10 +80,12 @@ export function ContactDemoHub() {
   const {
     state,
     error,
+    volume,
+    isSpeaking,
     start,
     stop,
     statusLabel,
-  } = useBrowserVoiceCall();
+  } = useVapiVoiceCall();
   const voiceActive = state === "connecting" || state === "active";
 
   return (
@@ -110,7 +112,11 @@ export function ContactDemoHub() {
                   maxWidth: "min(460px, 75vw)",
                 }}
               >
-                <VoiceSphere isActive={voiceActive} />
+                <VoiceSphere
+                  isActive={voiceActive}
+                  amplitude={volume}
+                  speaking={isSpeaking}
+                />
               </div>
               <div className="mx-auto mt-8 flex max-w-sm flex-col items-center gap-3 px-4 text-center sm:px-0">
                 <p className="text-base font-semibold text-[#F0EAD8]">

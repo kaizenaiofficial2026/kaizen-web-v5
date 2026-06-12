@@ -7,63 +7,62 @@ import { cn } from "@/lib/utils";
 
 const Accordion = AccordionPrimitive.Root;
 
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("border-b border-border", className)}
-    {...props}
-  />
-));
-AccordionItem.displayName = "AccordionItem";
+function AccordionItem({
+  className,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Item>) {
+  return (
+    <AccordionPrimitive.Item
+      className={cn("border-b border-border", className)}
+      {...props}
+    />
+  );
+}
 
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "group flex flex-1 items-start justify-between gap-8 py-7 text-left text-base font-semibold uppercase tracking-[0.04em] text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg lg:text-xl",
-        className,
-      )}
+function AccordionTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        className={cn(
+          "group flex flex-1 items-start justify-between gap-8 py-7 text-left text-base font-semibold uppercase tracking-[0.04em] text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg lg:text-xl",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <Plus
+          aria-hidden
+          className="text-primary mt-1 h-5 w-5 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-45"
+        />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  );
+}
+
+function AccordionContent({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Content>) {
+  return (
+    <AccordionPrimitive.Content
+      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
       {...props}
     >
-      {children}
-      <Plus
-        aria-hidden
-        className="text-primary mt-1 h-5 w-5 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-45"
-      />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div
-      className={cn(
-        "grid grid-cols-1 gap-8 pb-7 sm:grid-cols-2",
-        className,
-      )}
-    >
-      <div className="hidden sm:block" />
-      <p className="text-muted-foreground text-sm leading-7 sm:text-base">
-        {children}
-      </p>
-    </div>
-  </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+      <div
+        className={cn("grid grid-cols-1 gap-8 pb-7 sm:grid-cols-2", className)}
+      >
+        <div className="hidden sm:block" />
+        <p className="text-muted-foreground text-sm leading-7 sm:text-base">
+          {children}
+        </p>
+      </div>
+    </AccordionPrimitive.Content>
+  );
+}
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

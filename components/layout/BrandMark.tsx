@@ -4,18 +4,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
+  if (window.location.pathname !== "/") return;
+
+  event.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export function BrandMark({
   className,
 }: {
   className?: string;
 }) {
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
-    if (window.location.pathname !== "/") return;
-
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
   return (
     <Link
       href="/"

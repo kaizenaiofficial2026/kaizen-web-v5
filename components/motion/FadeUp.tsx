@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, type HTMLMotionProps } from "motion/react";
+import { m, type HTMLMotionProps } from "motion/react";
 
 type FadeUpProps = HTMLMotionProps<"div"> & {
   delay?: number;
@@ -17,7 +17,7 @@ export function FadeUp({
   ...props
 }: FadeUpProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
@@ -25,6 +25,6 @@ export function FadeUp({
       {...props}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

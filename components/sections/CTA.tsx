@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/primitives/Container";
 import { FadeUp } from "@/components/motion/FadeUp";
-import { openConsultationModal } from "@/components/contact/ConsultationModal";
+import { openConsultationModal } from "@/components/contact/consultation-modal-events";
 
 export function CTA() {
   return (

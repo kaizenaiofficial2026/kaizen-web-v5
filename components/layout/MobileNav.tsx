@@ -4,8 +4,9 @@ import { ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { openConsultationModal } from "@/components/contact/ConsultationModal";
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { openConsultationModal } from "@/components/contact/consultation-modal-events";
 import {
   Sheet,
   SheetClose,

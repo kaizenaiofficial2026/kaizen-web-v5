@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, type HTMLMotionProps } from "motion/react";
+import { m, type HTMLMotionProps } from "motion/react";
 
 const parentVariants = {
   hidden: {},
@@ -21,7 +21,7 @@ const childVariants = {
 
 export function StaggerGrid({ children, ...props }: HTMLMotionProps<"div">) {
   return (
-    <motion.div
+    <m.div
       variants={parentVariants}
       initial="hidden"
       whileInView="show"
@@ -29,14 +29,14 @@ export function StaggerGrid({ children, ...props }: HTMLMotionProps<"div">) {
       {...props}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
 export function StaggerItem({ children, ...props }: HTMLMotionProps<"div">) {
   return (
-    <motion.div variants={childVariants} {...props}>
+    <m.div variants={childVariants} {...props}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
