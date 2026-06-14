@@ -193,8 +193,12 @@ export default function BlogPage() {
       />
       <Grain />
 
-      <section className="relative pb-14 pt-32 sm:pb-16 sm:pt-40">
-        <Container size="wide">
+      <section className="relative overflow-hidden pb-14 pt-32 sm:pb-16 sm:pt-40">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,color-mix(in_oklab,var(--primary)_12%,transparent),transparent_34%),radial-gradient(circle_at_86%_12%,color-mix(in_oklab,var(--primary)_7%,transparent),transparent_32%)]"
+        />
+        <Container size="wide" className="relative z-10">
           <FadeUp className="max-w-5xl">
             <h1 className="max-w-5xl text-h1 font-medium text-foreground">
               Ideas, insights, and strategies for{" "}

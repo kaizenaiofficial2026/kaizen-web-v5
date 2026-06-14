@@ -12,7 +12,7 @@ import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Card } from "@/components/ui/card";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 import { FadeUp } from "@/components/motion/FadeUp";
-import { industriesOverview } from "@/lib/content/industries";
+import { industryAutomationPages } from "@/lib/content/industry-automation";
 
 export const metadata: Metadata = {
   title: "KaizenAI — The Future of Agentic AI, Delivered Today",
@@ -34,10 +34,16 @@ const stats = [
     label: "Potential uplift from faster lead response",
   },
   {
-    value: "9+",
+    value: "6",
     label: "Industries mapped for AI automation",
   },
 ];
+
+const homepageIndustries = industryAutomationPages.map((industry) => ({
+  slug: industry.slug,
+  name: industry.industryName,
+  href: `/industries/${industry.slug}`,
+}));
 
 export default function Home() {
   return (
@@ -60,15 +66,8 @@ export default function Home() {
         </FadeUp>
 
         <StaggerGrid className="mt-10 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
-          {industriesOverview.map((industry, index) => (
-            <StaggerItem
-              key={industry.slug}
-              className={`h-full ${
-                index === industriesOverview.length - 1
-                  ? "min-[360px]:col-span-2 min-[360px]:mx-auto min-[360px]:w-[calc((100%_-_0.75rem)_/_2)] md:col-span-1 md:w-full"
-                  : ""
-              }`}
-            >
+          {homepageIndustries.map((industry) => (
+            <StaggerItem key={industry.slug} className="h-full">
               <Link href={industry.href} className="group block h-full">
                 <Card className="relative grid min-h-[108px] place-items-center overflow-hidden p-4 text-center transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-glow sm:min-h-[132px] sm:p-6 lg:min-h-[144px]">
                   <ArrowRight

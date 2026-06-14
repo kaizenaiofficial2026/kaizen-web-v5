@@ -662,6 +662,17 @@ export const industriesOverview: IndustryOverview[] = industries.map(
   }),
 );
 
+const industrySlugAliases: Record<string, string> = {
+  "hospitality-travel-restaurants": "hospitality-restaurants",
+};
+
+export const industryRouteSlugs = [
+  ...industries.map((industry) => industry.slug),
+  ...Object.keys(industrySlugAliases),
+];
+
 export function getIndustry(slug: string) {
-  return industries.find((industry) => industry.slug === slug);
+  const resolvedSlug = industrySlugAliases[slug] ?? slug;
+
+  return industries.find((industry) => industry.slug === resolvedSlug);
 }

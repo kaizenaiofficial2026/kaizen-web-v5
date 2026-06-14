@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { IndustryAutomationPage } from "@/components/industries/IndustryAutomationPage";
 import { MarketingHero, MarketingSection } from "@/components/primitives/MarketingPage";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,13 @@ import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid";
 import {
   getIndustry,
-  industries,
+  industryRouteSlugs,
   type IndustryPainPoint,
 } from "@/lib/content/industries";
+import {
+  getIndustryAutomationContent,
+  industryAutomationSlugs,
+} from "@/lib/content/industry-automation";
 
 type IndustryPageProps = {
   params: Promise<{ slug: string }>;
@@ -68,13 +73,24 @@ function HeroPainPointGrid({ painPoints }: { painPoints: IndustryPainPoint[] }) 
 }
 
 export function generateStaticParams() {
-  return industries.map((industry) => ({ slug: industry.slug }));
+  return Array.from(new Set([...industryRouteSlugs, ...industryAutomationSlugs])).map(
+    (slug) => ({ slug }),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: IndustryPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const automationContent = getIndustryAutomationContent(slug);
+
+  if (automationContent) {
+    return {
+      title: `${automationContent.industryName} — KaizenAI`,
+      description: automationContent.subheading,
+    };
+  }
+
   const industry = getIndustry(slug);
 
   if (!industry) {
@@ -89,6 +105,12 @@ export async function generateMetadata({
 
 export default async function IndustryPage({ params }: IndustryPageProps) {
   const { slug } = await params;
+  const automationContent = getIndustryAutomationContent(slug);
+
+  if (automationContent) {
+    return <IndustryAutomationPage content={automationContent} />;
+  }
+
   const industry = getIndustry(slug);
 
   if (!industry) {
