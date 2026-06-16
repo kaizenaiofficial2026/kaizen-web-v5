@@ -18,7 +18,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "healthcare-clinics",
     industryName: "Healthcare & Clinics",
     subheading:
-      "Automate patient enquiries, bookings, reminders, intake, follow-ups, and clinic operations.",
+      "We do not believe in one-size-fits-all AI. First, we understand how your process actually works. Then we automate what matters — patient enquiries, bookings, reminders, intake, follow-ups, billing support, and daily clinic operations.",
     scope:
       "Dental clinics, medical practices, therapy centers, specialist clinics, physiotherapy centers, wellness centers, diagnostic laboratories, and primary care centers.",
     painPoints: [
@@ -106,7 +106,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "hospitality-travel-restaurants",
     industryName: "Hospitality, Travel & Restaurants",
     subheading:
-      "Capture bookings, reduce no-shows, manage guest communication, and increase repeat revenue.",
+      "We do not force a generic AI tool into your business. First, we understand how your process actually works. Then we automate what matters — bookings, guest enquiries, reservations, confirmations, review follow-ups, repeat visits, and daily hospitality operations.",
     scope:
       "Hotels, resorts, restaurants, cafes, travel agencies, tour operators, homestays, wedding venues, and event halls.",
     painPoints: [
@@ -204,7 +204,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "ecommerce-retail",
     industryName: "Ecommerce & Retail",
     subheading:
-      "Recover lost carts, automate support, sync orders, improve retention, and protect margins.",
+      "There is no single AI setup that works for every store. First, we understand how your process actually works. Then we automate what matters — abandoned carts, customer support, order updates, returns, retention, inventory visibility, and margin protection.",
     scope:
       "Online stores, Shopify and WooCommerce brands, retail chains, fashion, electronics, grocery retailers, and marketplace sellers on platforms such as Daraz or Jumia.",
     painPoints: [
@@ -323,7 +323,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "education",
     industryName: "Education",
     subheading:
-      "Automate enrolment, application follow-up, class scheduling, payments, student support, and retention.",
+      "Education businesses do not need random AI tools. First, we understand how your process actually works. Then we automate what matters — enquiries, applications, trial bookings, class scheduling, payment reminders, student support, and retention workflows.",
     scope:
       "Coaching centers, online course providers, tutoring platforms, universities, admissions teams, training institutes, and skill-development centers.",
     painPoints: [
@@ -442,7 +442,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "real-estate",
     industryName: "Real Estate",
     subheading:
-      "Respond to leads instantly, qualify buyers, automate viewings, nurture prospects, and track deals.",
+      "Real estate moves fast, and generic AI will not fix a broken lead process. First, we understand how your process actually works. Then we automate what matters — lead response, buyer qualification, viewing bookings, follow-ups, CRM updates, and deal tracking.",
     scope:
       "Real estate agents, brokerages, property developers, property management companies, and real estate consultancies.",
     painPoints: [
@@ -520,7 +520,7 @@ export const industryAutomationPages: IndustryAutomationContent[] = [
     slug: "accounting-audit-financial-reporting",
     industryName: "Accounting, Audit & Financial Reporting",
     subheading:
-      "Automate document collection, bookkeeping, reconciliation, tax support, audit evidence, and management reporting.",
+      "Accounting and audit automation has to follow your exact workflow. First, we understand how your process actually works. Then we automate what matters — document collection, bookkeeping support, reconciliation, tax preparation, audit evidence, and management reporting.",
     scope:
       "Accounting firms, audit firms, bookkeeping providers, tax consultants, outsourced CFO teams, finance advisory practices, payroll service providers, corporate finance departments, and SME finance teams.",
     painPoints: [
