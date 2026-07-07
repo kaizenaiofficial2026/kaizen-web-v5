@@ -55,11 +55,20 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/kai-logo.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   keywords: [
     "AI chatbots",
     "AI voice agents",
+    "custom AI solutions",
+    "custom ERP systems",
+    "custom CRM systems",
     "missed call recovery",
     "appointment booking automation",
     "WhatsApp chatbot",

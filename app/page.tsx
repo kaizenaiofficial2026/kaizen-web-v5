@@ -18,7 +18,7 @@ import { industryAutomationPages } from "@/lib/content/industry-automation";
 export const metadata: Metadata = {
   title: "KaizenAI — The Future of Agentic AI, Delivered Today",
   description:
-    "KaizenAI designs and delivers custom AI systems for businesses across every industry. AI receptionists, sales agents, workflow automation, and more in 30 days.",
+    "KaizenAI builds custom AI solutions, workflow automations, and fully custom ERP and CRM systems with AI integrations. We deploy each solution and train your team to use it.",
 };
 
 const homepageIndustries = industryAutomationPages.map((industry) => ({
