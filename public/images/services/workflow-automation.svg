@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Abstract agentic workflow automation">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="48%" r="72%">
+      <stop offset="0" stop-color="#d6a738" stop-opacity=".36"/>
+      <stop offset=".45" stop-color="#8d6f24" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0c1010"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#fade)"/>
+  <rect width="1200" height="720" fill="url(#glow)"/>
+  <g opacity=".18" stroke="#ecd479" stroke-width="2">
+    <path d="M120 600C276 441 383 511 512 354s290-114 548-256" fill="none"/>
+    <path d="M116 640C294 488 404 565 538 404s285-111 526-230" fill="none"/>
+  </g>
+  <g opacity=".56" stroke="#ecd479" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="250" cy="222" r="72"/>
+    <circle cx="600" cy="354" r="94"/>
+    <circle cx="944" cy="212" r="72"/>
+    <circle cx="890" cy="536" r="72"/>
+    <path d="M319 248 510 320M690 322l188-82M662 423l162 78M320 196h150M738 212h134M724 536h94"/>
+  </g>
+  <g opacity=".48" stroke="#c9a03d" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M557 325h92M557 371h92M600 270v-42M600 480v-42"/>
+    <path d="M221 222h58M914 212h60M860 536h60"/>
+  </g>
+</svg>

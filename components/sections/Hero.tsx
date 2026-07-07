@@ -3,7 +3,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const heroSubtext =
-  "We help your company identify the AI opportunities that will actually transform your business, then we build, deploy, and train your team to use the system.";
+  "We help your company identify the AI and custom software opportunities that can transform your business, then we build, deploy, and integrate solutions your team can use with confidence.";
 
 function HeroActions({
   className,
@@ -68,7 +68,7 @@ export function Hero() {
               </span>
             </h1>
 
-            <p className="mt-6 hidden max-w-[460px] text-[15px] leading-7 text-[#A3A3A3] md:block">
+            <p className="mt-6 hidden max-w-[520px] text-[17px] leading-8 text-[#F1ECE0] md:block">
               {heroSubtext}
             </p>
 
@@ -76,7 +76,7 @@ export function Hero() {
           </div>
 
           <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.93),rgba(0,0,0,0.66)_68%,rgba(0,0,0,0))] px-6 pb-20 pt-28 md:hidden">
-            <p className="mx-auto max-w-[340px] text-center text-[14px] leading-6 text-[#A3A3A3] [text-shadow:0_1px_18px_rgba(0,0,0,0.85)]">
+            <p className="mx-auto max-w-[350px] text-center text-[15px] leading-7 text-[#F1ECE0] [text-shadow:0_1px_18px_rgba(0,0,0,0.85)]">
               {heroSubtext}
             </p>
           </div>

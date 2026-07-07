@@ -1,4 +1,5 @@
 import type { NavItem } from "@/lib/types";
+import { serviceNavItems } from "@/lib/content/services";
 
 const industryNavItems = [
   {
@@ -29,6 +30,10 @@ const industryNavItems = [
 
 export const primaryNav: NavItem[] = [
   { label: "Home", href: "/" },
+  {
+    label: "Services",
+    children: serviceNavItems,
+  },
   {
     label: "Industries",
     children: industryNavItems,

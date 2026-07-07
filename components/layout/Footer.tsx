@@ -2,20 +2,21 @@ import Link from "next/link";
 import { Container } from "@/components/primitives/Container";
 import { BrandMark } from "./BrandMark";
 import { footerColumns, legalLinks, socialLinks } from "@/lib/content/footer";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card/40">
       <Container className="py-16 sm:py-20">
-        <div className="grid grid-cols-1 gap-9 min-[420px]:grid-cols-2 md:grid-cols-4 lg:gap-10">
-          <div className="flex flex-col items-center text-center min-[420px]:col-span-2 md:col-span-1 md:items-start md:text-left">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-start justify-items-center gap-y-12 text-center sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-x-12">
+          <div className="flex w-full max-w-xs flex-col items-center">
             <BrandMark />
             <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-6">
               The Future of Agentic AI, Delivered Today.
             </p>
             <nav
               aria-label="Social"
-              className="mx-auto mt-6 grid w-52 grid-cols-3 justify-items-center gap-y-4 md:mx-0 md:w-48 lg:w-52"
+              className="mt-8 grid w-52 grid-cols-3 justify-items-center gap-y-4 md:w-48 lg:w-52"
             >
               {socialLinks.map((s) => {
                 const Icon = s.icon;
@@ -43,16 +44,22 @@ export function Footer() {
           </div>
 
           {footerColumns.map((col) => (
-            <div key={col.heading}>
+            <div
+              key={col.heading}
+              className={cn(
+                "w-full max-w-56 min-w-0 text-left",
+                col.heading === "Company" && "lg:translate-x-6 xl:translate-x-8",
+              )}
+            >
               <h3 className="text-foreground text-xs font-semibold uppercase tracking-[0.18em]">
                 {col.heading}
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-5 space-y-3.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-primary text-sm transition-colors"
+                      className="text-muted-foreground hover:text-primary block text-sm leading-6 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -63,7 +70,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="border-border mt-16 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
+        <div className="border-border mt-16 flex flex-col items-center justify-between gap-4 border-t pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <p>© 2026 KaizenAI. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {legalLinks.map((l) => (

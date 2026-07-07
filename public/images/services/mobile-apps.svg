@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Abstract custom mobile app screens">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="44%" r="74%">
+      <stop offset="0" stop-color="#c9a03d" stop-opacity=".34"/>
+      <stop offset=".48" stop-color="#6f5620" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0d1114"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#fade)"/>
+  <rect width="1200" height="720" fill="url(#glow)"/>
+  <g opacity=".17" stroke="#ecd479" stroke-width="2">
+    <path d="M176 602c171-115 310-109 443-31s275 71 408-28" fill="none"/>
+    <path d="M172 134c178 95 311 92 416 28s248-59 430 36" fill="none"/>
+  </g>
+  <g opacity=".56" fill="none" stroke="#ecd479" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="348" y="102" width="218" height="502" rx="44" stroke-width="10"/>
+    <rect x="632" y="148" width="218" height="456" rx="44" stroke-width="10" opacity=".85"/>
+    <path d="M420 184h72M404 270h106M404 330h82M404 440h106" stroke-width="10"/>
+    <path d="M688 252h106M688 312h82M688 426h106" stroke-width="10" opacity=".85"/>
+    <rect x="404" y="380" width="106" height="38" rx="14" stroke-width="7"/>
+    <rect x="688" y="360" width="106" height="38" rx="14" stroke-width="7" opacity=".85"/>
+  </g>
+  <g opacity=".42" fill="#c9a03d">
+    <circle cx="457" cy="534" r="18"/>
+    <circle cx="741" cy="534" r="18"/>
+  </g>
+</svg>

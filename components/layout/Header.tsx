@@ -8,7 +8,6 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { openConsultationModal } from "@/components/contact/consultation-modal-events";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "./BrandMark";
-import { LoginModal } from "./LoginModal";
 import { MobileNav } from "./MobileNav";
 import { ScrollProgress } from "./ScrollProgress";
 import { primaryNav } from "@/lib/content/nav";
@@ -96,7 +95,6 @@ function isNavItemActive(
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [loginOpen, setLoginOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
@@ -257,13 +255,13 @@ export function Header() {
                               role="menuitem"
                               aria-current={isChildActive ? "page" : undefined}
                               className={cn(
-                                "group relative block rounded-xl px-4 py-3 transition-[background-color,transform,color] duration-200 hover:translate-x-0.5 hover:bg-primary/9",
+                                "group relative my-0.5 block rounded-xl px-4 py-2.5 transition-[background-color,transform,color] duration-200 hover:translate-x-0.5 hover:bg-primary/9",
                                 isChildActive && "text-primary",
                               )}
                             >
                               <span
                                 className={cn(
-                                  "block text-sm font-semibold leading-5 text-foreground/78 transition-colors group-hover:text-primary",
+                                  "block text-sm font-semibold leading-6 tracking-[0.01em] text-foreground/78 transition-colors group-hover:text-primary",
                                   isChildActive && "text-primary",
                                 )}
                               >
@@ -296,29 +294,18 @@ export function Header() {
             <div className="col-start-3 flex items-center justify-end gap-5">
               <Button
                 size="sm"
-                className="hidden h-10 rounded-lg border-0 bg-transparent px-2 text-sm font-medium text-foreground/86 shadow-none hover:bg-transparent hover:text-foreground lg:inline-flex"
-                onClick={() => setLoginOpen(true)}
-              >
-                Login
-              </Button>
-              <Button
-                size="sm"
                 className="hidden h-12 rounded-lg border border-[#b88b25]/70 bg-black/10 px-6 text-sm font-semibold text-[#d6a738] shadow-[0_0_34px_-15px_rgba(216,169,40,0.95),inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-[#d0a235] hover:bg-[#c49a30]/10 hover:text-[#ecd479] lg:inline-flex"
                 onClick={openConsultationModal}
               >
                 Free Consultation
                 <ArrowRight aria-hidden />
               </Button>
-              <MobileNav
-                items={primaryNav}
-                onOpenLogin={() => setLoginOpen(true)}
-              />
+              <MobileNav items={primaryNav} />
             </div>
           </div>
         </div>
         <ScrollProgress />
       </m.header>
-      <LoginModal open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );
 }

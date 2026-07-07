@@ -413,14 +413,14 @@ export function ChatWidget() {
             "max-md:pointer-events-none max-md:translate-y-5 max-md:opacity-0",
         )}
       >
-        <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-foreground/15 transition-colors duration-500 group-hover:bg-primary-foreground/20 group-focus-visible:bg-primary-foreground/20">
+        <span className="relative grid h-10 w-10 shrink-0 place-items-center">
           {open ? (
             <X className="h-5 w-5" aria-hidden />
           ) : (
             <MessageCircle className="h-5 w-5" aria-hidden />
           )}
           {!open && (
-            <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-primary bg-emerald-400" />
+            <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-primary bg-emerald-400" />
           )}
         </span>
         <span className="ml-1.5 max-w-0 translate-x-0.5 whitespace-nowrap text-base font-bold opacity-0 transition-[max-width,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:group-hover:max-w-32 sm:group-hover:translate-x-0 sm:group-hover:opacity-100 sm:group-focus-visible:max-w-32 sm:group-focus-visible:translate-x-0 sm:group-focus-visible:opacity-100">

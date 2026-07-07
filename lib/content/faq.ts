@@ -2,35 +2,35 @@ import type { FAQItem } from "@/lib/types";
 
 export const faqs: FAQItem[] = [
   {
-    q: "What exactly does KaizenAI build?",
-    a: "We design and build custom AI systems for businesses including AI receptionists, sales agents, support agents, lead qualification systems, CRM automations, and full workflow automation. Every solution is custom-built around your specific operations.",
+    q: "What are KaizenAI's core services?",
+    a: "Our core services are AI receptionists, AI chat agents, agentic AI workflow automation, AI knowledge assistants, Custom Web Apps + AI Integrations, Custom Mobile Apps + AI Integrations, Custom ERP Systems + AI Integrations, and Custom CRM Systems + AI Integrations.",
   },
   {
-    q: "Do you only build chatbots?",
-    a: "No. We solve business problems using AI. Chatbots are one small part of what is possible. We build AI voice agents, internal assistants, workflow automation systems, recruitment tools, reporting automation, and industry-specific AI applications.",
+    q: "Is every software solution custom built?",
+    a: "Yes. Every system is designed around your business needs, workflow, tools, team structure, and customer journey. We do not force a generic template into your operations.",
   },
   {
-    q: "What is Agentic AI?",
-    a: "Agentic AI refers to AI systems that can take actions, make decisions, and complete multi-step tasks autonomously, not just answer questions. An AI agent can qualify a lead, book an appointment, update your CRM, and send a confirmation, all without human involvement.",
+    q: "What can an AI receptionist do?",
+    a: "An AI receptionist can answer calls, capture enquiries, qualify leads, book appointments, send reminders, recover missed calls, and transfer urgent or complex conversations to your team.",
   },
   {
-    q: "How long does implementation take?",
-    a: "Our target delivery window is 30 days from consultation to launch. Complex enterprise systems may take longer. We confirm the timeline after the discovery session when we understand the full scope.",
+    q: "What channels can AI chat agents support?",
+    a: "We build AI chat agents for website chat, WhatsApp, Instagram, Messenger, and other customer channels where your business receives sales or support conversations.",
+  },
+  {
+    q: "What is agentic AI workflow automation?",
+    a: "Agentic AI workflow automation means AI agents can complete multi-step business tasks across your tools, such as updating records, routing requests, sending follow-ups, reconciling data, and escalating exceptions.",
+  },
+  {
+    q: "Can you build custom apps, CRMs, and ERP systems with AI integrations?",
+    a: "Yes. We build custom web apps, mobile apps, CRM systems, and ERP systems with AI integrations embedded into the workflows that matter, such as lead scoring, reporting, booking, support, routing, and operations.",
   },
   {
     q: "Can you integrate with our existing systems?",
-    a: "Yes. We integrate with Salesforce, HubSpot, Zoho, Google Workspace, WhatsApp Business, and most major business platforms. Integration capability is confirmed during the discovery phase.",
+    a: "Yes. We integrate with CRMs, calendars, forms, WhatsApp Business, Google Workspace, HubSpot, Zoho, Salesforce, Make, n8n, and other tools depending on your current stack.",
   },
   {
-    q: "Do we need technical knowledge?",
-    a: "None at all. We handle everything from architecture and build to integration and launch. You describe the problem and the outcome you want. We deliver it.",
-  },
-  {
-    q: "Is every solution custom built?",
-    a: "Yes. We do not use templates or pre-built tools sold under a different name. Every system is designed and built specifically for your business, your workflows, and your goals.",
-  },
-  {
-    q: "What industries do you work with?",
-    a: "We work across Ecommerce & Retail, Healthcare, Real Estate, Hospitality, Education, Legal, Financial Services, Recruitment, and Professional Services, plus any industry that needs intelligent automation.",
+    q: "How long does implementation take?",
+    a: "Timelines depend on scope. Focused AI agents can often launch quickly, while custom software, ERP, CRM, or multi-system automation projects are scoped after discovery so the build matches your real requirements.",
   },
 ];

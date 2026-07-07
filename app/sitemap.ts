@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { industries } from "@/lib/content/industries";
+import { services } from "@/lib/content/services";
 import { siteConfig } from "@/lib/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/blog",
     "/case-studies",
+    ...services.map((service) => service.href),
     ...industries.map((industry) => industry.href),
   ];
 
@@ -17,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${siteConfig.url}${route}`,
     lastModified: now,
     changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : route.startsWith("/industries") ? 0.8 : 0.7,
+    priority:
+      route === ""
+        ? 1
+        : route.startsWith("/services") || route.startsWith("/industries")
+          ? 0.8
+          : 0.7,
   }));
 }

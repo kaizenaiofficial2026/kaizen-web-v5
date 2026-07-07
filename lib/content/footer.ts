@@ -8,6 +8,7 @@ import {
 } from "@/components/icons/social";
 import type { ComponentType, SVGProps } from "react";
 import type { FooterColumn } from "@/lib/types";
+import { services } from "@/lib/content/services";
 
 export type SocialLink = {
   label: string;
@@ -19,35 +20,20 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Company",
     links: [
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
       { label: "Industries", href: "/industries" },
       { label: "Blog", href: "/blog" },
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
-      { label: "Client Portal", href: "#" },
     ],
   },
   {
-    heading: "Industries",
-    links: [
-      { label: "Healthcare & Clinics", href: "/industries/healthcare-clinics" },
-      { label: "Real Estate", href: "/industries/real-estate" },
-      {
-        label: "Hospitality, Travel & Restaurants",
-        href: "/industries/hospitality-restaurants",
-      },
-      { label: "Ecommerce & Retail", href: "/industries/ecommerce-retail" },
-      { label: "Education", href: "/industries/education" },
-      { label: "Recruitment & HR", href: "/industries/recruitment-hr" },
-      { label: "Legal Services", href: "/industries/legal-professional-services" },
-      {
-        label: "Financial Services & Insurance",
-        href: "/industries/financial-services-insurance",
-      },
-      {
-        label: "Professional Services & Agencies",
-        href: "/industries/professional-services-agencies",
-      },
-    ],
+    heading: "Services",
+    links: services.map((service) => ({
+      label: service.navLabel ?? service.title,
+      href: service.href,
+    })),
   },
   {
     heading: "Contact",

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Abstract AI chat channels">
+  <defs>
+    <radialGradient id="glow" cx="52%" cy="45%" r="68%">
+      <stop offset="0" stop-color="#c9a03d" stop-opacity=".34"/>
+      <stop offset=".48" stop-color="#5f4a16" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101314"/>
+      <stop offset="1" stop-color="#030303"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#fade)"/>
+  <rect width="1200" height="720" fill="url(#glow)"/>
+  <g opacity=".15" stroke="#ecd479" stroke-width="2">
+    <path d="M100 150h1000M100 285h1000M100 420h1000M100 555h1000"/>
+    <path d="M210 80v560M405 80v560M600 80v560M795 80v560M990 80v560"/>
+  </g>
+  <g opacity=".52" fill="none" stroke="#ecd479" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M280 212h306c48 0 86 37 86 82v48c0 45-38 82-86 82H440l-104 74v-74h-56c-48 0-86-37-86-82v-48c0-45 38-82 86-82Z" stroke-width="9"/>
+    <path d="M666 332h240c39 0 70 30 70 66v36c0 37-31 66-70 66H801l-81 58v-58h-54" stroke-width="7" opacity=".8"/>
+    <path d="M330 306h245M330 360h168" stroke-width="10"/>
+    <path d="M742 410h154M742 452h92" stroke-width="8" opacity=".8"/>
+  </g>
+  <g opacity=".5" fill="#c9a03d">
+    <circle cx="218" cy="158" r="34"/>
+    <circle cx="1028" cy="214" r="24"/>
+    <circle cx="954" cy="560" r="30"/>
+    <circle cx="190" cy="556" r="18"/>
+  </g>
+</svg>

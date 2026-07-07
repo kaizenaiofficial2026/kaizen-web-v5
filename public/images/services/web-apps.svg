@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Abstract custom web application dashboard">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="76%">
+      <stop offset="0" stop-color="#c9a03d" stop-opacity=".32"/>
+      <stop offset=".5" stop-color="#8d6f24" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101113"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#fade)"/>
+  <rect width="1200" height="720" fill="url(#glow)"/>
+  <g opacity=".54" fill="none" stroke="#ecd479" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="170" y="132" width="860" height="462" rx="34" stroke-width="10"/>
+    <path d="M170 222h860" stroke-width="10"/>
+    <circle cx="234" cy="177" r="13" fill="#ecd479" stroke="none"/>
+    <circle cx="284" cy="177" r="13" fill="#ecd479" stroke="none" opacity=".7"/>
+    <circle cx="334" cy="177" r="13" fill="#ecd479" stroke="none" opacity=".45"/>
+    <path d="m388 360-76 74 76 74M812 360l76 74-76 74M554 518l94-188" stroke-width="14"/>
+  </g>
+  <g opacity=".24" fill="#c9a03d">
+    <rect x="214" y="266" width="180" height="54" rx="18"/>
+    <rect x="806" y="266" width="180" height="54" rx="18"/>
+    <rect x="214" y="530" width="334" height="40" rx="14"/>
+  </g>
+</svg>
