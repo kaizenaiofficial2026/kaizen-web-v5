@@ -8,7 +8,7 @@ import {
   Mic,
   PhoneOff,
 } from "lucide-react";
-import { useVapiVoiceCall } from "@/components/demo/useVapiVoiceCall";
+import { useVapiVoiceCall } from "@/components/voice/useVapiVoiceCall";
 import {
   FacebookIcon,
   InstagramIcon,

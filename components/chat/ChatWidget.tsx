@@ -21,9 +21,6 @@ import { Button } from "@/components/ui/button";
 import { OPEN_CHAT_WIDGET_EVENT } from "@/lib/chat-events";
 import { cn } from "@/lib/utils";
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://api.kaizenai.dev";
-
 type ChatMessage = {
   id: number;
   role: "assistant" | "user";
@@ -37,17 +34,11 @@ const quickPrompts = [
   "Show pricing",
 ];
 
-const initialMessages: ChatMessage[] = [
-  {
-    id: 1,
-    role: "assistant",
-    text: "Hi, I am Kaizen AI. Ask me about chatbots, voice agents, pricing, or how we can help you stop missing leads.",
-  },
-];
-
-function makeSessionId() {
-  return `web-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-}
+// Shown only if priming the Vapi chat fails. Normally the assistant's own
+// greeting is fetched on first open, so the user sees a single, consistent
+// hello (and their first real question gets answered directly, not re-greeted).
+const GREETING_FALLBACK =
+  "Hi! I’m Eve from Kaizen AI. Ask me about chatbots, voice agents, pricing, or how we can help you stop missing leads.";
 
 let _msgId = 1;
 const nextMsgId = () => ++_msgId;
@@ -82,7 +73,7 @@ const panelVariants: Variants = {
 export function ChatWidget() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [hideLauncherOnMobileHero, setHideLauncherOnMobileHero] =
@@ -90,9 +81,43 @@ export function ChatWidget() {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const sessionIdRef = useRef<string | null>(null);
-  if (sessionIdRef.current === null) sessionIdRef.current = makeSessionId();
+  const previousChatIdRef = useRef<string | null>(null);
+  const primedRef = useRef(false);
   const reducedMotion = useReducedMotion();
+
+  // On first open, fetch the assistant's real greeting and open a Vapi chat
+  // session. Subsequent user messages ride that session (previousChatId), so
+  // the first question is answered instead of triggering a fresh intro.
+  useEffect(() => {
+    if (!open || primedRef.current) return;
+    primedRef.current = true;
+
+    const prime = async () => {
+      setIsTyping(true);
+      let text = GREETING_FALLBACK;
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: "Hello" }),
+        });
+        const data = (await response.json()) as {
+          reply?: string;
+          chatId?: string | null;
+        };
+        if (response.ok && data.reply) {
+          previousChatIdRef.current = data.chatId ?? null;
+          text = data.reply;
+        }
+      } catch {
+        // fall back to the static greeting
+      }
+      setMessages([{ id: nextMsgId(), role: "assistant", text }]);
+      setIsTyping(false);
+    };
+
+    void prime();
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -177,7 +202,6 @@ export function ChatWidget() {
     abortRef.current = controller;
 
     const userMsgId = nextMsgId();
-    const assistantMsgId = nextMsgId();
     setMessages((current) => [
       ...current,
       { id: userMsgId, role: "user", text: trimmed },
@@ -186,59 +210,42 @@ export function ChatWidget() {
     setIsTyping(true);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/chat`, {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, sessionId: sessionIdRef.current, agentId: 'kaizenai' }),
+        body: JSON.stringify({
+          message: trimmed,
+          previousChatId: previousChatIdRef.current,
+        }),
         signal: controller.signal,
       });
 
-      if (!response.ok || !response.body) throw new Error("API error");
+      const data = (await response.json()) as {
+        reply?: string;
+        chatId?: string | null;
+        error?: string;
+      };
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      const msgId = assistantMsgId;
-      let assistantText = "";
-      let firstChunk = true;
+      if (!response.ok) throw new Error(data.error ?? "API error");
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const lines = decoder.decode(value, { stream: true }).split("\n");
-        for (const line of lines) {
-          if (!line.startsWith("data: ")) continue;
-          let parsed: { chunk?: string; done?: boolean };
-          try { parsed = JSON.parse(line.slice(6)); } catch { continue; }
-          if (parsed.done) break;
-          if (parsed.chunk) {
-            if (firstChunk) {
-              firstChunk = false;
-              setIsTyping(false);
-              assistantText = parsed.chunk;
-              setMessages((current) => [
-                ...current,
-                { id: msgId, role: "assistant", text: parsed.chunk! },
-              ]);
-            } else {
-              assistantText += parsed.chunk;
-              const snapshot = assistantText;
-              setMessages((current) =>
-                current.map((m) => (m.id === msgId ? { ...m, text: snapshot } : m))
-              );
-            }
-          }
-        }
-      }
-
-      if (firstChunk) setIsTyping(false);
+      // Vapi keeps conversation history server-side; thread the chat id forward.
+      previousChatIdRef.current = data.chatId ?? previousChatIdRef.current;
+      setIsTyping(false);
+      setMessages((current) => [
+        ...current,
+        {
+          id: nextMsgId(),
+          role: "assistant",
+          text: data.reply ?? "Sorry, I didn't catch that — could you rephrase?",
+        },
+      ]);
     } catch (err) {
       if ((err as Error).name === "AbortError") return;
       setIsTyping(false);
       setMessages((current) => [
         ...current,
         {
-          id: assistantMsgId,
+          id: nextMsgId(),
           role: "assistant",
           text: "I'm having trouble connecting right now. Please try again in a moment.",
         },
