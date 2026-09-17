@@ -12,6 +12,7 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteConfig } from "@/lib/content/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -137,6 +138,7 @@ export default function RootLayout({
           <SkipLink />
           <SiteChrome>{children}</SiteChrome>
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
