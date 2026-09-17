@@ -10,6 +10,7 @@ type BookDemoPayload = {
   role?: unknown;
   companySize?: unknown;
   interest?: unknown;
+  budget?: unknown;
   project?: unknown;
   countryIso?: unknown;
   countryName?: unknown;
@@ -27,6 +28,7 @@ type Lead = {
   role: string;
   companySize: string;
   interest: string;
+  budget: string;
   project: string;
   countryIso: string;
   countryName: string;
@@ -116,6 +118,7 @@ function buildLeadText(lead: Lead) {
     `Role: ${lead.role}`,
     `Company size: ${lead.companySize}`,
     `Interest: ${lead.interest}`,
+    `Budget: ${lead.budget || "Not provided"}`,
     `Project: ${lead.project || "Not provided"}`,
     `Source: ${lead.source}`,
     `Submitted at: ${lead.submittedAt}`,
@@ -133,6 +136,7 @@ function buildLeadHtml(lead: Lead) {
     ["Role", lead.role],
     ["Company size", lead.companySize],
     ["Interest", lead.interest],
+    ["Budget", lead.budget || "Not provided"],
     ["Project", lead.project || "Not provided"],
     ["Source", lead.source],
     ["Submitted at", lead.submittedAt],
@@ -208,6 +212,7 @@ function validatePayload(payload: BookDemoPayload): Lead | string {
   const role = readString(payload.role, 80);
   const companySize = readString(payload.companySize, 80);
   const interest = readString(payload.interest, 80);
+  const budget = readString(payload.budget, 80);
   const project = readString(payload.project, 1200);
   const countryIso = readString(payload.countryIso, 2).toUpperCase();
   const countryName = readString(payload.countryName, 120);
@@ -243,6 +248,7 @@ function validatePayload(payload: BookDemoPayload): Lead | string {
     role,
     companySize,
     interest,
+    budget,
     project,
     countryIso,
     countryName,

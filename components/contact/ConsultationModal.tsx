@@ -26,6 +26,22 @@ const companySizes = [
   "500+ employees",
 ];
 
+const roles = [
+  "Founder / Owner",
+  "CEO / Managing Director",
+  "Marketing Manager",
+  "Sales Manager",
+  "Operations Manager",
+  "Other",
+];
+
+const interests = [
+  "AI Chat Agents",
+  "AI Voice Agents",
+  "Both",
+  "Not sure yet",
+];
+
 const budgetRanges = [
   "Not sure yet",
   "Under $1,000",
@@ -40,10 +56,12 @@ type ConsultationFormState = {
   firstName: string;
   lastName: string;
   workEmail: string;
+  phone: string;
   company: string;
   companyWebsite: string;
   role: string;
   companySize: string;
+  interest: string;
   budgetRange: string;
   project: string;
 };
@@ -52,10 +70,12 @@ const initialFormState: ConsultationFormState = {
   firstName: "",
   lastName: "",
   workEmail: "",
+  phone: "",
   company: "",
   companyWebsite: "",
   role: "",
   companySize: "",
+  interest: "",
   budgetRange: budgetRanges[0],
   project: "",
 };
@@ -89,7 +109,7 @@ function Field({
   children: ReactNode;
 }) {
   return (
-    <label className="grid gap-2">
+    <label className="grid content-start gap-2">
       <span className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground/62">
         {label}
       </span>
@@ -101,6 +121,8 @@ function Field({
 export function ConsultationModal() {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState<ConsultationFormState>(initialFormState);
   const budgetIndex = budgetRanges.indexOf(form.budgetRange);
   const budgetPercent = `${(Math.max(budgetIndex, 0) / (budgetRanges.length - 1)) * 100}%`;
@@ -187,10 +209,59 @@ export function ConsultationModal() {
     }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
-    setForm(initialFormState);
+    if (submitting) return;
+
+    setSubmitting(true);
+    setErrorMessage("");
+
+    const website = form.companyWebsite.trim();
+
+    try {
+      const response = await fetch("/api/book-demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.workEmail,
+          phone: form.phone,
+          company: form.company,
+          website:
+            website && !/^https?:\/\//i.test(website)
+              ? `https://${website}`
+              : website,
+          role: form.role,
+          companySize: form.companySize,
+          interest: form.interest,
+          budget: form.budgetRange,
+          project: form.project,
+          source: "Free consultation modal",
+        }),
+      });
+
+      const data = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        message?: string;
+      } | null;
+
+      if (!response.ok || !data?.ok) {
+        setErrorMessage(
+          data?.message ?? "We could not send your request. Please try again.",
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      setForm(initialFormState);
+    } catch {
+      setErrorMessage(
+        "We could not reach the server. Please check your connection and try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -297,6 +368,17 @@ export function ConsultationModal() {
                         autoComplete="email"
                       />
                     </Field>
+                    <Field label="Phone Number">
+                      <input
+                        required
+                        type="tel"
+                        value={form.phone}
+                        onChange={updateField("phone")}
+                        className={inputClass}
+                        placeholder="+94 77 123 4567"
+                        autoComplete="tel"
+                      />
+                    </Field>
                     <Field label="Company">
                       <input
                         required
@@ -316,15 +398,23 @@ export function ConsultationModal() {
                       />
                     </Field>
                     <Field label="Your Role">
-                      <input
+                      <select
+                        required
                         value={form.role}
                         onChange={updateField("role")}
-                        className={inputClass}
-                        autoComplete="organization-title"
-                      />
+                        className={cn(inputClass, "appearance-none")}
+                      >
+                        <option value="">Select role</option>
+                        {roles.map((role) => (
+                          <option key={role} value={role}>
+                            {role}
+                          </option>
+                        ))}
+                      </select>
                     </Field>
                     <Field label="Company Size">
                       <select
+                        required
                         value={form.companySize}
                         onChange={updateField("companySize")}
                         className={cn(inputClass, "appearance-none")}
@@ -333,6 +423,21 @@ export function ConsultationModal() {
                         {companySizes.map((size) => (
                           <option key={size} value={size}>
                             {size}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
+                    <Field label="Interested In">
+                      <select
+                        required
+                        value={form.interest}
+                        onChange={updateField("interest")}
+                        className={cn(inputClass, "appearance-none")}
+                      >
+                        <option value="">Select interest</option>
+                        {interests.map((interest) => (
+                          <option key={interest} value={interest}>
+                            {interest}
                           </option>
                         ))}
                       </select>
@@ -377,12 +482,22 @@ export function ConsultationModal() {
                     />
                   </Field>
 
+                  {errorMessage && (
+                    <p
+                      role="alert"
+                      className="rounded-xl border border-destructive/35 bg-destructive/10 px-3.5 py-2.5 text-sm leading-6 text-destructive"
+                    >
+                      {errorMessage}
+                    </p>
+                  )}
+
                   <Button
                     type="submit"
                     size="xl"
-                    className="h-12 w-full rounded-full bg-[linear-gradient(135deg,#D4A853_0%,#C49A30_52%,#8F6A16_100%)] px-7 text-black shadow-[0_18px_52px_-24px_rgba(212,168,83,0.95),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#E0BA61_0%,#C49A30_55%,#9B741C_100%)] sm:w-fit"
+                    disabled={submitting}
+                    className="h-12 w-full rounded-full bg-[linear-gradient(135deg,#D4A853_0%,#C49A30_52%,#8F6A16_100%)] px-7 text-black shadow-[0_18px_52px_-24px_rgba(212,168,83,0.95),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#E0BA61_0%,#C49A30_55%,#9B741C_100%)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-fit"
                   >
-                    Submit Request
+                    {submitting ? "Sending…" : "Submit Request"}
                   </Button>
                 </form>
               )}
