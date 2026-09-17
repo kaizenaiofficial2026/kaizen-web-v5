@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CONSULTATION_MODAL_EVENT } from "@/components/contact/consultation-modal-events";
+import { services } from "@/lib/content/services";
 import { cn } from "@/lib/utils";
 
 const companySizes = [
@@ -35,12 +36,9 @@ const roles = [
   "Other",
 ];
 
-const interests = [
-  "AI Chat Agents",
-  "AI Voice Agents",
-  "Both",
-  "Not sure yet",
-];
+// Kept in step with the services pages; the API route validates against the
+// same list, so both sides read from lib/content/services.
+const interests = [...services.map((service) => service.title), "Not sure yet"];
 
 const budgetRanges = [
   "Not sure yet",
@@ -266,9 +264,9 @@ export function ConsultationModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-black p-0 shadow-none sm:w-screen sm:p-0 lg:overflow-hidden [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:z-30 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/28 [&>button.absolute]:bg-black/78 [&>button.absolute]:text-[#F0EAD8]/82 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary sm:[&>button.absolute]:right-5 sm:[&>button.absolute]:top-5">
+      <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-black p-0 shadow-none sm:w-screen sm:p-0 [&>button.absolute]:right-4 [&>button.absolute]:top-4 [&>button.absolute]:z-30 [&>button.absolute]:grid [&>button.absolute]:h-10 [&>button.absolute]:w-10 [&>button.absolute]:place-items-center [&>button.absolute]:rounded-full [&>button.absolute]:border [&>button.absolute]:border-primary/28 [&>button.absolute]:bg-black/78 [&>button.absolute]:text-[#F0EAD8]/82 [&>button.absolute]:backdrop-blur-md [&>button.absolute]:hover:text-primary sm:[&>button.absolute]:right-5 sm:[&>button.absolute]:top-5">
         <div className="mx-auto flex min-h-dvh w-full max-w-[1180px] items-start px-4 pb-8 pt-16 sm:px-6 sm:pb-12 lg:items-center lg:px-8 lg:py-12">
-          <div className="grid w-full gap-5 sm:gap-8 lg:h-[calc(100dvh-6rem)] lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-12">
+          <div className="grid w-full gap-5 sm:gap-8 lg:min-h-[calc(100dvh-6rem)] lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-12">
             <div className="relative isolate overflow-visible bg-black">
               <div
                 aria-hidden

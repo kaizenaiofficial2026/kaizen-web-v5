@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { services } from "@/lib/content/services";
 
 type BookDemoPayload = {
   firstName?: unknown;
@@ -60,9 +61,7 @@ const allowedCompanySizes = new Set([
 ]);
 
 const allowedInterests = new Set([
-  "AI Chat Agents",
-  "AI Voice Agents",
-  "Both",
+  ...services.map((service) => service.title),
   "Not sure yet",
 ]);
 
